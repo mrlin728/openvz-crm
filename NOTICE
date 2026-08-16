@@ -1,0 +1,19 @@
+OPENVZ CRM
+Copyright (c) 2026 OPENVZ AI
+
+This product is a derivative work. It is built on an MIT-licensed codebase
+originally published by Comp AI, and it keeps that project's copyright notice in
+LICENSE as the MIT terms require.
+
+Changes made in this derivative include, but are not limited to:
+
+  - Product identity, wordmark, icon set and colour system.
+  - Telemetry: the upstream analytics key and host were removed. Reporting is
+    off unless an operator sets OPENVZ_TELEMETRY_ENABLED, and it has no
+    destination until OPENVZ_POSTHOG_KEY is set.
+  - Landing page: the upstream project's customer logos and staff photographs
+    were removed and replaced with neutral placeholder records.
+  - Workspace package scope, database names and environment variable prefixes.
+
+Third-party dependencies keep their own licences. See the dependency tree for
+the full list.
