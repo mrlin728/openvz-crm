@@ -260,10 +260,10 @@ const CLOSED_STAGES = [
 ] as const;
 
 const DEAL_DESCRIPTIONS = [
-	"Replacing a spreadsheet-and-Drive evidence process before their first SOC 2 audit. Security owns the decision, finance signs.",
-	"Expansion onto the platform team after the security org went live. Blocked on whether the current contract can be co-termed.",
-	"Inbound from a failed vendor renewal. They want automated evidence collection and one auditor-ready report.",
-	"Their enterprise deals keep stalling on security questionnaires. The buying trigger is the pipeline, not the audit.",
+	"Replacing a spreadsheet-and-Drive process the ops team has outgrown. Operations owns the decision, finance signs.",
+	"Expansion onto the platform team after the first org went live. Blocked on whether the current contract can be co-termed.",
+	"Inbound from a failed vendor renewal. They want the manual reporting automated and one view the whole team trusts.",
+	"Their enterprise deals keep stalling in handover between teams. The buying trigger is the pipeline, not the tooling.",
 	"Champion ran the evaluation themselves and wants the agent, not the checklist. Procurement is the long pole.",
 ] as const;
 
@@ -271,12 +271,12 @@ const LOST_REASONS = [
 	"Went with an incumbent vendor",
 	"No budget this cycle",
 	"Timeline slipped to next year",
-	"Not a fit — no compliance requirement yet",
+	"Not a fit — too early for a system of record",
 ] as const;
 
 const NOTE_BODIES = [
-	"Ran through the SOC 2 timeline. They want evidence collection automated before the audit window opens.",
-	"Procurement wants a security questionnaire back before they will look at pricing.",
+	"Ran through their rollout timeline. They want the reporting automated before the next quarter opens.",
+	"Procurement wants the vendor review done before they will look at pricing.",
 	"Champion is keen, but the budget owner has not been in a call yet.",
 	"They are evaluating us against two others. Differentiator is the agent, not the checklist.",
 	"Asked for a reference in the same vertical. Following up with marketing.",
@@ -288,15 +288,15 @@ const CALL_SUBJECTS = [
 	"Technical deep dive",
 	"Pricing discussion",
 	"Follow-up call",
-	"Security review",
+	"Vendor review",
 ] as const;
 
 const TASK_SUBJECTS = [
-	"Send the security questionnaire",
+	"Send the vendor review pack",
 	"Share pricing proposal",
 	"Book the technical deep dive",
 	"Chase procurement",
-	"Send SOC 2 report",
+	"Send the reference list",
 	"Introduce the implementation team",
 ] as const;
 

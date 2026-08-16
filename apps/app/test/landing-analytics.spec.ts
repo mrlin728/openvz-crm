@@ -2,9 +2,12 @@ import { describe, expect, it } from "bun:test";
 import { analyticsAllowed } from "../lib/analytics";
 
 describe("analyticsAllowed", () => {
-	it("allows the two hosts the landing page is served from", () => {
+	it("allows the host the landing page is served from", () => {
 		expect(analyticsAllowed("crm.openvzai.com")).toBe(true);
-		expect(analyticsAllowed("www.openvzai.com")).toBe(true);
+	});
+
+	it("refuses the marketing site, which serves its own /crm page", () => {
+		expect(analyticsAllowed("www.openvzai.com")).toBe(false);
 	});
 
 	it("ignores case and surrounding whitespace", () => {
