@@ -26,13 +26,22 @@ SQL either.
 
 ```
 DATABASE_URL="postgresql://postgres.yyrjclgbeahuhqtccpry:<PASSWORD>@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
-DIRECT_DATABASE_URL="postgresql://postgres:<PASSWORD>@db.yyrjclgbeahuhqtccpry.supabase.co:5432/postgres"
+DIRECT_DATABASE_URL="postgresql://postgres.yyrjclgbeahuhqtccpry:<PASSWORD>@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres"
 ```
 
-The pooled one is what the serverless function uses, because a function that
-opens a direct connection per invocation exhausts Postgres long before it
-exhausts Vercel. `DIRECT_DATABASE_URL` is for `prisma migrate deploy`, which
-cannot run through a transaction pooler.
+Three details, each of which costs an hour to rediscover:
+
+- **`DATABASE_URL` is the transaction pooler (:6543)**, because a serverless
+  function that opens a direct connection per invocation exhausts Postgres long
+  before it exhausts Vercel.
+- **`DIRECT_DATABASE_URL` is the *session* pooler (:5432), not the direct host.**
+  Migrations cannot run through a transaction pooler — `prisma migrate deploy`
+  against :6543 hangs rather than failing, which reads as a network problem. And
+  Supabase's direct host, `db.<ref>.supabase.co`, **resolves over IPv6 only**
+  unless the project buys the IPv4 add-on; on an IPv4-only machine it does not
+  resolve at all. The session pooler is IPv4 and accepts migrations.
+- **`prisma.config.ts` is what reads these.** It prefers `DIRECT_DATABASE_URL`,
+  then `POSTGRES_URL_NON_POOLING`, then `DATABASE_URL`.
 
 Then, once:
 
