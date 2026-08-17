@@ -1,6 +1,6 @@
+import { Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { isGoogleConfigured, signsInWithGoogle } from "@openvz/auth";
 import { type Db, GoogleSyncStatus, type Prisma } from "@openvz/db";
-import { Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { normalizeDomain } from "../companies/domain";
 import { ActivityStampService } from "../crm/activity-stamp.service";
 import { InjectDatabase } from "../database/database.constants";

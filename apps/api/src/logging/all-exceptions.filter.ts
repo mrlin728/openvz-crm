@@ -1,4 +1,3 @@
-import { apiError } from "@openvz/telemetry";
 import {
 	type ArgumentsHost,
 	Catch,
@@ -7,6 +6,7 @@ import {
 	HttpStatus,
 	Logger,
 } from "@nestjs/common";
+import { apiError } from "@openvz/telemetry";
 import type { Request, Response } from "express";
 import { getRequestContext } from "./request-context";
 

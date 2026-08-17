@@ -1,3 +1,9 @@
+import {
+	BadRequestException,
+	ForbiddenException,
+	Injectable,
+	Logger,
+} from "@nestjs/common";
 import { canManageCurrency, workspaceRoleOf } from "@openvz/auth";
 import type { Db } from "@openvz/db";
 import { Prisma, RateSource } from "@openvz/db";
@@ -8,12 +14,6 @@ import {
 	normalizeCurrency,
 } from "@openvz/db/currency";
 import { writeReportingCurrency } from "@openvz/db/settings";
-import {
-	BadRequestException,
-	ForbiddenException,
-	Injectable,
-	Logger,
-} from "@nestjs/common";
 import { InjectDatabase } from "../database/database.constants";
 import { ConversionService, type Unconverted } from "./conversion.service";
 import { RatesService } from "./rates.service";

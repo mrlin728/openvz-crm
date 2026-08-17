@@ -1,3 +1,5 @@
+import { CACHE_MANAGER } from "@nestjs/cache-manager";
+import { Inject, Injectable, Logger } from "@nestjs/common";
 import type { Db } from "@openvz/db";
 import { SETTINGS_ID } from "@openvz/db/settings";
 import {
@@ -6,8 +8,6 @@ import {
 	readTrackingConfig,
 	type TrackingConfig,
 } from "@openvz/db/tracking";
-import { CACHE_MANAGER } from "@nestjs/cache-manager";
-import { Inject, Injectable, Logger } from "@nestjs/common";
 import type { Cache } from "cache-manager";
 import { InjectDatabase } from "../database/database.constants";
 

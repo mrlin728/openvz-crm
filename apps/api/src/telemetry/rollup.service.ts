@@ -1,3 +1,4 @@
+import { Injectable, Logger } from "@nestjs/common";
 import {
 	ActivityType,
 	type Db,
@@ -26,7 +27,6 @@ import {
 	restoreCounters,
 	telemetryDisabled,
 } from "@openvz/telemetry";
-import { Injectable, Logger } from "@nestjs/common";
 import { InjectDatabase } from "../database/database.constants";
 import { FunnelService } from "./funnel.service";
 import { SEED_OWNER_PREFIX } from "./seed";

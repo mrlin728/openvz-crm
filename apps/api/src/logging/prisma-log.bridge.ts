@@ -1,10 +1,10 @@
-import { setPrismaLogSink } from "@openvz/db";
 import {
 	Injectable,
 	Logger,
 	type OnApplicationShutdown,
 	type OnModuleInit,
 } from "@nestjs/common";
+import { setPrismaLogSink } from "@openvz/db";
 
 @Injectable()
 export class PrismaLogBridge implements OnModuleInit, OnApplicationShutdown {

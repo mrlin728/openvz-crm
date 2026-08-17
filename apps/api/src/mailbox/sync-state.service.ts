@@ -1,9 +1,9 @@
+import { Injectable, Logger } from "@nestjs/common";
 import {
 	type Db,
 	GoogleSyncStatus,
 	type MailboxSyncModel as MailboxSync,
 } from "@openvz/db";
-import { Injectable, Logger } from "@nestjs/common";
 import { InjectDatabase } from "../database/database.constants";
 import type { SyncSource } from "./mailbox.constants";
 

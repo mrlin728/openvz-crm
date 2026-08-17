@@ -1,16 +1,16 @@
 import {
+	BadRequestException,
+	ForbiddenException,
+	Injectable,
+	NotFoundException,
+} from "@nestjs/common";
+import {
 	canManageConnections,
 	isSlackConfigured,
 	WORKSPACE_ID,
 } from "@openvz/auth";
 import type { Db } from "@openvz/db";
 import { schemas } from "@openvz/validation";
-import {
-	BadRequestException,
-	ForbiddenException,
-	Injectable,
-	NotFoundException,
-} from "@nestjs/common";
 import { AgentAccessService } from "../agent/agent-access.service";
 import { AgentTriggerService } from "../agent/agent-trigger.service";
 import { InjectDatabase } from "../database/database.constants";

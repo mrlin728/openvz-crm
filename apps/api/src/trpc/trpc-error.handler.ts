@@ -1,5 +1,5 @@
-import { apiError } from "@openvz/telemetry";
 import { Injectable, Logger } from "@nestjs/common";
+import { apiError } from "@openvz/telemetry";
 import type { OnErrorOptions, TRPCErrorHandler } from "nestjs-trpc";
 
 @Injectable()

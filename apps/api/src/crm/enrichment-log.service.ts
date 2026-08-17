@@ -1,5 +1,5 @@
-import { ActivityType, type Db } from "@openvz/db";
 import { Injectable } from "@nestjs/common";
+import { ActivityType, type Db } from "@openvz/db";
 import { InjectDatabase } from "../database/database.constants";
 import { ActivityStampService } from "./activity-stamp.service";
 

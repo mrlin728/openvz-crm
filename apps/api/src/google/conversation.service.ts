@@ -1,5 +1,5 @@
-import type { Db } from "@openvz/db";
 import { Injectable, NotFoundException } from "@nestjs/common";
+import type { Db } from "@openvz/db";
 import { InjectDatabase } from "../database/database.constants";
 
 @Injectable()

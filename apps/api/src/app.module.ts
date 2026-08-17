@@ -1,6 +1,6 @@
-import { auth } from "@openvz/auth";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { auth } from "@openvz/auth";
 import { AuthModule as BetterAuthModule } from "@thallesp/nestjs-better-auth";
 import { ActivitiesModule } from "./activities/activities.module";
 import { AgentModule } from "./agent/agent.module";

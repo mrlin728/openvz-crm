@@ -1,4 +1,3 @@
-import { type Db, db } from "@openvz/db";
 import {
 	Global,
 	Logger,
@@ -6,6 +5,7 @@ import {
 	type OnApplicationShutdown,
 	type OnModuleInit,
 } from "@nestjs/common";
+import { type Db, db } from "@openvz/db";
 import { DATABASE, InjectDatabase } from "./database.constants";
 
 @Global()

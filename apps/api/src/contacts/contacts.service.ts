@@ -1,4 +1,10 @@
 import {
+	ConflictException,
+	Injectable,
+	Logger,
+	NotFoundException,
+} from "@nestjs/common";
+import {
 	type ContactBriefSections,
 	type Db,
 	type FactEvidence,
@@ -7,12 +13,6 @@ import {
 	Prisma as PrismaNamespace,
 	type RecordSource,
 } from "@openvz/db";
-import {
-	ConflictException,
-	Injectable,
-	Logger,
-	NotFoundException,
-} from "@nestjs/common";
 import { AgentQueueService } from "../agent/agent-queue.service";
 import { AgentTriggerService } from "../agent/agent-trigger.service";
 import { CompanyDirectoryService } from "../companies/company-directory.service";

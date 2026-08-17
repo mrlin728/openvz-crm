@@ -1,4 +1,9 @@
 import {
+	ForbiddenException,
+	Injectable,
+	NotFoundException,
+} from "@nestjs/common";
+import {
 	isWorkspaceAdmin,
 	toWorkspaceRole,
 	WORKSPACE_ID,
@@ -6,11 +11,6 @@ import {
 	workspaceRoleOf,
 } from "@openvz/auth";
 import type { Db, Prisma } from "@openvz/db";
-import {
-	ForbiddenException,
-	Injectable,
-	NotFoundException,
-} from "@nestjs/common";
 import { InjectDatabase } from "../database/database.constants";
 import { canReadAgent, isPrivateAgentDraft } from "./agent-visibility";
 

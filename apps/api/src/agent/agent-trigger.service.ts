@@ -1,8 +1,8 @@
+import { Injectable, Logger } from "@nestjs/common";
 import { type Db, type FieldEntity, Prisma } from "@openvz/db";
 import { PRIORITY } from "@openvz/db/agent-tasks";
 import { CRM_EVENT_CATALOG, type CrmEventType } from "@openvz/db/crm-events";
 import { lockIdempotencyKey } from "@openvz/db/idempotency";
-import { Injectable, Logger } from "@nestjs/common";
 import { InjectDatabase } from "../database/database.constants";
 import { AGENT_DISPATCH } from "./agent-dispatch.config";
 import { bridge } from "./bridge";

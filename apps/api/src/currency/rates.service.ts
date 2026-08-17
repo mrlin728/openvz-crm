@@ -1,3 +1,4 @@
+import { Injectable, Logger } from "@nestjs/common";
 import type { Db } from "@openvz/db";
 import { Prisma, RateSource } from "@openvz/db";
 import {
@@ -10,7 +11,6 @@ import {
 	readReportingCurrency,
 	writeRatesRefreshedAt,
 } from "@openvz/db/settings";
-import { Injectable, Logger } from "@nestjs/common";
 import { InjectDatabase } from "../database/database.constants";
 
 export const RATES_PROVIDER = "open.er-api.com";

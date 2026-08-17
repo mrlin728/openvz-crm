@@ -1,3 +1,4 @@
+import { Injectable, Logger } from "@nestjs/common";
 import type { Db } from "@openvz/db";
 import {
 	classifyTouch,
@@ -16,7 +17,6 @@ import {
 	stripQuery,
 	type TrackingConfig,
 } from "@openvz/db/tracking";
-import { Injectable, Logger } from "@nestjs/common";
 import { normalizeEmail } from "../crm/values";
 import { InjectDatabase } from "../database/database.constants";
 import { TrackingConfigService } from "./tracking-config.service";

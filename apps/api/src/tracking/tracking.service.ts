@@ -1,4 +1,10 @@
 import {
+	BadRequestException,
+	ForbiddenException,
+	Injectable,
+	NotFoundException,
+} from "@nestjs/common";
+import {
 	appUrl,
 	canManageTracking,
 	isWorkspaceRole,
@@ -23,12 +29,6 @@ import {
 	trackingSnippet,
 	VERIFY_WINDOW_MS,
 } from "@openvz/db/tracking";
-import {
-	BadRequestException,
-	ForbiddenException,
-	Injectable,
-	NotFoundException,
-} from "@nestjs/common";
 import { InjectDatabase } from "../database/database.constants";
 import { TrackingConfigService } from "./tracking-config.service";
 

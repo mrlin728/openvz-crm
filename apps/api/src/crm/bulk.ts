@@ -1,5 +1,5 @@
-import type { Db } from "@openvz/db";
 import { BadRequestException } from "@nestjs/common";
+import type { Db } from "@openvz/db";
 import { z } from "zod";
 
 export const MAX_BULK_IDS = 100;

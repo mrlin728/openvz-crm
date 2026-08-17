@@ -1,7 +1,7 @@
+import { Injectable, Logger } from "@nestjs/common";
 import type { Db, Prisma } from "@openvz/db";
 import { blobEnabled, mirror } from "@openvz/db/blob";
 import { BLOB_HOST_SUFFIX, COMPANY_IMAGE_FIELDS } from "@openvz/db/images";
-import { Injectable, Logger } from "@nestjs/common";
 import { InjectDatabase } from "../database/database.constants";
 
 const MAX_PER_SWEEP = 25;

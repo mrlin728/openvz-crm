@@ -1,10 +1,4 @@
 import type { IncomingMessage } from "node:http";
-import type { Db } from "@openvz/db";
-import {
-	EVENT_RETENTION_DAYS,
-	isSiteId,
-	MAX_BODY_BYTES,
-} from "@openvz/db/tracking";
 import {
 	Controller,
 	ForbiddenException,
@@ -19,6 +13,12 @@ import {
 	ServiceUnavailableException,
 } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import type { Db } from "@openvz/db";
+import {
+	EVENT_RETENTION_DAYS,
+	isSiteId,
+	MAX_BODY_BYTES,
+} from "@openvz/db/tracking";
 import { AllowAnonymous } from "@thallesp/nestjs-better-auth";
 import type { Response } from "express";
 import type { EnvironmentVariables } from "../config/env.validation";

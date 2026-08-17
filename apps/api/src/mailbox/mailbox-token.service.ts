@@ -1,3 +1,4 @@
+import { Injectable, Logger } from "@nestjs/common";
 import {
 	auth,
 	type MailboxProviderId,
@@ -5,7 +6,6 @@ import {
 	type SignInAccount,
 } from "@openvz/auth";
 import { type Db } from "@openvz/db";
-import { Injectable, Logger } from "@nestjs/common";
 import { InjectDatabase } from "../database/database.constants";
 import {
 	GOOGLE_PROVIDER_ID,

@@ -1,9 +1,9 @@
+import { CACHE_MANAGER } from "@nestjs/cache-manager";
+import { Inject, Injectable, Logger, type OnModuleInit } from "@nestjs/common";
 import { onSignedIn } from "@openvz/auth";
 import { type Db, EnrichmentStatus, type Prisma } from "@openvz/db";
 import { PRIORITY } from "@openvz/db/agent-tasks";
 import { readWorkspaceIdentity } from "@openvz/db/workspace";
-import { CACHE_MANAGER } from "@nestjs/cache-manager";
-import { Inject, Injectable, Logger, type OnModuleInit } from "@nestjs/common";
 import type { Cache } from "cache-manager";
 import { AgentTriggerService } from "../agent/agent-trigger.service";
 import { FaviconService } from "../companies/favicon.service";

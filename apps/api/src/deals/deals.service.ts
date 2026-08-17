@@ -1,4 +1,10 @@
 import {
+	BadRequestException,
+	Injectable,
+	Logger,
+	NotFoundException,
+} from "@nestjs/common";
+import {
 	ActivityType,
 	type Db,
 	type DealStage,
@@ -12,12 +18,6 @@ import {
 	LOSING_DEAL_STAGES,
 	OPEN_DEAL_STAGES,
 } from "@openvz/db/deal-stage";
-import {
-	BadRequestException,
-	Injectable,
-	Logger,
-	NotFoundException,
-} from "@nestjs/common";
 import { AgentTriggerService } from "../agent/agent-trigger.service";
 import {
 	ActivityStampService,

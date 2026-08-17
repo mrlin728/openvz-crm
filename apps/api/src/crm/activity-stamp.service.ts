@@ -1,5 +1,5 @@
-import { type Db, type Prisma, Prisma as PrismaNamespace } from "@openvz/db";
 import { Injectable, Logger } from "@nestjs/common";
+import { type Db, type Prisma, Prisma as PrismaNamespace } from "@openvz/db";
 import { InjectDatabase } from "../database/database.constants";
 
 export type ActivityTarget = {

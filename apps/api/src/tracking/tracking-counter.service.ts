@@ -1,6 +1,6 @@
+import { Injectable, Logger } from "@nestjs/common";
 import type { Db } from "@openvz/db";
 import { windowExpiry } from "@openvz/db/tracking";
-import { Injectable, Logger } from "@nestjs/common";
 import { InjectDatabase } from "../database/database.constants";
 
 @Injectable()

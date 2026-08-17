@@ -1,3 +1,4 @@
+import { Injectable, Logger } from "@nestjs/common";
 import {
 	ActivityType,
 	type Db,
@@ -5,7 +6,6 @@ import {
 	type MailboxSyncModel as MailboxSync,
 	RecordSource,
 } from "@openvz/db";
-import { Injectable, Logger } from "@nestjs/common";
 import { AgentTriggerService } from "../agent/agent-trigger.service";
 import { ActivityStampService } from "../crm/activity-stamp.service";
 import { InjectDatabase } from "../database/database.constants";

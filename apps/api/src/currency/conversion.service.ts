@@ -1,3 +1,4 @@
+import { Injectable, Logger } from "@nestjs/common";
 import type { Db, Prisma as PrismaTypes } from "@openvz/db";
 import { Prisma } from "@openvz/db";
 import { minorUnitsOf, normalizeCurrency } from "@openvz/db/currency";
@@ -8,7 +9,6 @@ import {
 	resolveRate,
 } from "@openvz/db/fx";
 import { readReportingCurrency } from "@openvz/db/settings";
-import { Injectable, Logger } from "@nestjs/common";
 import { InjectDatabase } from "../database/database.constants";
 
 export interface DealFxFields {

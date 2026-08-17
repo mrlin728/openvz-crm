@@ -1,3 +1,4 @@
+import { Injectable, Logger } from "@nestjs/common";
 import { workspaceDomains } from "@openvz/auth";
 import { ActivityType, type Db, Prisma, RecordSource } from "@openvz/db";
 import type { Touch } from "@openvz/db/attribution";
@@ -6,7 +7,6 @@ import {
 	CONTACTS_PER_HOUR,
 	contactWindowKey,
 } from "@openvz/db/tracking";
-import { Injectable, Logger } from "@nestjs/common";
 import { AgentTriggerService } from "../agent/agent-trigger.service";
 import { CompanyDirectoryService } from "../companies/company-directory.service";
 import { isMachineDomain } from "../companies/domain";

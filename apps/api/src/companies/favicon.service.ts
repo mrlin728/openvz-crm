@@ -1,7 +1,7 @@
+import { Injectable, Logger } from "@nestjs/common";
 import type { Db } from "@openvz/db";
 import { mirror } from "@openvz/db/blob";
 import { resolveFavicon } from "@openvz/db/favicon";
-import { Injectable, Logger } from "@nestjs/common";
 import { InjectDatabase } from "../database/database.constants";
 
 @Injectable()

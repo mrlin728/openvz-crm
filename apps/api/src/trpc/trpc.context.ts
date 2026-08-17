@@ -1,5 +1,5 @@
-import { auth } from "@openvz/auth";
 import { Injectable } from "@nestjs/common";
+import { auth } from "@openvz/auth";
 import { fromNodeHeaders } from "better-auth/node";
 import type { ContextOptions, TRPCContext } from "nestjs-trpc";
 import type { BaseTrpcContext } from "./context.types";

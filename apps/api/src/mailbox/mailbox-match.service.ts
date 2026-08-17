@@ -1,7 +1,7 @@
+import { Injectable, Logger } from "@nestjs/common";
 import { workspaceDomains } from "@openvz/auth/workspace";
 import { type Db, RecordSource } from "@openvz/db";
 import { lockIdempotencyKey } from "@openvz/db/idempotency";
-import { Injectable, Logger } from "@nestjs/common";
 import { AgentTriggerService } from "../agent/agent-trigger.service";
 import { CompanyDirectoryService } from "../companies/company-directory.service";
 import { EnrichmentLogService } from "../crm/enrichment-log.service";

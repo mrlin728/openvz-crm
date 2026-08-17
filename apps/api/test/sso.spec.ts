@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
+import { ForbiddenException } from "@nestjs/common";
 import { isGoogleConfigured, WORKSPACE_ID } from "@openvz/auth";
 import type { Db } from "@openvz/db";
-import { ForbiddenException } from "@nestjs/common";
 import { SsoService } from "../src/sso/sso.service";
 
 type Row = {

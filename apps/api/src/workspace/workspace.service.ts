@@ -1,4 +1,12 @@
 import {
+	BadRequestException,
+	ForbiddenException,
+	Injectable,
+	Logger,
+	NotFoundException,
+	ServiceUnavailableException,
+} from "@nestjs/common";
+import {
 	canChangeRole,
 	canRenameWorkspace,
 	ensureWorkspaceMembership,
@@ -13,14 +21,6 @@ import {
 	markOnboarded,
 	workspaceSlug,
 } from "@openvz/db/workspace";
-import {
-	BadRequestException,
-	ForbiddenException,
-	Injectable,
-	Logger,
-	NotFoundException,
-	ServiceUnavailableException,
-} from "@nestjs/common";
 import { AgentTriggerService } from "../agent/agent-trigger.service";
 import { normalizeDomain } from "../companies/domain";
 import { InjectDatabase } from "../database/database.constants";

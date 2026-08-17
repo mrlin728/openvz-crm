@@ -1,16 +1,16 @@
 import {
+	Injectable,
+	Logger,
+	type OnApplicationShutdown,
+	type OnModuleInit,
+} from "@nestjs/common";
+import {
 	flushTelemetry,
 	onTelemetryProblem,
 	shutdownTelemetry,
 	syncVersion,
 	telemetryDisabled,
 } from "@openvz/telemetry";
-import {
-	Injectable,
-	Logger,
-	type OnApplicationShutdown,
-	type OnModuleInit,
-} from "@nestjs/common";
 import { RollupService } from "./rollup.service";
 
 const ROLLUP_INTERVAL_MS = 60 * 60 * 1000;

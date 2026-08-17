@@ -1,5 +1,3 @@
-import { WORKSPACE_ID } from "@openvz/auth";
-import { type Db, type Prisma, Prisma as PrismaNamespace } from "@openvz/db";
 import {
 	BadRequestException,
 	Injectable,
@@ -7,6 +5,8 @@ import {
 	NotFoundException,
 	Optional,
 } from "@nestjs/common";
+import { WORKSPACE_ID } from "@openvz/auth";
+import { type Db, type Prisma, Prisma as PrismaNamespace } from "@openvz/db";
 import { AgentTriggerService } from "../agent/agent-trigger.service";
 import { InjectDatabase } from "../database/database.constants";
 import {

@@ -1,10 +1,10 @@
-import { ActivityType, type Db, type Prisma } from "@openvz/db";
 import {
 	BadRequestException,
 	Injectable,
 	Logger,
 	NotFoundException,
 } from "@nestjs/common";
+import { ActivityType, type Db, type Prisma } from "@openvz/db";
 import { ActivityStampService } from "../crm/activity-stamp.service";
 import { blankToNull } from "../crm/values";
 import { InjectDatabase } from "../database/database.constants";

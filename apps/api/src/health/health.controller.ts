@@ -1,10 +1,10 @@
-import type { Db } from "@openvz/db";
 import {
 	Controller,
 	Get,
 	Logger,
 	ServiceUnavailableException,
 } from "@nestjs/common";
+import type { Db } from "@openvz/db";
 import { AllowAnonymous } from "@thallesp/nestjs-better-auth";
 import { InjectDatabase } from "../database/database.constants";
 

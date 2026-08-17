@@ -1,11 +1,11 @@
-import type { Db, Prisma } from "@openvz/db";
-import type { AgentDefinitionStatus } from "@openvz/db/enums";
-import { schemas } from "@openvz/validation";
 import {
 	BadRequestException,
 	Injectable,
 	NotFoundException,
 } from "@nestjs/common";
+import type { Db, Prisma } from "@openvz/db";
+import type { AgentDefinitionStatus } from "@openvz/db/enums";
+import { schemas } from "@openvz/validation";
 import { InjectDatabase } from "../database/database.constants";
 import { AgentAccessService } from "./agent-access.service";
 import { AgentTriggerService } from "./agent-trigger.service";

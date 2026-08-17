@@ -1,3 +1,4 @@
+import { Injectable, Logger } from "@nestjs/common";
 import type { Db } from "@openvz/db";
 import { FactStatus } from "@openvz/db";
 import {
@@ -7,7 +8,6 @@ import {
 	reachedMilestones,
 	readInstall,
 } from "@openvz/telemetry";
-import { Injectable, Logger } from "@nestjs/common";
 import { InjectDatabase } from "../database/database.constants";
 import { GOOGLE_PROVIDER_ID } from "../google/google.constants";
 import { SEED_OWNER_PREFIX } from "./seed";

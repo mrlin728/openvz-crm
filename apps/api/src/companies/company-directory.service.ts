@@ -1,6 +1,6 @@
+import { Injectable, Logger } from "@nestjs/common";
 import { EnrichmentStatus } from "@openvz/db";
 import { lockIdempotencyKey } from "@openvz/db/idempotency";
-import { Injectable, Logger } from "@nestjs/common";
 import { AgentTriggerService } from "../agent/agent-trigger.service";
 import { domainFromEmail } from "./domain";
 

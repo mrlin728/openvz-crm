@@ -1,8 +1,8 @@
+import { Injectable, Logger } from "@nestjs/common";
 import {
 	GoogleSyncStatus,
 	type MailboxSyncModel as MailboxSync,
 } from "@openvz/db";
-import { Injectable, Logger } from "@nestjs/common";
 import type { MailboxResult } from "../mailbox/mailbox-api.client";
 import type { MatchContext } from "../mailbox/mailbox-match.service";
 import { MailboxTokenService } from "../mailbox/mailbox-token.service";

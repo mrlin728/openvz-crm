@@ -1,4 +1,3 @@
-import type { auth } from "@openvz/auth";
 import {
 	Controller,
 	Get,
@@ -7,6 +6,7 @@ import {
 	Res,
 	StreamableFile,
 } from "@nestjs/common";
+import type { auth } from "@openvz/auth";
 import { Session, type UserSession } from "@thallesp/nestjs-better-auth";
 import type { Response } from "express";
 import { ConversationsService } from "./conversations.service";

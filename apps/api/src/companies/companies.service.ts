@@ -1,4 +1,11 @@
 import {
+	BadRequestException,
+	ConflictException,
+	Injectable,
+	Logger,
+	NotFoundException,
+} from "@nestjs/common";
+import {
 	type Db,
 	type EnrichmentStatus,
 	type Prisma,
@@ -6,13 +13,6 @@ import {
 	type RecordSource,
 } from "@openvz/db";
 import { OPEN_DEAL_STAGES } from "@openvz/db/deal-stage";
-import {
-	BadRequestException,
-	ConflictException,
-	Injectable,
-	Logger,
-	NotFoundException,
-} from "@nestjs/common";
 import { AgentQueueService } from "../agent/agent-queue.service";
 import { AgentTriggerService } from "../agent/agent-trigger.service";
 import {

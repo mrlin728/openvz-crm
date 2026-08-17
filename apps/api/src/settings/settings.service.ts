@@ -1,3 +1,4 @@
+import { BadRequestException, Injectable, Logger } from "@nestjs/common";
 import type { Db } from "@openvz/db";
 import {
 	DEFAULT_AGENT_MODEL,
@@ -7,7 +8,6 @@ import {
 	writeAgentModel,
 	writeContextDevKey,
 } from "@openvz/db/settings";
-import { BadRequestException, Injectable, Logger } from "@nestjs/common";
 import { ResearchKeyService } from "../agent/research-key.service";
 import { BackfillService } from "../backfill/backfill.service";
 import { InjectDatabase } from "../database/database.constants";

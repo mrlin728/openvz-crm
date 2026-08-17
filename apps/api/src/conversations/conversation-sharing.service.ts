@@ -1,11 +1,11 @@
 import { randomBytes } from "node:crypto";
-import { WORKSPACE_ID } from "@openvz/auth";
-import type { Db, Prisma } from "@openvz/db";
 import {
 	ForbiddenException,
 	Injectable,
 	NotFoundException,
 } from "@nestjs/common";
+import { WORKSPACE_ID } from "@openvz/auth";
+import type { Db, Prisma } from "@openvz/db";
 import { InjectDatabase } from "../database/database.constants";
 import { builderMessageWithAttachments } from "./conversation-attachments";
 import { conversationShareTokenHash } from "./conversation-share-token";

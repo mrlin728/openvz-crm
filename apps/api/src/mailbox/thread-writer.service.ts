@@ -1,3 +1,4 @@
+import { Injectable, Logger } from "@nestjs/common";
 import {
 	ActivityType,
 	type Db,
@@ -7,7 +8,6 @@ import {
 	Prisma as PrismaNamespace,
 	RecordSource,
 } from "@openvz/db";
-import { Injectable, Logger } from "@nestjs/common";
 import { ActivityStampService } from "../crm/activity-stamp.service";
 import { InjectDatabase } from "../database/database.constants";
 import type { SyncSource } from "./mailbox.constants";

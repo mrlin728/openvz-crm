@@ -1,6 +1,6 @@
-import type { Db } from "@openvz/db";
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
 import { Inject, Injectable, Logger, NotFoundException } from "@nestjs/common";
+import type { Db } from "@openvz/db";
 import type { Cache } from "cache-manager";
 import { InjectDatabase } from "../database/database.constants";
 

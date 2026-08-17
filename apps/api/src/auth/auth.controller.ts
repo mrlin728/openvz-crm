@@ -1,5 +1,5 @@
-import type { auth } from "@openvz/auth";
 import { Controller, Get } from "@nestjs/common";
+import type { auth } from "@openvz/auth";
 import {
 	OptionalAuth,
 	Session,

@@ -1,6 +1,6 @@
+import { Injectable } from "@nestjs/common";
 import { ActivityType, type Db, DealStage } from "@openvz/db";
 import { OPEN_DEAL_STAGES } from "@openvz/db/deal-stage";
-import { Injectable } from "@nestjs/common";
 import { toCents } from "../crm/values";
 import { ConversionService } from "../currency/conversion.service";
 import { InjectDatabase } from "../database/database.constants";

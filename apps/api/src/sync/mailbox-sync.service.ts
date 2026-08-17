@@ -1,5 +1,5 @@
-import { syncError } from "@openvz/telemetry";
 import { Injectable, Logger } from "@nestjs/common";
+import { syncError } from "@openvz/telemetry";
 import { GoogleConnectionService } from "../google/google-connection.service";
 import { GoogleSyncService } from "../google/google-sync.service";
 import {
