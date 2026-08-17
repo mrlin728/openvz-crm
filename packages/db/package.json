@@ -46,7 +46,8 @@
 		"@openvz/env": "workspace:*",
 		"@prisma/adapter-pg": "^7.9.1",
 		"@prisma/client": "^7.9.1",
-		"@vercel/blob": "^2.6.1"
+		"@vercel/blob": "^2.6.1",
+		"aws4fetch": "^1.0.20"
 	},
 	"devDependencies": {
 		"@openvz/typescript-config": "workspace:*",

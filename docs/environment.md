@@ -114,13 +114,46 @@ single place that knows what is set.
 | `PERPLEXITY_API_KEY` | Open-web research with citations; finds a LinkedIn slug |
 | `RAPIDAPI_KEY` | LinkedIn profiles via LinkDAPI |
 | `GITHUB_TOKEN` | Raises the GitHub rate limit from 60/hour |
-| `BLOB_READ_WRITE_TOKEN` | Mirrors logos and photos into Blob |
+| `BLOB_READ_WRITE_TOKEN` | Mirrors logos and photos into Vercel Blob |
+| `R2_*` (five of them) | Mirrors them into Cloudflare R2 instead — below |
 | `AI_GATEWAY_API_KEY` | The model. Not needed on Vercel (OIDC) |
 | `AGENT_BRIDGE_SECRET` | The rep-facing Agent panel — see `agent.md` |
 
 `BLOB_READ_WRITE_TOKEN` is also in `env.validation.ts` and `apps/api/turbo.json`
 because the API and the seed write pictures too. The Next.js app is deliberately
 excluded — recognising our URL for the image optimizer needs no token.
+
+### Where the mirrored pictures go
+
+Two backends, one interface. `mirror()` in `@openvz/db/blob` picks between them:
+
+| Configured | Backend |
+| --- | --- |
+| All five `R2_*` | Cloudflare R2 |
+| `BLOB_READ_WRITE_TOKEN` only | Vercel Blob |
+| Neither | Off — a photograph is not stored, a logo keeps its origin URL |
+
+**R2 wins when both are set.** Egress is free there, and these are images a
+browser loads on every page of the CRM, so the bill is otherwise proportional to
+how much the product is used.
+
+The five are `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`,
+`R2_BUCKET` and `R2_PUBLIC_BASE`. Miss one and the config reads as absent — the
+code falls back rather than half-configuring itself. The bucket needs public
+access on, because the browser fetches these URLs directly.
+
+**`isMirrored()` matches on host suffix**, `.r2.dev` and
+`.blob.vercel-storage.com`, and not on the configured base URL. It has to: it
+runs in the browser too, from `EntityLogo`, where a server-only variable does not
+exist. The cost is that moving to a custom domain means adding its suffix to
+`MIRROR_HOST_SUFFIXES` in `packages/db/src/images.ts` — and to
+`images.remotePatterns` in `apps/app/next.config.ts`, or Next refuses to optimise
+it.
+
+Objects are keyed by what they belong to and a digest of their bytes —
+`companies/<id>/logoUrl-<sha>.png`. The digest is why re-mirroring the same
+picture overwrites rather than accumulating, and why a changed logo lands on a
+new URL instead of being cached as the old one.
 
 ### The Context key is asked for, not configured
 

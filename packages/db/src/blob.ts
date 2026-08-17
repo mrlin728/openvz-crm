@@ -1,8 +1,10 @@
 import { createHash } from "node:crypto";
 import { isMirrored } from "./images";
+import { r2Config, r2Put } from "./r2";
 import { safeFetch } from "./safe-fetch";
 
 export { isMirrored, isOptimizable } from "./images";
+export { r2Config } from "./r2";
 
 const MAX_BYTES = 3 * 1024 * 1024;
 const TIMEOUT_MS = 15_000;
@@ -18,8 +20,17 @@ const ALLOWED: Record<string, string> = {
 	"image/vnd.microsoft.icon": "ico",
 };
 
-export function blobEnabled(): boolean {
+export function vercelBlobEnabled(): boolean {
 	return Boolean(process.env.BLOB_READ_WRITE_TOKEN?.trim());
+}
+
+export function blobEnabled(): boolean {
+	return r2Config() !== null || vercelBlobEnabled();
+}
+
+export function blobBackend(): "r2" | "vercel" | null {
+	if (r2Config() !== null) return "r2";
+	return vercelBlobEnabled() ? "vercel" : null;
 }
 
 export async function mirror(
@@ -46,9 +57,14 @@ export async function mirror(
 			.digest("hex")
 			.slice(0, 12);
 
+		const name = `${prefix}-${digest}.${extension}`;
+
+		const r2 = r2Config();
+		if (r2) return await r2Put(r2, name, bytes, type);
+
 		const { put } = await import("@vercel/blob");
 
-		const blob = await put(`${prefix}-${digest}.${extension}`, bytes, {
+		const blob = await put(name, bytes, {
 			access: "public",
 			contentType: type,
 			addRandomSuffix: false,
