@@ -8,8 +8,8 @@ Everything here runs on two accounts that already exist: **Vercel** and
 | `apps/app` | Vercel | Next.js. Root directory `apps/app`. |
 | `apps/api` | Vercel | One Node serverless function — `apps/api/api/index.ts` boots Nest once per cold start and hands the request to its Express instance. `vercel.json` beside it declares the crons. |
 | `apps/agent` | Vercel | `eve build` emits a Nitro output. Its own deployment, its own schedule. |
-| Postgres | Supabase | Project `openvz-crm`, ref `yyrjclgbeahuhqtccpry`, region `ap-northeast-1`. |
-| Images | Cloudflare R2 | Bucket `openvz-crm`. See `environment.md`. |
+| Postgres | Supabase | Any Postgres 17. The notes below assume Supabase, which is the fiddliest of them. |
+| Images | Cloudflare R2 | See `environment.md`. |
 
 ## The two things a person has to do
 
@@ -25,8 +25,8 @@ SQL either.
 **Settings → Database → Reset database password**, then build two URLs:
 
 ```
-DATABASE_URL="postgresql://postgres.yyrjclgbeahuhqtccpry:<PASSWORD>@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
-DIRECT_DATABASE_URL="postgresql://postgres.yyrjclgbeahuhqtccpry:<PASSWORD>@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres"
+DATABASE_URL="postgresql://postgres.<PROJECT-REF>:<PASSWORD>@aws-0-<REGION>.pooler.supabase.com:6543/postgres?pgbouncer=true"
+DIRECT_DATABASE_URL="postgresql://postgres.<PROJECT-REF>:<PASSWORD>@aws-0-<REGION>.pooler.supabase.com:5432/postgres"
 ```
 
 Three details, each of which costs an hour to rediscover:
@@ -118,10 +118,10 @@ on a slow uplink the request count costs more than the bytes.
 | Variable | Value |
 | --- | --- |
 | `BETTER_AUTH_SECRET` | `openssl rand -base64 32`. **The same value in the app and the API**, or the API mints a cookie the app cannot verify and sign-in becomes a redirect loop rather than an error. |
-| `ALLOWED_SIGN_IN` | `openvzai.com` |
+| `ALLOWED_SIGN_IN` | Your email domain, or a single address. Nobody signs in until this is set. |
 | `API_URL` / `APP_URL` | The two real origins. |
-| `AUTH_COOKIE_DOMAIN` | `.openvzai.com`, only if the two are subdomains of one parent. |
-| `R2_*` (five) | Bucket `openvz-crm`. See `environment.md`. |
+| `AUTH_COOKIE_DOMAIN` | The shared parent, only if app and API are subdomains of one domain. See below. |
+| `R2_*` (five) | See `environment.md`. |
 | `CRON_SECRET` | Guards `/internal/sync/*`. Required before the crons do anything. |
 | `IS_MARKETING` | `true` on the app only if you want the landing page at `/`. |
 
@@ -152,11 +152,16 @@ neither of which needs a code change:
 
 ## What is not decided here
 
-**The hostname.** `crm.openvzai.com` needs a CNAME, and the DNS for
-`openvzai.com` is at julydns rather than Cloudflare or Vercel — so a subdomain
-is a manual step in a console this repository cannot reach. The alternative is a
-rewrite from the marketing site at `www.openvzai.com/crm/app`, which works but
-brings the whole `assetPrefix` and CSP list with it.
+**The hostname — and it is not cosmetic.** The app and the API are separate
+deployments, and the session cookie has to be readable by both. That works when
+they are subdomains of one domain you control (`app.example.com`,
+`api.example.com`, `AUTH_COOKIE_DOMAIN=.example.com`).
 
-Until one of those is done, the deployment lives on its `.vercel.app` URL, which
-is a real URL and a fine place to finish the setup from.
+It does **not** work on two `*.vercel.app` subdomains. `vercel.app` is on the
+Public Suffix List, so a browser refuses to set a cookie for it, and there is no
+shared parent to fall back on. Sign-in completes at Google and then loops,
+because the cookie the API set is on a host the app cannot read.
+
+Either put both behind your own domain, or point the API's `API_URL` at the
+*app's* origin so the whole `/api/auth/*` flow runs through the app's proxy at
+`apps/app/app/api/[...path]/route.ts` and the cookie binds to the app's host.
