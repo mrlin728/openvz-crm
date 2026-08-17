@@ -16,6 +16,24 @@ bun run dev                 # app :3000, api :3001, agent :2000
 Prisma from the repo root: `db:generate`, `db:migrate`, `db:push`, `db:reset`,
 `db:seed`, `db:studio`, `db:deploy`.
 
+### Without Docker
+
+`embedded-postgres` downloads a real Postgres and runs it on :5432, which is
+enough for the whole suite. Two things to know before reaching for it:
+
+- **Install it with `npm`, not `bun`.** The native package ships its shared
+  libraries as symlinks (`libicudata.dylib` → `libicudata.77.1.dylib`), and
+  `bun install` does not preserve them. The result is a Postgres that aborts on
+  start with `Library not loaded: libicudata.77.dylib`. Keep it outside this
+  workspace so `bun install` never touches it.
+- **Set the databases to UTC**: `ALTER DATABASE openvz_crm SET timezone TO 'UTC'`,
+  and the same for `openvz_crm_test`. `docker compose` gives you UTC already;
+  an embedded server follows the host clock. `test/keyless-brand.integration.spec.ts`
+  compares an `updatedAt` written by Postgres `NOW()` against a `finishedAt`
+  written by the client, in a `timestamp without time zone` column — on a host in
+  UTC+8 it fails by eight hours, and the failure reads as a bug in `settle()`
+  rather than a bug in the environment.
+
 `dev` depends on `^dev:prepare`, so every start applies pending migrations and
 regenerates the Prisma client before a single server boots. That is why the first
 run needs `db:migrate` only for the seed that follows it. When the database and
