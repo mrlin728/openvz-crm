@@ -49,6 +49,45 @@ Then, once:
 bun run db:deploy
 ```
 
+### Close the PostgREST door first
+
+Supabase puts a PostgREST API in front of every project and hands out a
+deliberately public `anon` key. This schema has no row-level security — it was
+written for a plain Postgres where the application is the only client — so on
+Supabase every table is readable by anyone holding that key. Contacts, email
+bodies, deal amounts.
+
+This install does not use PostgREST or the Supabase client libraries at all. It
+connects to Postgres directly, as the table owner. So the fix is to take the
+door away rather than to guard it:
+
+```sql
+REVOKE USAGE ON SCHEMA public FROM anon, authenticated;
+REVOKE ALL ON ALL TABLES IN SCHEMA public FROM anon, authenticated;
+REVOKE ALL ON ALL SEQUENCES IN SCHEMA public FROM anon, authenticated;
+REVOKE ALL ON ALL FUNCTIONS IN SCHEMA public FROM anon, authenticated;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE ALL ON TABLES FROM anon, authenticated;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE ALL ON SEQUENCES FROM anon, authenticated;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE ALL ON FUNCTIONS FROM anon, authenticated;
+```
+
+Three things worth knowing about that:
+
+- **The `ALTER DEFAULT PRIVILEGES` lines are the ones that keep working.** They
+  apply to objects created by the role that ran them, so run them as the same
+  role Prisma migrates with — `postgres`, which is also the table owner. A
+  migration that adds a table months from now is covered without anyone
+  remembering this file.
+- **`USAGE` on the schema stays granted anyway**, through `PUBLIC`. That is
+  fine: `USAGE` only permits looking an object up. Reading needs a table grant,
+  and there are none.
+- **Prefer this to enabling RLS with no policies.** Both close the hole, but RLS
+  on 59 tables is 59 statements that a new table silently escapes, and it leaves
+  a reader wondering which policies were intended.
+
+Run the revokes before the first real row exists, and verify with
+`SET LOCAL ROLE anon` that a select on `company` raises `insufficient_privilege`.
+
 ### 2. A Google OAuth client
 
 `ALLOWED_SIGN_IN` plus one identity provider is the entire authorisation model.
