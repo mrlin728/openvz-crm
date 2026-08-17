@@ -5,7 +5,11 @@
 		"build": {
 			"inputs": ["$TURBO_DEFAULT$", "prisma/**"],
 			"outputs": ["src/generated/**"],
-			"passThroughEnv": ["DATABASE_URL"]
+			"passThroughEnv": [
+				"DATABASE_URL",
+				"DIRECT_DATABASE_URL",
+				"POSTGRES_URL_NON_POOLING"
+			]
 		},
 		"dev:prepare": {
 			"cache": false,
@@ -17,31 +21,56 @@
 				"scripts/require-local-db.ts"
 			],
 			"outputs": ["src/generated/**"],
-			"passThroughEnv": ["ALLOW_REMOTE_DB", "DATABASE_URL"]
+			"passThroughEnv": [
+				"ALLOW_REMOTE_DB",
+				"DATABASE_URL",
+				"DIRECT_DATABASE_URL",
+				"POSTGRES_URL_NON_POOLING"
+			]
 		},
 		"db:generate": {
 			"inputs": ["$TURBO_DEFAULT$", "prisma/**"],
 			"outputs": ["src/generated/**"],
-			"passThroughEnv": ["DATABASE_URL"]
+			"passThroughEnv": [
+				"DATABASE_URL",
+				"DIRECT_DATABASE_URL",
+				"POSTGRES_URL_NON_POOLING"
+			]
 		},
 		"db:deploy": {
 			"cache": false,
-			"passThroughEnv": ["DATABASE_URL"]
+			"passThroughEnv": [
+				"DATABASE_URL",
+				"DIRECT_DATABASE_URL",
+				"POSTGRES_URL_NON_POOLING"
+			]
 		},
 		"db:migrate": {
 			"cache": false,
 			"interactive": true,
-			"passThroughEnv": ["DATABASE_URL"]
+			"passThroughEnv": [
+				"DATABASE_URL",
+				"DIRECT_DATABASE_URL",
+				"POSTGRES_URL_NON_POOLING"
+			]
 		},
 		"db:push": {
 			"cache": false,
 			"interactive": true,
-			"passThroughEnv": ["DATABASE_URL"]
+			"passThroughEnv": [
+				"DATABASE_URL",
+				"DIRECT_DATABASE_URL",
+				"POSTGRES_URL_NON_POOLING"
+			]
 		},
 		"db:reset": {
 			"cache": false,
 			"interactive": true,
-			"passThroughEnv": ["DATABASE_URL"]
+			"passThroughEnv": [
+				"DATABASE_URL",
+				"DIRECT_DATABASE_URL",
+				"POSTGRES_URL_NON_POOLING"
+			]
 		},
 		"db:seed": {
 			"cache": false,
@@ -52,17 +81,27 @@
 				"R2_SECRET_ACCESS_KEY",
 				"R2_BUCKET",
 				"R2_PUBLIC_BASE",
-				"DATABASE_URL"
+				"DATABASE_URL",
+				"DIRECT_DATABASE_URL",
+				"POSTGRES_URL_NON_POOLING"
 			]
 		},
 		"db:studio": {
 			"cache": false,
 			"persistent": true,
-			"passThroughEnv": ["DATABASE_URL"]
+			"passThroughEnv": [
+				"DATABASE_URL",
+				"DIRECT_DATABASE_URL",
+				"POSTGRES_URL_NON_POOLING"
+			]
 		},
 		"check-types": {
 			"dependsOn": ["$TURBO_EXTENDS$", "build"],
-			"passThroughEnv": ["DATABASE_URL"]
+			"passThroughEnv": [
+				"DATABASE_URL",
+				"DIRECT_DATABASE_URL",
+				"POSTGRES_URL_NON_POOLING"
+			]
 		}
 	}
 }

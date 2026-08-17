@@ -1,21 +1,20 @@
 {
 	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"outputDirectory": "public",
+	"rewrites": [
+		{
+			"source": "/(.*)",
+			"destination": "/api"
+		}
+	],
 	"crons": [
 		{
 			"path": "/internal/sync/mailboxes",
-			"schedule": "*/5 * * * *"
+			"schedule": "0 1 * * *"
 		},
 		{
 			"path": "/internal/sync/rates",
 			"schedule": "0 6 * * *"
-		},
-		{
-			"path": "/internal/telemetry/rollup",
-			"schedule": "0 7 * * *"
-		},
-		{
-			"path": "/internal/tracking/retention",
-			"schedule": "0 4 * * *"
 		}
 	]
 }

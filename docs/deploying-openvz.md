@@ -125,6 +125,31 @@ on a slow uplink the request count costs more than the bytes.
 | `CRON_SECRET` | Guards `/internal/sync/*`. Required before the crons do anything. |
 | `IS_MARKETING` | `true` on the app only if you want the landing page at `/`. |
 
+## The crons are cut down to fit Hobby
+
+Vercel's Hobby plan allows **two** cron jobs, each **at most once a day**. The
+schedule this codebase wants does not fit, so `apps/api/vercel.json` keeps the
+two that earn their slot and drops the rest:
+
+| Path | Was | Now | Why |
+| --- | --- | --- | --- |
+| `/internal/sync/mailboxes` | every 5 min | daily 01:00 | The one that matters. Daily is a real loss — see below. |
+| `/internal/sync/rates` | daily 06:00 | unchanged | Deal amounts in other currencies go stale without it. |
+| `/internal/telemetry/rollup` | daily 07:00 | **removed** | Telemetry is off by default here, so it had nothing to roll up. |
+| `/internal/tracking/retention` | daily 04:00 | **removed** | Only does work once website tracking is switched on. Put it back in the same change that enables tracking, or old visitor rows are never pruned. |
+
+**Daily mailbox sync is a downgrade, not a setting.** The premise of the agent is
+that it reads your threads and calendar; at daily granularity a reply that
+arrives after the run is invisible until tomorrow. Two ways back to five minutes,
+neither of which needs a code change:
+
+- **Vercel Pro.** Unlocks 40 crons at any frequency.
+- **Any external scheduler**, which is what `CRON_SECRET` exists for. A GitHub
+  Actions workflow on `*/5 * * * *` doing
+  `curl -H "Authorization: Bearer $CRON_SECRET" -X POST https://<api-host>/internal/sync/mailboxes`
+  is enough. This is the arrangement the README describes — "point a scheduler
+  at it" — so nothing about it is a workaround.
+
 ## What is not decided here
 
 **The hostname.** `crm.openvzai.com` needs a CNAME, and the DNS for

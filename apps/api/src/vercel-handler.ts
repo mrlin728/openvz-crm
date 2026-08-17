@@ -1,6 +1,7 @@
 import "reflect-metadata";
+import "express";
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { createApp } from "../src/create-app";
+import { createApp } from "./create-app";
 
 type ExpressInstance = (req: IncomingMessage, res: ServerResponse) => void;
 
@@ -14,6 +15,7 @@ function getInstance(): Promise<ExpressInstance> {
 			return app.getHttpAdapter().getInstance() as ExpressInstance;
 		})();
 	}
+
 	return instancePromise;
 }
 

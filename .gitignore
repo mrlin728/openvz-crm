@@ -43,3 +43,6 @@ yarn-error.log*
 # eve build output
 .eve
 .output
+
+# Built by `bun run build:vercel` — the Vercel function itself.
+apps/api/api/index.js
