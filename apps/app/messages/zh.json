@@ -1,0 +1,40 @@
+{
+	"signIn": {
+		"metaTitle": "登录",
+		"welcomeTitle": "欢迎回来",
+		"welcomeDescription": "登录你的账号以继续。",
+		"firstRunTitle": "设置你的 CRM",
+		"firstRunDescription": "这份是你的。你在这里创建的账号就是工作区的所有者。",
+		"closedTitle": "还进不来",
+		"closedDescription": "这个 CRM 没有配置任何登录方式，所以谁都进不来 —— 包括你自己。",
+		"closedHelp": "在根目录的 .env 文件里设置 GOOGLE_CLIENT_ID 与 GOOGLE_CLIENT_SECRET，或者 MICROSOFT_CLIENT_ID 与 MICROSOFT_CLIENT_SECRET，然后重启。有人登录之后，可以在「设置」里添加你自己的身份提供方。",
+		"name": "你的名字",
+		"email": "邮箱",
+		"password": "密码",
+		"passwordHint": "至少 {count} 个字符。它只存在这台电脑上，无法通过邮件重置。",
+		"createAccount": "创建账号",
+		"submit": "登录",
+		"continueWith": "使用 {provider} 继续",
+		"failed": "无法登录。",
+		"unreachable": "无法连接登录服务。"
+	},
+	"settings": {
+		"language": {
+			"title": "语言",
+			"description": "这个 CRM 用哪种语言跟你说话。",
+			"label": "界面语言",
+			"hint": "新装的副本跟随你的操作系统。这个选择记在这台电脑上。",
+			"failed": "无法切换语言。"
+		}
+	},
+	"nav": {
+		"overview": "总览",
+		"chat": "对话",
+		"companies": "公司",
+		"contacts": "联系人",
+		"deals": "交易",
+		"settings": "设置",
+		"primary": "主导航",
+		"close": "关闭导航"
+	}
+}

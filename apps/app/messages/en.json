@@ -1,0 +1,40 @@
+{
+	"signIn": {
+		"metaTitle": "Sign in",
+		"welcomeTitle": "Welcome back",
+		"welcomeDescription": "Sign in with your account to continue.",
+		"firstRunTitle": "Set up your CRM",
+		"firstRunDescription": "This copy is yours. The account you make here is the workspace owner.",
+		"closedTitle": "No way in yet",
+		"closedDescription": "This CRM has no sign-in method configured, so nobody can get in — including you.",
+		"closedHelp": "Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET — or MICROSOFT_CLIENT_ID and MICROSOFT_CLIENT_SECRET — in the root .env file and restart. Your own identity provider can be added from Settings once somebody is signed in.",
+		"name": "Your name",
+		"email": "Email",
+		"password": "Password",
+		"passwordHint": "At least {count} characters. It is stored on this computer only, and there is no way to reset it by email.",
+		"createAccount": "Create account",
+		"submit": "Sign in",
+		"continueWith": "Continue with {provider}",
+		"failed": "Could not sign in.",
+		"unreachable": "Could not reach the sign-in service."
+	},
+	"settings": {
+		"language": {
+			"title": "Language",
+			"description": "The language this CRM speaks to you in.",
+			"label": "Interface language",
+			"hint": "New installs follow your operating system. This choice is remembered on this computer.",
+			"failed": "Could not change the language."
+		}
+	},
+	"nav": {
+		"overview": "Overview",
+		"chat": "Chat",
+		"companies": "Companies",
+		"contacts": "Contacts",
+		"deals": "Deals",
+		"settings": "Settings",
+		"primary": "Primary",
+		"close": "Close navigation"
+	}
+}

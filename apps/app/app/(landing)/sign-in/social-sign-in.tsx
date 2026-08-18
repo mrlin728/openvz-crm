@@ -6,22 +6,24 @@ import GoogleLogo from "@openvz/ui/components/brand-logos/google";
 import MicrosoftLogo from "@openvz/ui/components/brand-logos/microsoft";
 import { Button } from "@openvz/ui/components/button";
 import { Spinner } from "@openvz/ui/components/spinner";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 
 const PROVIDERS = {
-	google: { label: "Continue with Google", Logo: GoogleLogo },
-	microsoft: { label: "Continue with Microsoft", Logo: MicrosoftLogo },
+	google: { name: "Google", Logo: GoogleLogo },
+	microsoft: { name: "Microsoft", Logo: MicrosoftLogo },
 } as const satisfies Record<MailboxProviderId, unknown>;
 
 export function SocialSignIn({ provider }: { provider: MailboxProviderId }) {
+	const t = useTranslations("signIn");
 	const [pending, setPending] = useState(false);
 
-	const { label, Logo } = PROVIDERS[provider];
+	const { name, Logo } = PROVIDERS[provider];
 
 	function fail(message?: string) {
 		setPending(false);
-		toast.error(message ?? "Could not reach the sign-in service.");
+		toast.error(message ?? t("unreachable"));
 	}
 
 	async function handleClick() {
@@ -53,7 +55,7 @@ export function SocialSignIn({ provider }: { provider: MailboxProviderId }) {
 			) : (
 				<Logo data-icon="inline-start" className="size-4" />
 			)}
-			{label}
+			{t("continueWith", { provider: name })}
 		</Button>
 	);
 }

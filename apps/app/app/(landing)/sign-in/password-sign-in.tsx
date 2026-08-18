@@ -10,12 +10,14 @@ import {
 } from "@openvz/ui/components/field";
 import { Input } from "@openvz/ui/components/input";
 import { Spinner } from "@openvz/ui/components/spinner";
+import { useTranslations } from "next-intl";
 import { type FormEvent, useId, useState } from "react";
 import { toast } from "sonner";
 
 const MINIMUM_PASSWORD = 8;
 
 export function PasswordSignIn({ create }: { create: boolean }) {
+	const t = useTranslations("signIn");
 	const nameId = useId();
 	const emailId = useId();
 	const passwordId = useId();
@@ -35,7 +37,7 @@ export function PasswordSignIn({ create }: { create: boolean }) {
 
 		if (error) {
 			setPending(false);
-			toast.error(error.message ?? "Could not sign in.");
+			toast.error(error.message ?? t("failed"));
 			return;
 		}
 
@@ -48,14 +50,14 @@ export function PasswordSignIn({ create }: { create: boolean }) {
 			onSubmit={(event) => {
 				submit(event).catch(() => {
 					setPending(false);
-					toast.error("Could not reach the sign-in service.");
+					toast.error(t("unreachable"));
 				});
 			}}
 		>
 			<FieldGroup>
 				{create ? (
 					<Field>
-						<FieldLabel htmlFor={nameId}>Your name</FieldLabel>
+						<FieldLabel htmlFor={nameId}>{t("name")}</FieldLabel>
 						<Input
 							autoComplete="name"
 							id={nameId}
@@ -67,7 +69,7 @@ export function PasswordSignIn({ create }: { create: boolean }) {
 				) : null}
 
 				<Field>
-					<FieldLabel htmlFor={emailId}>Email</FieldLabel>
+					<FieldLabel htmlFor={emailId}>{t("email")}</FieldLabel>
 					<Input
 						autoComplete="username"
 						id={emailId}
@@ -79,7 +81,7 @@ export function PasswordSignIn({ create }: { create: boolean }) {
 				</Field>
 
 				<Field>
-					<FieldLabel htmlFor={passwordId}>Password</FieldLabel>
+					<FieldLabel htmlFor={passwordId}>{t("password")}</FieldLabel>
 					<Input
 						autoComplete={create ? "new-password" : "current-password"}
 						id={passwordId}
@@ -91,8 +93,7 @@ export function PasswordSignIn({ create }: { create: boolean }) {
 					/>
 					{create ? (
 						<FieldDescription>
-							At least {MINIMUM_PASSWORD} characters. It is stored on this
-							computer only, and there is no way to reset it by email.
+							{t("passwordHint", { count: MINIMUM_PASSWORD })}
 						</FieldDescription>
 					) : null}
 				</Field>
@@ -100,7 +101,7 @@ export function PasswordSignIn({ create }: { create: boolean }) {
 
 			<Button className="w-full" disabled={pending} type="submit">
 				{pending ? <Spinner data-icon="inline-start" /> : null}
-				{create ? "Create account" : "Sign in"}
+				{create ? t("createAccount") : t("submit")}
 			</Button>
 		</form>
 	);

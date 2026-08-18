@@ -3,6 +3,7 @@
 import { signIn } from "@openvz/auth/client";
 import { Button } from "@openvz/ui/components/button";
 import { Spinner } from "@openvz/ui/components/spinner";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -12,6 +13,7 @@ export type SsoProvider = {
 };
 
 export function SsoSignIn({ providers }: { providers: SsoProvider[] }) {
+	const t = useTranslations("signIn");
 	const [pending, setPending] = useState<string | null>(null);
 
 	async function handleClick(providerId: string) {
@@ -26,7 +28,7 @@ export function SsoSignIn({ providers }: { providers: SsoProvider[] }) {
 		});
 
 		if (error) {
-			toast.error(error.message ?? "Could not reach the sign-in service.");
+			toast.error(error.message ?? t("unreachable"));
 			setPending(null);
 		}
 	}
@@ -45,7 +47,7 @@ export function SsoSignIn({ providers }: { providers: SsoProvider[] }) {
 					{pending === provider.providerId ? (
 						<Spinner data-icon="inline-start" />
 					) : null}
-					Continue with {provider.name}
+					{t("continueWith", { provider: provider.name })}
 				</Button>
 			))}
 		</>

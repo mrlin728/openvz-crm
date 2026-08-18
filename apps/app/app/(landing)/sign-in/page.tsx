@@ -1,6 +1,7 @@
 import type { MailboxProviderId } from "@openvz/auth/scopes";
 import type { Metadata } from "next";
 import { redirect, unstable_rethrow } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { AuthHeading, AuthShell } from "@/components/auth-shell";
 import { getSession } from "@/lib/session";
@@ -9,9 +10,10 @@ import { PasswordSignIn } from "./password-sign-in";
 import { SocialSignIn } from "./social-sign-in";
 import { type SsoProvider, SsoSignIn } from "./sso-sign-in";
 
-export const metadata: Metadata = {
-	title: "Sign in",
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations("signIn");
+	return { title: t("metaTitle") };
+}
 
 type SignInOptions = {
 	password: boolean;
@@ -36,14 +38,7 @@ async function signInOptions(): Promise<SignInOptions | null> {
 export default function SignInPage({ searchParams }: PageProps<"/sign-in">) {
 	return (
 		<AuthShell>
-			<Suspense
-				fallback={
-					<AuthHeading
-						title="Welcome back"
-						description="Sign in with your account to continue."
-					/>
-				}
-			>
+			<Suspense fallback={null}>
 				<SignIn searchParams={searchParams} />
 			</Suspense>
 		</AuthShell>
@@ -53,6 +48,8 @@ export default function SignInPage({ searchParams }: PageProps<"/sign-in">) {
 async function SignIn({
 	searchParams,
 }: Pick<PageProps<"/sign-in">, "searchParams">) {
+	const t = await getTranslations("signIn");
+
 	const [session, options, { method }] = await Promise.all([
 		getSession().catch((error: unknown) => {
 			unstable_rethrow(error);
@@ -89,15 +86,12 @@ async function SignIn({
 		return (
 			<>
 				<AuthHeading
-					title="No way in yet"
-					description="This CRM has no sign-in method configured, so nobody can get in — including you."
+					title={t("closedTitle")}
+					description={t("closedDescription")}
 				/>
 
 				<p className="text-center text-muted-foreground text-sm/5">
-					Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET — or MICROSOFT_CLIENT_ID
-					and MICROSOFT_CLIENT_SECRET — in the root .env file and restart. Your
-					own identity provider can be added from Settings once somebody is
-					signed in.
+					{t("closedHelp")}
 				</p>
 			</>
 		);
@@ -106,12 +100,8 @@ async function SignIn({
 	return (
 		<>
 			<AuthHeading
-				description={
-					firstRun
-						? "This copy is yours. The account you make here is the workspace owner."
-						: "Sign in with your account to continue."
-				}
-				title={firstRun ? "Set up your CRM" : "Welcome back"}
+				description={t(firstRun ? "firstRunDescription" : "welcomeDescription")}
+				title={t(firstRun ? "firstRunTitle" : "welcomeTitle")}
 			/>
 
 			{password ? <PasswordSignIn create={firstRun} /> : null}
