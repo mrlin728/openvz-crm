@@ -79,12 +79,19 @@ jobs:
           Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
           & "$env:OPENVZ_CRM_RUNTIME\postgres\bin\pg_ctl.exe" -D "$env:OPENVZ_CRM_HOME\postgres\data" -m fast stop
 
-      - name: Checksum
+      - name: Name it for a URL, then checksum it
         shell: pwsh
         run: |
           $out = "apps\desktop\src-tauri\target\release\bundle\nsis"
           $file = Get-ChildItem "$out\*.exe" | Select-Object -First 1
           if (-not $file) { throw "No installer was produced." }
+
+          $clean = $file.Name -replace "[ _]", "-"
+          if ($clean -ne $file.Name) {
+            Rename-Item $file.FullName $clean
+            $file = Get-Item (Join-Path $out $clean)
+          }
+
           $hash = (Get-FileHash $file.FullName -Algorithm SHA256).Hash.ToLower()
           "$hash  $($file.Name)" | Out-File -Encoding ascii "$($file.FullName).sha256"
           Write-Host "$hash  $($file.Name)"
