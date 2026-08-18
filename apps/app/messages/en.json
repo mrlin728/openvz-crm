@@ -181,5 +181,46 @@
 			"moved": "{count, plural, =1 {1 deal} other {# deals}} moved.",
 			"deleted": "{count, plural, =1 {1 deal} other {# deals}} deleted."
 		}
+	},
+	"crm": {
+		"company": {
+			"fallbackTitle": "Company",
+			"primary": "Primary",
+			"name": "Name",
+			"jobTitle": "Title",
+			"email": "Email",
+			"owner": "Owner",
+			"deal": "Deal",
+			"stage": "Stage",
+			"amount": "Amount",
+			"closeDate": "Close date",
+			"domain": "Domain",
+			"website": "Website",
+			"phone": "Phone",
+			"city": "City",
+			"country": "Country",
+			"unassigned": "Unassigned",
+			"tabOverview": "Overview",
+			"tabContacts": "Contacts",
+			"tabDeals": "Deals",
+			"tabActivity": "Activity",
+			"tabAgent": "Agent",
+			"openPipeline": "Open pipeline",
+			"openDeals": "Open deals",
+			"nextClose": "Next close",
+			"about": "About",
+			"details": "Details",
+			"links": "Links",
+			"noContacts": "No contacts yet",
+			"noContactsDescription": "Everyone you talk to at {name} lives here — add the first person and their calls, emails and notes hang off them.",
+			"noDeals": "No deals yet",
+			"noDealsDescription": "Nothing is being sold to {name} right now. Open one and it joins the pipeline and the forecast.",
+			"addContact": "Add contact",
+			"newDeal": "New deal",
+			"primaryContact": "Primary contact",
+			"makePrimary": "Make primary",
+			"deleteDeals": "{count, plural, =0 {Everything filed against the account goes too.} =1 {Its one deal and everything filed against the account go too.} other {All # of its deals and everything filed against the account go too.}}",
+			"deleteContacts": "{count, plural, =1 {The one person who works there stays in the CRM, without a company.} other {The # people who work there stay in the CRM, without a company.}}"
+		}
 	}
 }

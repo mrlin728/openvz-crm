@@ -181,5 +181,46 @@
 			"moved": "已移动 {count} 笔交易。",
 			"deleted": "已删除 {count} 笔交易。"
 		}
+	},
+	"crm": {
+		"company": {
+			"fallbackTitle": "公司",
+			"primary": "主要",
+			"name": "名称",
+			"jobTitle": "职位",
+			"email": "邮箱",
+			"owner": "负责人",
+			"deal": "交易",
+			"stage": "阶段",
+			"amount": "金额",
+			"closeDate": "预计成交日",
+			"domain": "域名",
+			"website": "网站",
+			"phone": "电话",
+			"city": "城市",
+			"country": "国家",
+			"unassigned": "未分配",
+			"tabOverview": "总览",
+			"tabContacts": "联系人",
+			"tabDeals": "交易",
+			"tabActivity": "动态",
+			"tabAgent": "智能体",
+			"openPipeline": "进行中金额",
+			"openDeals": "进行中的交易",
+			"nextClose": "最近成交日",
+			"about": "简介",
+			"details": "详细信息",
+			"links": "链接",
+			"noContacts": "还没有联系人",
+			"noContactsDescription": "你在 {name} 打交道的每个人都在这里 —— 先加第一个人，他的通话、邮件和备注都会挂在他名下。",
+			"noDeals": "还没有交易",
+			"noDealsDescription": "目前没有在向 {name} 卖任何东西。开一笔，它就会进入管道和预测。",
+			"addContact": "添加联系人",
+			"newDeal": "新建交易",
+			"primaryContact": "主要联系人",
+			"makePrimary": "设为主要",
+			"deleteDeals": "{count, plural, =0 {记在这家公司名下的一切也会一起删除。} other {它名下的 # 笔交易，以及记在这家公司名下的一切，都会一起删除。}}",
+			"deleteContacts": "在那里工作的 {count} 个人会留在 CRM 里，只是不再属于任何公司。"
+		}
 	}
 }
