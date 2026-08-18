@@ -16,6 +16,7 @@ import {
 import { Button } from "@openvz/ui/components/button";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useCrmCache } from "@/lib/trpc/cache";
@@ -28,6 +29,7 @@ export function SlackDisconnectButton({
 	canManage: boolean;
 	workspace: string | null;
 }) {
+	const t = useTranslations("settings.slack");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 	const router = useRouter();
@@ -37,7 +39,7 @@ export function SlackDisconnectButton({
 			onSuccess: async () => {
 				await cache.slack();
 				setConfirming(false);
-				toast.success("Slack disconnected.");
+				toast.success(t("disconnected"));
 				router.refresh();
 			},
 			onError: (error) => toast.error(error.message),
@@ -67,7 +69,7 @@ export function SlackDisconnectButton({
 				<AlertDialogContent>
 					<AlertDialogHeader>
 						<AlertDialogTitle>
-							Disconnect {workspace ?? "Slack"}?
+							{t("disconnectTitle", { workspace: workspace ?? "Slack" })}
 						</AlertDialogTitle>
 						<AlertDialogDescription>
 							Agents stop sending to Slack immediately, and the cached channel
@@ -87,7 +89,7 @@ export function SlackDisconnectButton({
 						>
 							<AsyncButtonContent
 								status={disconnectAction.status}
-								pendingLabel="Disconnecting…"
+								pendingLabel={t("disconnecting")}
 							>
 								Disconnect
 							</AsyncButtonContent>

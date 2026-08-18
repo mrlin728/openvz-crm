@@ -4,6 +4,7 @@ import { Button } from "@openvz/ui/components/button";
 import { Spinner } from "@openvz/ui/components/spinner";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { SLACK_CHANNELS } from "@/components/slack/use-slack-channels";
 import { useCrmCache } from "@/lib/trpc/cache";
@@ -29,6 +30,7 @@ export function SlackPeopleMatches({
 	slug: string;
 	initialMatches: { rows: MatchRow[]; sync: SlackSync };
 }) {
+	const t = useTranslations("settings.slack");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 	const matches = useQuery({
@@ -59,7 +61,7 @@ export function SlackPeopleMatches({
 					onClick={() => refresh.mutate()}
 				>
 					{refreshing ? <Spinner data-icon="inline-start" /> : null}
-					{refreshing ? "Refreshing…" : "Refresh from Slack"}
+					{t(refreshing ? "refreshing" : "refreshFromSlack")}
 				</Button>
 			</div>
 			{matches.data.sync === "stalled" ? (
@@ -106,7 +108,9 @@ export function SlackPeopleMatches({
 			</p>
 			<div className="flex justify-end">
 				<Button asChild>
-					<Link href={`/${slug}/settings/connections/slack`}>Continue</Link>
+					<Link href={`/${slug}/settings/connections/slack`}>
+						{t("continue")}
+					</Link>
 				</Button>
 			</div>
 		</div>

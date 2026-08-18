@@ -21,6 +21,7 @@ import {
 	InputGroupInput,
 } from "@openvz/ui/components/input-group";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useDeferredValue, useState } from "react";
 import { toast } from "sonner";
 import {
@@ -33,6 +34,7 @@ import { useTRPC } from "@/lib/trpc/client";
 const INVITE_COMMAND = "/invite @OPENVZ AI";
 
 export function SlackChannels() {
+	const t = useTranslations("settings.slack");
 	const trpc = useTRPC();
 	const [asking, setAsking] = useState<PickerChannel | null>(null);
 	const [query, setQuery] = useState("");
@@ -45,10 +47,10 @@ export function SlackChannels() {
 				setAsking(null);
 				toast.success(
 					result.alreadyJoined
-						? "OPENVZ AI is already in there."
+						? t("alreadyIn")
 						: result.queued
-							? "OPENVZ AI is joining."
-							: "Ask someone inside to invite OPENVZ AI.",
+							? t("joining")
+							: t("askInvite"),
 				);
 			},
 			onError: (error) => toast.error(error.message),
@@ -60,7 +62,7 @@ export function SlackChannels() {
 	const refresh = useMutation(
 		trpc.slack.refreshPeople.mutationOptions({
 			onSuccess: async () => {
-				toast.success("Reading the channel list from Slack.");
+				toast.success(t("reading"));
 				await channels.reload();
 			},
 			onError: (error) => toast.error(error.message),
@@ -86,7 +88,7 @@ export function SlackChannels() {
 					size="sm"
 					variant="outline"
 				>
-					{refreshing ? "Refreshing…" : "Refresh"}
+					{t(refreshing ? "refreshing" : "refresh")}
 				</Button>
 			</div>
 
@@ -103,7 +105,7 @@ export function SlackChannels() {
 					</InputGroupAddon>
 					<InputGroupInput
 						onChange={(event) => setQuery(event.target.value)}
-						placeholder="Search channels"
+						placeholder={t("searchChannels")}
 						value={query}
 					/>
 				</InputGroup>
@@ -115,10 +117,10 @@ export function SlackChannels() {
 				empty={
 					<p className="px-4 py-4 text-muted-foreground text-sm">
 						{channels.pending
-							? "Reading the channel list from Slack…"
+							? t("readingList")
 							: query
 								? `No channel matches “${query}”.`
-								: "No channels yet. OPENVZ AI reads the list from Slack after it connects."}
+								: t("noChannels")}
 					</p>
 				}
 				onAdd={(channel) => void joinAction.run(channel.id)}
@@ -133,7 +135,7 @@ export function SlackChannels() {
 					size="sm"
 					variant="outline"
 				>
-					{channels.fetchingMore ? "Loading…" : "Load more"}
+					{t(channels.fetchingMore ? "loading" : "loadMore")}
 				</Button>
 			) : null}
 
@@ -161,17 +163,18 @@ function AskDialog({
 	onConfirm: () => void;
 	status: "idle" | "pending" | "success" | "error";
 }) {
+	const t = useTranslations("settings.slack");
 	if (!channel) return null;
 
 	async function copyThenConfirm() {
 		try {
 			await navigator.clipboard.writeText(INVITE_COMMAND);
 		} catch {
-			toast.error("Copying failed. Copy the command above by hand.");
+			toast.error(t("copyFailed"));
 			return;
 		}
 
-		toast.success("Command copied.");
+		toast.success(t("copied"));
 		onConfirm();
 	}
 
@@ -182,7 +185,7 @@ function AskDialog({
 					<AlertDialogTitle>
 						{canInviteItself
 							? `Add OPENVZ AI to #${channel.name}?`
-							: "Ask someone to add OPENVZ AI"}
+							: t("askSomeone")}
 					</AlertDialogTitle>
 					<AlertDialogDescription>
 						{canInviteItself
