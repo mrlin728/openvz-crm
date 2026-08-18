@@ -11,12 +11,33 @@ function paths(tree: Tree, prefix = ""): string[] {
 	});
 }
 
+/**
+ * The argument names a message takes. Only the outermost braces name an
+ * argument — the ones inside a plural hold the words for each branch, and
+ * those differ by language on purpose.
+ */
 function placeholders(value: string): string[] {
-	const named = [...value.matchAll(/\{\s*(\w+)\s*[,}]/g)]
-		.map((match) => match[1] ?? "")
-		.filter((name) => !/^\d+$/.test(name));
+	const names: string[] = [];
+	let depth = 0;
 
-	return [...new Set(named)].sort();
+	for (let index = 0; index < value.length; index += 1) {
+		const character = value[index];
+
+		if (character === "}") {
+			depth = Math.max(0, depth - 1);
+			continue;
+		}
+
+		if (character !== "{") continue;
+
+		depth += 1;
+		if (depth !== 1) continue;
+
+		const name = /^\s*(\w+)\s*[,}]/.exec(value.slice(index + 1))?.[1];
+		if (name && !/^\d+$/.test(name)) names.push(name);
+	}
+
+	return [...new Set(names)].sort();
 }
 
 function flatten(tree: Tree, prefix = ""): Map<string, string> {
