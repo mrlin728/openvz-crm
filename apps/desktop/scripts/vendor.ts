@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 import { chmod, mkdir, rename, rm, symlink } from "node:fs/promises";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 
 const BUN_VERSION = "1.3.14";
 const POSTGRES_VERSION = "18.4.0-beta.17";
@@ -154,7 +154,7 @@ async function vendorPostgres(
 	await download(url, tarball);
 	await shell("tar", ["-xzf", tarball, "-C", staging]);
 
-	await mkdir(postgresRoot, { recursive: true });
+	await mkdir(dirname(postgresRoot), { recursive: true });
 	await rename(join(staging, "package", "native"), postgresRoot);
 	await rm(staging, { recursive: true, force: true });
 

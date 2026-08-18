@@ -101,6 +101,9 @@ person who installed it does not need to write a config file to get in.
   ignores the inner `BEGIN`, and the inner `COMMIT` then ends the outer one, so
   the wrapper commits nothing and warns again on the way out. `managesItsOwnTransaction`
   detects it and lets it run unwrapped.
+- **Do not create the directory you are about to rename onto.** POSIX replaces
+  an empty destination directory; Windows returns EPERM. `vendor.ts` creates the
+  parent and lets the rename make the directory itself.
 - **The macOS Postgres binaries are universal.** `lipo -thin` halves them, from
   144 MB to 74 MB.
 - **`express` has to stay external and be installed beside the bundle.**
