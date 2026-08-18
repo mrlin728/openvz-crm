@@ -7,8 +7,8 @@ import {
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 } from "@openvz/ui/components/dropdown-menu";
-import { formatCount } from "@openvz/ui/lib/format";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import {
@@ -20,10 +20,6 @@ import {
 import { useCrmCache } from "@/lib/trpc/cache";
 import { useTRPC } from "@/lib/trpc/client";
 
-function companies(count: number): string {
-	return formatCount(count, "company", "companies");
-}
-
 export function CompaniesBulkActions({
 	ids,
 	onDone,
@@ -31,6 +27,7 @@ export function CompaniesBulkActions({
 	ids: string[];
 	onDone: () => void;
 }) {
+	const t = useTranslations("companies.bulk");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 	const users = useQuery(trpc.users.list.queryOptions());
@@ -42,7 +39,7 @@ export function CompaniesBulkActions({
 		trpc.companies.bulkAssignOwner.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.company();
-				reportBulk(result, (count) => `${companies(count)} reassigned.`);
+				reportBulk(result, (count) => t("reassigned", { count }));
 				onDone();
 			},
 			onError,
@@ -53,10 +50,7 @@ export function CompaniesBulkActions({
 		trpc.companies.bulkEnrich.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.company();
-				reportBulk(
-					result,
-					(count) => `Looking up ${companies(count)} — the table will update.`,
-				);
+				reportBulk(result, (count) => t("enriching", { count }));
 				onDone();
 			},
 			onError,
@@ -67,7 +61,7 @@ export function CompaniesBulkActions({
 		trpc.companies.bulkDelete.mutationOptions({
 			onSuccess: async (result, variables) => {
 				await cache.removedMany({ kind: "company", ids: variables.ids });
-				reportBulk(result, (count) => `${companies(count)} deleted.`);
+				reportBulk(result, (count) => t("deleted", { count }));
 				setConfirming(false);
 				onDone();
 			},
@@ -82,7 +76,7 @@ export function CompaniesBulkActions({
 			<BulkActionsMenu pending={pending}>
 				<BulkOwnerMenu
 					users={users.data ?? []}
-					unassignedLabel="Nobody"
+					unassignedLabel={t("nobody")}
 					onSelect={(ownerId) => assignOwner.mutate({ ids, ownerId })}
 				/>
 				<DropdownMenuGroup>
@@ -98,7 +92,7 @@ export function CompaniesBulkActions({
 						onSelect={() => setConfirming(true)}
 					>
 						<TrashCan />
-						Delete
+						{t("delete")}
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 			</BulkActionsMenu>
@@ -106,8 +100,8 @@ export function CompaniesBulkActions({
 			<BulkDeleteDialog
 				open={confirming}
 				onOpenChange={setConfirming}
-				title={`Delete ${companies(ids.length)}?`}
-				description="Their contacts stay, with no company. Deals on these companies go with them, and none of it can be undone."
+				title={t("deleteTitle", { count: ids.length })}
+				description={t("deleteDescription")}
 				onConfirm={() => remove.mutate({ ids })}
 			/>
 		</>

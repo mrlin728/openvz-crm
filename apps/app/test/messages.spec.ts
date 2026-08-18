@@ -12,7 +12,11 @@ function paths(tree: Tree, prefix = ""): string[] {
 }
 
 function placeholders(value: string): string[] {
-	return [...value.matchAll(/\{(\w+)/g)].map((match) => match[1] ?? "").sort();
+	const named = [...value.matchAll(/\{\s*(\w+)\s*[,}]/g)]
+		.map((match) => match[1] ?? "")
+		.filter((name) => !/^\d+$/.test(name));
+
+	return [...new Set(named)].sort();
 }
 
 function flatten(tree: Tree, prefix = ""): Map<string, string> {

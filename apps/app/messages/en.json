@@ -64,6 +64,26 @@
 		"page": {
 			"title": "Companies",
 			"description": "Every account in the pipeline."
+		},
+		"create": {
+			"title": "New company",
+			"description": "Give it a name and a domain. The agent fills in the logo, description, industry, address and socials.",
+			"name": "Name",
+			"domain": "Domain",
+			"owner": "Owner",
+			"unassigned": "Unassigned",
+			"added": "{name} added.",
+			"submit": "Add company",
+			"cancel": "Cancel"
+		},
+		"bulk": {
+			"nobody": "Nobody",
+			"delete": "Delete",
+			"deleteTitle": "Delete {count, plural, =1 {1 company} other {# companies}}?",
+			"deleteDescription": "Their contacts stay, with no company. Deals on these companies go with them, and none of it can be undone.",
+			"reassigned": "{count, plural, =1 {1 company} other {# companies}} reassigned.",
+			"enriching": "Looking up {count, plural, =1 {1 company} other {# companies}} — the table will update.",
+			"deleted": "{count, plural, =1 {1 company} other {# companies}} deleted."
 		}
 	},
 	"contacts": {
@@ -82,6 +102,33 @@
 		"page": {
 			"title": "Contacts",
 			"description": "Everyone in the pipeline."
+		},
+		"create": {
+			"title": "New contact",
+			"description": "Email addresses are unique, so importing the same person twice updates them rather than duplicating them.",
+			"firstName": "First name",
+			"lastName": "Last name",
+			"email": "Email",
+			"jobTitle": "Title",
+			"company": "Company",
+			"owner": "Owner",
+			"noCompany": "No company",
+			"unassigned": "Unassigned",
+			"added": "{name} added.",
+			"submit": "Add contact",
+			"cancel": "Cancel"
+		},
+		"bulk": {
+			"nobody": "Nobody",
+			"delete": "Delete",
+			"moveToCompany": "Move to company",
+			"noCompany": "No company",
+			"deleteTitle": "Delete {count, plural, =1 {1 contact} other {# contacts}}?",
+			"deleteDescription": "Their email addresses are suppressed, so the inbox sync will not file them again. This cannot be undone.",
+			"reassigned": "{count, plural, =1 {1 contact} other {# contacts}} reassigned.",
+			"moved": "{count, plural, =1 {1 contact} other {# contacts}} moved.",
+			"enriching": "Looking up {count, plural, =1 {1 contact} other {# contacts}} — the table will update.",
+			"deleted": "{count, plural, =1 {1 contact} other {# contacts}} deleted."
 		}
 	},
 	"deals": {
@@ -102,6 +149,37 @@
 		"page": {
 			"title": "Deals",
 			"description": "The pipeline, and everything that has already closed."
+		},
+		"create": {
+			"title": "New deal",
+			"description": "Every deal belongs to a company and has someone's name against it.",
+			"name": "Name",
+			"company": "Company",
+			"owner": "Owner",
+			"chooseOwner": "Choose an owner",
+			"stage": "Stage",
+			"amount": "Amount",
+			"currency": "Currency",
+			"closeDate": "Expected close date",
+			"noDate": "No date yet",
+			"unassigned": "Unassigned",
+			"added": "{name} added.",
+			"submit": "Add deal",
+			"cancel": "Cancel"
+		},
+		"bulk": {
+			"delete": "Delete",
+			"changeStage": "Change stage",
+			"reason": "Reason",
+			"reasonPlaceholder": "Budget pulled for the quarter",
+			"reasonShared": "The same reason goes on every one of them, so keep it to what they have in common.",
+			"closeLost": "Close {count, plural, =1 {1 deal} other {# deals}} as lost",
+			"markUnqualified": "Mark {count, plural, =1 {1 deal} other {# deals}} as unqualified",
+			"deleteTitle": "Delete {count, plural, =1 {1 deal} other {# deals}}?",
+			"deleteDescription": "Everything filed against them — activity, notes, the amounts in your pipeline — goes too. This cannot be undone.",
+			"reassigned": "{count, plural, =1 {1 deal} other {# deals}} reassigned.",
+			"moved": "{count, plural, =1 {1 deal} other {# deals}} moved.",
+			"deleted": "{count, plural, =1 {1 deal} other {# deals}} deleted."
 		}
 	}
 }

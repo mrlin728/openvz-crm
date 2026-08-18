@@ -31,6 +31,7 @@ import {
 } from "@openvz/ui/components/sheet";
 import { Spinner } from "@openvz/ui/components/spinner";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { parseAsBoolean, useQueryState } from "nuqs";
 import { type ComponentProps, Suspense, useId, useState } from "react";
 import { toast } from "sonner";
@@ -60,6 +61,7 @@ export function CreateDealSheet({ companyId }: { companyId?: string }) {
 }
 
 function CreateDealForm({ companyId }: { companyId?: string }) {
+	const t = useTranslations("deals.create");
 	const openRecord = useOpenRecord();
 	const trpc = useTRPC();
 	const cache = useCrmCache();
@@ -92,7 +94,7 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 		trpc.deals.create.mutationOptions({
 			onSuccess: async (deal) => {
 				await cache.deal(deal.id);
-				toast.success(`${deal.name} added.`);
+				toast.success(t("added", { name: deal.name }));
 				await setOpen(null);
 				setName("");
 				setAmount("");
@@ -114,10 +116,8 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 			</SheetTrigger>
 			<SheetContent side="right">
 				<SheetHeader>
-					<SheetTitle>New deal</SheetTitle>
-					<SheetDescription>
-						Every deal belongs to a company and has someone's name against it.
-					</SheetDescription>
+					<SheetTitle>{t("title")}</SheetTitle>
+					<SheetDescription>{t("description")}</SheetDescription>
 				</SheetHeader>
 
 				<form
@@ -141,7 +141,7 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 				>
 					<FieldGroup>
 						<Field>
-							<FieldLabel htmlFor={nameId}>Name</FieldLabel>
+							<FieldLabel htmlFor={nameId}>{t("name")}</FieldLabel>
 							<Input
 								id={nameId}
 								value={name}
@@ -153,7 +153,9 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor="create-deal-company">Company</FieldLabel>
+							<FieldLabel htmlFor="create-deal-company">
+								{t("company")}
+							</FieldLabel>
 							<CompanyPicker
 								id="create-deal-company"
 								value={company}
@@ -162,10 +164,10 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor="create-deal-owner">Owner</FieldLabel>
+							<FieldLabel htmlFor="create-deal-owner">{t("owner")}</FieldLabel>
 							<Select value={resolvedOwner} onValueChange={setOwnerId}>
 								<SelectTrigger id="create-deal-owner">
-									<SelectValue placeholder="Choose an owner" />
+									<SelectValue placeholder={t("chooseOwner")} />
 								</SelectTrigger>
 								<SelectContent>
 									{(users.data ?? []).map((user) => (
@@ -178,7 +180,7 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor="create-deal-stage">Stage</FieldLabel>
+							<FieldLabel htmlFor="create-deal-stage">{t("stage")}</FieldLabel>
 							<Select value={stage} onValueChange={setStage}>
 								<SelectTrigger id="create-deal-stage">
 									<SelectValue />
@@ -198,7 +200,7 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor={amountId}>Amount</FieldLabel>
+							<FieldLabel htmlFor={amountId}>{t("amount")}</FieldLabel>
 							<div className="flex gap-2">
 								<Input
 									id={amountId}
@@ -210,7 +212,7 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 								/>
 								<Select value={resolvedCurrency} onValueChange={setCurrency}>
 									<SelectTrigger
-										aria-label="Currency"
+										aria-label={t("currency")}
 										className="w-28 shrink-0"
 									>
 										<SelectValue />
@@ -227,12 +229,12 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor={closeDateId}>Expected close date</FieldLabel>
+							<FieldLabel htmlFor={closeDateId}>{t("closeDate")}</FieldLabel>
 							<DatePicker
 								id={closeDateId}
 								value={closeDate}
 								onChange={setCloseDate}
-								placeholder="No date yet"
+								placeholder={t("noDate")}
 							/>
 						</Field>
 					</FieldGroup>
@@ -245,10 +247,10 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 						disabled={create.isPending || !ready}
 					>
 						{create.isPending ? <Spinner /> : null}
-						Add deal
+						{t("submit")}
 					</Button>
 					<SheetClose asChild>
-						<Button variant="outline">Cancel</Button>
+						<Button variant="outline">{t("cancel")}</Button>
 					</SheetClose>
 				</SheetFooter>
 			</SheetContent>

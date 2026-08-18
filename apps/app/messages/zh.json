@@ -64,6 +64,26 @@
 		"page": {
 			"title": "公司",
 			"description": "管道里的每一家客户。"
+		},
+		"create": {
+			"title": "新建公司",
+			"description": "填上名称和域名。智能体会补齐 logo、简介、行业、地址和社交主页。",
+			"name": "名称",
+			"domain": "域名",
+			"owner": "负责人",
+			"unassigned": "未分配",
+			"added": "已添加 {name}。",
+			"submit": "添加公司",
+			"cancel": "取消"
+		},
+		"bulk": {
+			"nobody": "不指派",
+			"delete": "删除",
+			"deleteTitle": "删除 {count} 家公司？",
+			"deleteDescription": "他们的联系人会保留，只是不再属于任何公司。这些公司名下的交易会一起删除，且无法撤销。",
+			"reassigned": "已重新指派 {count} 家公司。",
+			"enriching": "正在查 {count} 家公司 —— 表格会自动更新。",
+			"deleted": "已删除 {count} 家公司。"
 		}
 	},
 	"contacts": {
@@ -82,6 +102,33 @@
 		"page": {
 			"title": "联系人",
 			"description": "管道里的每一个人。"
+		},
+		"create": {
+			"title": "新建联系人",
+			"description": "邮箱地址是唯一的，所以重复导入同一个人只会更新他，不会建出第二条。",
+			"firstName": "名",
+			"lastName": "姓",
+			"email": "邮箱",
+			"jobTitle": "职位",
+			"company": "公司",
+			"owner": "负责人",
+			"noCompany": "无公司",
+			"unassigned": "未分配",
+			"added": "已添加 {name}。",
+			"submit": "添加联系人",
+			"cancel": "取消"
+		},
+		"bulk": {
+			"nobody": "不指派",
+			"delete": "删除",
+			"moveToCompany": "移动到公司",
+			"noCompany": "无公司",
+			"deleteTitle": "删除 {count} 个联系人？",
+			"deleteDescription": "他们的邮箱地址会被屏蔽，收件箱同步不会再把他们建回来。此操作无法撤销。",
+			"reassigned": "已重新指派 {count} 个联系人。",
+			"moved": "已移动 {count} 个联系人。",
+			"enriching": "正在查 {count} 个联系人 —— 表格会自动更新。",
+			"deleted": "已删除 {count} 个联系人。"
 		}
 	},
 	"deals": {
@@ -102,6 +149,37 @@
 		"page": {
 			"title": "交易",
 			"description": "管道，以及所有已经结束的交易。"
+		},
+		"create": {
+			"title": "新建交易",
+			"description": "每一笔交易都属于一家公司，并且记在某个人名下。",
+			"name": "名称",
+			"company": "公司",
+			"owner": "负责人",
+			"chooseOwner": "选择负责人",
+			"stage": "阶段",
+			"amount": "金额",
+			"currency": "币种",
+			"closeDate": "预计成交日",
+			"noDate": "还没有日期",
+			"unassigned": "未分配",
+			"added": "已添加 {name}。",
+			"submit": "添加交易",
+			"cancel": "取消"
+		},
+		"bulk": {
+			"delete": "删除",
+			"changeStage": "更改阶段",
+			"reason": "原因",
+			"reasonPlaceholder": "本季度预算被砍了",
+			"reasonShared": "同一个原因会写到每一笔上，所以只写它们共同的那部分。",
+			"closeLost": "把 {count} 笔交易标记为输单",
+			"markUnqualified": "把 {count} 笔交易标记为不合格",
+			"deleteTitle": "删除 {count} 笔交易？",
+			"deleteDescription": "记在它们名下的一切 —— 动态、备注、管道里的金额 —— 都会一起删除。此操作无法撤销。",
+			"reassigned": "已重新指派 {count} 笔交易。",
+			"moved": "已移动 {count} 笔交易。",
+			"deleted": "已删除 {count} 笔交易。"
 		}
 	}
 }
