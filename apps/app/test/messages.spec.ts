@@ -49,10 +49,15 @@ describe("the two catalogues", () => {
 	});
 
 	it("is actually translated", () => {
+		// Brand names are spelled the same in both languages. Every other
+		// identical string is a key somebody forgot.
+		const brands = new Set(["crm.contact.github"]);
+
 		const english = flatten(en as Tree);
 		const chinese = flatten(zh as Tree);
 
 		const untranslated = [...english]
+			.filter(([key]) => !brands.has(key))
 			.filter(([key, value]) => chinese.get(key) === value)
 			.filter(([, value]) => /[A-Za-z]{4}/.test(value))
 			.map(([key]) => key);
