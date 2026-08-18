@@ -21,6 +21,7 @@ import {
 } from "@openvz/ui/components/dropdown-menu";
 import { Icon } from "@openvz/ui/components/icon";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useCrmCache } from "@/lib/trpc/cache";
@@ -72,6 +73,7 @@ export function RecordActions({
 	name: string;
 	consequence: string;
 }) {
+	const t = useTranslations("crm.recordActions");
 	const [confirming, setConfirming] = useState(false);
 	const remove = useDeleteRecord(record);
 
@@ -81,7 +83,7 @@ export function RecordActions({
 				<DropdownMenuTrigger asChild>
 					<Button variant="ghost" size="icon-sm" disabled={remove.isPending}>
 						<Icon icon={OverflowMenuVertical} />
-						<span className="sr-only">More actions</span>
+						<span className="sr-only">{t("moreActions")}</span>
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end" className="min-w-44">
@@ -103,12 +105,12 @@ export function RecordActions({
 					</AlertDialogHeader>
 
 					<AlertDialogFooter>
-						<AlertDialogCancel>Cancel</AlertDialogCancel>
+						<AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
 						<AlertDialogAction
 							variant="destructive"
 							onClick={() => remove.mutate({ id: record.id })}
 						>
-							Delete
+							{t("delete")}
 						</AlertDialogAction>
 					</AlertDialogFooter>
 				</AlertDialogContent>

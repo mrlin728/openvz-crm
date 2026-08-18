@@ -50,6 +50,7 @@ import {
 import { Spinner } from "@openvz/ui/components/spinner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEveAgent } from "eve/react";
+import { useTranslations } from "next-intl";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { AgentClarificationComposer } from "@/components/agent-clarification-composer";
 import {
@@ -150,6 +151,7 @@ function ThreadWithHistory({
 	conversation: Conversation | null;
 	onNewThread: () => void;
 }) {
+	const t = useTranslations("crm.agentPanel");
 	const trpc = useTRPC();
 
 	const thread = useQuery<ThreadState>({
@@ -206,6 +208,7 @@ function Thread({
 	thread: ThreadState | undefined;
 	onNewThread: () => void;
 }) {
+	const t = useTranslations("crm.agentPanel");
 	const copy = recordCopy(record.kind);
 	const agent = useEveAgent({
 		headers: recordHeader(record),
@@ -279,10 +282,10 @@ function Thread({
 			{ended ? (
 				<div className="flex flex-col items-start gap-3 border-t px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-2">
 					<p className="text-pretty text-muted-foreground text-xs">
-						This conversation has ended.
+						{t("ended")}
 					</p>
 					<Button variant="outline" size="sm" onClick={onNewThread}>
-						Start a new conversation
+						{t("startNew")}
 					</Button>
 				</div>
 			) : null}

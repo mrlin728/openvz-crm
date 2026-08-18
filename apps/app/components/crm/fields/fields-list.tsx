@@ -34,6 +34,7 @@ import {
 } from "@openvz/ui/components/sortable-list";
 import { Spinner } from "@openvz/ui/components/spinner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useCrmCache } from "@/lib/trpc/cache";
 import { useTRPC } from "@/lib/trpc/client";
@@ -105,6 +106,7 @@ function DisclosureRow({
 	note: string;
 	children: React.ReactNode;
 }) {
+	const t = useTranslations("crm.fields");
 	return (
 		<Collapsible>
 			<CollapsibleTrigger asChild>
@@ -136,6 +138,7 @@ export function FieldsList({
 	onEdit: (key: string) => void;
 	onNew: () => void;
 }) {
+	const t = useTranslations("crm.fields");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 	const queryClient = useQueryClient();
@@ -299,13 +302,13 @@ export function FieldsList({
 												</DropdownMenuTrigger>
 												<DropdownMenuContent align="end">
 													<DropdownMenuItem onSelect={() => onEdit(field.key)}>
-														Edit
+														{t("edit")}
 													</DropdownMenuItem>
 													<DropdownMenuSeparator />
 													<DropdownMenuItem
 														onSelect={() => archive.mutate({ id: field.id })}
 													>
-														Archive
+														{t("archive")}
 													</DropdownMenuItem>
 												</DropdownMenuContent>
 											</DropdownMenu>
@@ -334,7 +337,7 @@ export function FieldsList({
 												size="xs"
 												onClick={() => restore.mutate({ id: field.id })}
 											>
-												Restore
+												{t("restore")}
 											</Button>
 										</li>
 									))}

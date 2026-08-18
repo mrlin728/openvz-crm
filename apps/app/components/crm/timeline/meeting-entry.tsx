@@ -2,6 +2,7 @@
 
 import { AttendeeList } from "@openvz/ui/components/attendee-list";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import {
 	LocalDateTime,
 	LocalDateTimeRange,
@@ -35,6 +36,7 @@ export function MeetingEntry({
 	attendeeCount: number;
 	conferenceUrl: string | null;
 }) {
+	const t = useTranslations("crm.timeline");
 	const trpc = useTRPC();
 
 	const event = useQuery({
@@ -69,7 +71,7 @@ export function MeetingEntry({
 					rel="noreferrer"
 					className="text-muted-foreground text-xs underline underline-offset-3 hover:text-foreground"
 				>
-					Join call
+					{t("joinCall")}
 				</a>
 			) : null}
 		</div>

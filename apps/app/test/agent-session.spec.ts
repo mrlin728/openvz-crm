@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import type { MessageStreamEvent, SessionState } from "eve/client";
 import { recordCopy, recordFilter, recordHeader } from "../lib/agent-record";
 import { classify, composerState, eventsOf } from "../lib/agent-session";
+import en from "../messages/en.json";
 
 const NOW = Date.parse("2026-08-01T12:00:00.000Z");
 
@@ -156,8 +157,9 @@ describe("the panel", () => {
 	});
 
 	it("offers a way out of a thread that has ended", () => {
-		expect(source()).toContain("Start a new conversation");
+		expect(source()).toContain('t("startNew")');
 		expect(source()).toContain("onClick={onNewThread}");
+		expect(en.crm.agentPanel.startNew).toBe("Start a new conversation");
 	});
 });
 

@@ -24,6 +24,7 @@ import {
 	DropdownMenuTrigger,
 } from "@openvz/ui/components/dropdown-menu";
 import { Spinner } from "@openvz/ui/components/spinner";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 
@@ -66,6 +67,7 @@ export function BulkActionsMenu({
 	onOpenChange?: (open: boolean) => void;
 	children: ReactNode;
 }) {
+	const t = useTranslations("crm.bulkActions");
 	return (
 		<DropdownMenu open={open} onOpenChange={onOpenChange}>
 			<DropdownMenuTrigger asChild>
@@ -91,9 +93,10 @@ export function BulkOwnerMenu({
 	onSelect: (ownerId: string | null) => void;
 	unassignedLabel?: string;
 }) {
+	const t = useTranslations("crm.bulkActions");
 	return (
 		<DropdownMenuSub>
-			<DropdownMenuSubTrigger>Assign owner</DropdownMenuSubTrigger>
+			<DropdownMenuSubTrigger>{t("assignOwner")}</DropdownMenuSubTrigger>
 			<DropdownMenuSubContent className="max-h-72 overflow-y-auto">
 				<DropdownMenuGroup>
 					{unassignedLabel && (
@@ -102,7 +105,7 @@ export function BulkOwnerMenu({
 						</DropdownMenuItem>
 					)}
 					{users.length === 0 ? (
-						<DropdownMenuLabel>Nobody else works here yet.</DropdownMenuLabel>
+						<DropdownMenuLabel>{t("nobodyElse")}</DropdownMenuLabel>
 					) : (
 						users.map((user) => (
 							<DropdownMenuItem
@@ -132,6 +135,7 @@ export function BulkDeleteDialog({
 	description: string;
 	onConfirm: () => void;
 }) {
+	const t = useTranslations("crm.bulkActions");
 	return (
 		<AlertDialog open={open} onOpenChange={onOpenChange}>
 			<AlertDialogContent>
@@ -141,7 +145,7 @@ export function BulkDeleteDialog({
 				</AlertDialogHeader>
 
 				<AlertDialogFooter>
-					<AlertDialogCancel>Cancel</AlertDialogCancel>
+					<AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
 					<AlertDialogAction variant="destructive" onClick={onConfirm}>
 						Delete
 					</AlertDialogAction>

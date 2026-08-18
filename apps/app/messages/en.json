@@ -651,6 +651,59 @@
 			"newConversation": "New conversation",
 			"deleteConversation": "Delete this conversation",
 			"deleted": "Conversation deleted."
+		},
+		"quickAdd": {
+			"cancel": "Cancel",
+			"firstName": "First name",
+			"lastName": "Last name",
+			"email": "Email",
+			"jobTitle": "Title",
+			"titlePlaceholder": "Head of Security",
+			"person": "Person",
+			"role": "Role",
+			"rolePlaceholder": "Champion",
+			"name": "Name",
+			"amount": "Amount",
+			"expectedClose": "Expected close",
+			"noDate": "No date yet",
+			"noOwner": "Could not work out who should own this deal.",
+			"amountMustBeNumber": "Amount has to be a number."
+		},
+		"stageChange": {
+			"reason": "Reason",
+			"cancel": "Cancel",
+			"reasonPlaceholder": "Went with an incumbent vendor",
+			"dealClosed": "Deal closed.",
+			"stageUpdated": "Stage updated."
+		},
+		"recordActions": {
+			"moreActions": "More actions",
+			"cancel": "Cancel",
+			"delete": "Delete",
+			"couldNotLoad": "This record could not be loaded"
+		},
+		"bulkActions": {
+			"assignOwner": "Assign owner",
+			"nobodyElse": "Nobody else works here yet.",
+			"cancel": "Cancel",
+			"delete": "Delete"
+		},
+		"agentPanel": {
+			"stillWorking": "Still working on the last question. Your next one can go in when it finishes.",
+			"ended": "This conversation has ended.",
+			"startNew": "Start a new conversation",
+			"followUp": "Follow-up"
+		},
+		"fields": {
+			"edit": "Edit",
+			"archive": "Archive",
+			"restore": "Restore",
+			"fields": "Fields"
+		},
+		"timeline": {
+			"outstanding": "Outstanding",
+			"joinCall": "Join call",
+			"whatHappened": "What happened"
 		}
 	},
 	"overview": {

@@ -23,6 +23,7 @@ import { Icon } from "@openvz/ui/components/icon";
 import { Spinner } from "@openvz/ui/components/spinner";
 import { Textarea } from "@openvz/ui/components/textarea";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { parseAsString, useQueryStates } from "nuqs";
 import { useId, useState } from "react";
 import { toast } from "sonner";
@@ -60,6 +61,7 @@ export function DealStageMenu({
 	stage: DealStage;
 	variant?: "inline" | "control";
 }) {
+	const t = useTranslations("crm.stageChange");
 	const [, setCloseParams] = useQueryStates(closeReasonParams);
 	const setStage = useStageMutation();
 
@@ -119,6 +121,7 @@ export function DealStageMenu({
 }
 
 export function CloseReasonDialog() {
+	const t = useTranslations("crm.stageChange");
 	const reasonId = useId();
 	const [{ closing, closingStage }, setCloseParams] =
 		useQueryStates(closeReasonParams);
@@ -130,7 +133,7 @@ export function CloseReasonDialog() {
 	};
 
 	const setStage = useStageMutation(() => {
-		toast.success("Deal closed.");
+		toast.success(t("dealClosed"));
 		close();
 	});
 
@@ -161,12 +164,12 @@ export function CloseReasonDialog() {
 					}}
 				>
 					<Field>
-						<FieldLabel htmlFor={reasonId}>Reason</FieldLabel>
+						<FieldLabel htmlFor={reasonId}>{t("reason")}</FieldLabel>
 						<Textarea
 							id={reasonId}
 							value={reason}
 							onChange={(event) => setReason(event.target.value)}
-							placeholder="Went with an incumbent vendor"
+							placeholder={t("reasonPlaceholder")}
 							rows={3}
 						/>
 					</Field>
@@ -182,7 +185,7 @@ export function CloseReasonDialog() {
 						Save
 					</Button>
 					<Button variant="outline" onClick={close}>
-						Cancel
+						{t("cancel")}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

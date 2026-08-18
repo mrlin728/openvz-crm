@@ -8,6 +8,7 @@ import { SimpleTableRow } from "@openvz/ui/components/simple-table";
 import { Spinner } from "@openvz/ui/components/spinner";
 import { TableCell } from "@openvz/ui/components/table";
 import { formatMoney } from "@openvz/ui/lib/format";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import {
 	DetailSheetHeader,
@@ -41,6 +42,7 @@ export function RecordSheetFrame({
 	tab: string;
 	onTabChange: (tab: string) => void;
 }) {
+	const t = useTranslations("crm.recordActions");
 	const { stack, close, closeAll } = useRecordStack();
 
 	return (
@@ -61,7 +63,7 @@ export function RecordSheetFrame({
 				</div>
 			) : error ? (
 				<div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-1 p-6 text-center">
-					<p className="font-medium text-sm">This record could not be loaded</p>
+					<p className="font-medium text-sm">{t("couldNotLoad")}</p>
 					<p className="text-muted-foreground text-xs">{error}</p>
 				</div>
 			) : (
