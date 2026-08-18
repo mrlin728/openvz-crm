@@ -118,9 +118,20 @@ person who installed it does not need to write a config file to get in.
   ignores the inner `BEGIN`, and the inner `COMMIT` then ends the outer one, so
   the wrapper commits nothing and warns again on the way out. `managesItsOwnTransaction`
   detects it and lets it run unwrapped.
-- **The standalone build is copied with `dereference` on Windows.** Next traces
-  the workspace packages in as symlinks, and creating a symlink on Windows needs
-  elevation, so a plain recursive copy is EPERM. macOS keeps the links.
+- **The trace writes packages that are only a `package.json`.** Around thirty of
+  them — `react`, `pg`, `react-dom` and the rest — get a manifest and no code, and
+  the interface dies on the first one it imports. It fails the same way under
+  Node, so it is the trace and not the runtime. `fillStubs` in `scripts/payload.ts`
+  replaces each one from the workspace's own `node_modules` after the copy.
+- **The trace misses `@swc/helpers`.** Next's compiled output reaches it through
+  paths the tracer cannot follow, so the standalone tree got the package.json and
+  none of the code — and the interface died on its first import with
+  `Cannot find module '@swc/helpers/_/_interop_require_default'`. The desktop
+  branch of `next.config.ts` forces it in with `outputFileTracingIncludes`.
+- **The standalone build is copied with `dereference` everywhere.** Windows
+  cannot create a symlink without elevation, and `fs.cp` rewrites a relative link
+  into an absolute one when it recreates it — which is how a payload ends up
+  pointing at the tree it was built from. Copying the contents avoids both.
 - **The trace also contains links that lead nowhere.** Bun's isolated layout
   leaves symlinks into `node_modules/.bun` that Next did not trace a target for,
   and following one is another EPERM. The copy filters out anything that does not

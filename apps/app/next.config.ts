@@ -26,6 +26,9 @@ const nextConfig: NextConfig = {
 		? {
 				output: "standalone" as const,
 				outputFileTracingRoot: join(import.meta.dirname, "../.."),
+				outputFileTracingIncludes: {
+					"**/*": ["../../node_modules/@swc/helpers/**"],
+				},
 			}
 		: {}),
 

@@ -1,6 +1,7 @@
 import {
 	cp,
 	mkdir,
+	readdir,
 	readFile,
 	readlink,
 	realpath,
@@ -35,7 +36,7 @@ async function leadsSomewhere(source: string): Promise<boolean> {
 
 const COPY = {
 	recursive: true,
-	dereference: process.platform === "win32",
+	dereference: true,
 	filter: leadsSomewhere,
 } as const;
 
@@ -163,6 +164,60 @@ async function buildApp(repoRoot: string, payload: string): Promise<void> {
 		join(destination, "apps", "app", "public"),
 		COPY,
 	);
+
+	const filled = await fillStubs(payload, repoRoot);
+	console.log(`filled ${filled} traced packages that had only a package.json`);
+}
+
+async function packageDirectories(modules: string): Promise<string[]> {
+	const found: string[] = [];
+
+	for (const entry of await readdir(modules, { withFileTypes: true }).catch(
+		() => [],
+	)) {
+		if (!entry.isDirectory()) continue;
+		if (entry.name === ".bin" || entry.name === ".bun") continue;
+
+		if (entry.name.startsWith("@")) {
+			const scope = join(modules, entry.name);
+			for (const inner of await readdir(scope, { withFileTypes: true }).catch(
+				() => [],
+			)) {
+				if (inner.isDirectory()) found.push(join(entry.name, inner.name));
+			}
+			continue;
+		}
+
+		found.push(entry.name);
+	}
+
+	return found;
+}
+
+async function isStub(directory: string): Promise<boolean> {
+	const entries: string[] = await readdir(directory).catch(() => []);
+	return entries.length <= 1 && entries.includes("package.json");
+}
+
+async function fillStubs(payload: string, repoRoot: string): Promise<number> {
+	const traced = join(payload, "server", "app", "node_modules");
+	const real = join(repoRoot, "node_modules");
+
+	let filled = 0;
+
+	for (const name of await packageDirectories(traced)) {
+		const destination = join(traced, name);
+		if (!(await isStub(destination))) continue;
+
+		const source = join(real, name);
+		if (!(await stat(source).catch(() => null))) continue;
+
+		await rm(destination, { recursive: true, force: true });
+		await cp(source, destination, COPY);
+		filled += 1;
+	}
+
+	return filled;
 }
 
 async function buildSupervisor(
