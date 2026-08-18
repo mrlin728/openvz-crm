@@ -36,5 +36,72 @@
 		"settings": "Settings",
 		"primary": "Primary",
 		"close": "Close navigation"
+	},
+	"header": {
+		"openNavigation": "Open navigation",
+		"homepage": "Homepage",
+		"accountMenu": "Account menu",
+		"signOut": "Sign out",
+		"signOutFailed": "Could not sign out.",
+		"lightMode": "Light mode",
+		"darkMode": "Dark mode"
+	},
+	"companies": {
+		"columns": {
+			"name": "Company",
+			"domain": "Domain",
+			"industry": "Industry",
+			"owner": "Owner",
+			"contacts": "Contacts",
+			"openDeals": "Open deals",
+			"created": "Created",
+			"createdDate": "Created date",
+			"lastActivity": "Last activity",
+			"enrichment": "Enrichment",
+			"enrichmentStatus": "Enrichment status",
+			"unassigned": "Unassigned"
+		},
+		"page": {
+			"title": "Companies",
+			"description": "Every account in the pipeline."
+		}
+	},
+	"contacts": {
+		"columns": {
+			"name": "Name",
+			"title": "Title",
+			"email": "Email",
+			"company": "Company",
+			"owner": "Owner",
+			"created": "Created",
+			"createdDate": "Created date",
+			"lastActivity": "Last activity",
+			"unassigned": "Unassigned",
+			"noCompany": "No company"
+		},
+		"page": {
+			"title": "Contacts",
+			"description": "Everyone in the pipeline."
+		}
+	},
+	"deals": {
+		"columns": {
+			"name": "Deal",
+			"company": "Company",
+			"stage": "Stage",
+			"amount": "Amount",
+			"owner": "Owner",
+			"closeDate": "Close date",
+			"created": "Created",
+			"createdDate": "Created date",
+			"lastActivity": "Last activity",
+			"closing": "Closing",
+			"open": "Open",
+			"closed": "Closed"
+		},
+		"page": {
+			"title": "Deals",
+			"description": "The pipeline, and everything that has already closed."
+		}
 	}
 }

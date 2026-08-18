@@ -12,6 +12,7 @@ import {
 } from "@openvz/ui/components/entity-logo";
 import { useTableSelection } from "@openvz/ui/hooks/use-table-selection";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { EnrichmentIndicator } from "@/components/crm/enrichment-status";
 import { useFieldColumns } from "@/components/crm/fields/field-columns";
@@ -33,10 +34,12 @@ import { companiesSearchParams } from "./companies-search-params";
 
 type CompanyRow = RouterOutputs["companies"]["list"]["rows"][number];
 
-const COLUMNS: DataTableColumn<CompanyRow>[] = [
+type Translate = ReturnType<typeof useTranslations<"companies.columns">>;
+
+const columnsFor = (t: Translate): DataTableColumn<CompanyRow>[] => [
 	{
 		id: "name",
-		header: "Company",
+		header: t("name"),
 		sortable: true,
 		hideable: false,
 		width: "w-[26%]",
@@ -55,7 +58,7 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "domain",
-		header: "Domain",
+		header: t("domain"),
 		sortable: true,
 		width: "w-[16%]",
 		hideBelow: "md",
@@ -68,7 +71,7 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "industry",
-		header: "Industry",
+		header: t("industry"),
 		sortable: true,
 		width: "w-[16%]",
 		hideBelow: "lg",
@@ -81,7 +84,7 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "owner",
-		header: "Owner",
+		header: t("owner"),
 		sortable: true,
 		width: "w-[16%]",
 		hideBelow: "md",
@@ -89,7 +92,7 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "contacts",
-		header: "Contacts",
+		header: t("contacts"),
 		sortable: true,
 		align: "right",
 		width: "w-[9%]",
@@ -98,7 +101,7 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "deals",
-		header: "Open deals",
+		header: t("openDeals"),
 		sortable: true,
 		align: "right",
 		width: "w-[9%]",
@@ -106,8 +109,8 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "createdAt",
-		header: "Created",
-		label: "Created date",
+		header: t("created"),
+		label: t("createdDate"),
 		sortable: true,
 		align: "right",
 		width: "w-[10%]",
@@ -120,7 +123,7 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "lastActivity",
-		header: "Last activity",
+		header: t("lastActivity"),
 		sortable: true,
 		align: "right",
 		width: "w-[12%]",
@@ -137,8 +140,8 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 	},
 	{
 		id: "enrichment",
-		header: "Enrichment",
-		label: "Enrichment status",
+		header: t("enrichment"),
+		label: t("enrichmentStatus"),
 		defaultHidden: true,
 		width: "w-[14%]",
 		cell: (row) => (
@@ -148,6 +151,7 @@ const COLUMNS: DataTableColumn<CompanyRow>[] = [
 ];
 
 export function CompaniesTable() {
+	const t = useTranslations("companies.columns");
 	const openRecord = useOpenRecord();
 	const trpc = useTRPC();
 	const prefetchRecord = usePrefetchRecord();
@@ -175,9 +179,9 @@ export function CompaniesTable() {
 	const facets: DataTableFacet[] = [
 		{
 			id: "owner",
-			label: "Owner",
+			label: t("owner"),
 			options: [
-				{ value: "unassigned", label: "Unassigned" },
+				{ value: "unassigned", label: t("unassigned") },
 				...(users.data ?? []).map((user) => ({
 					value: user.id,
 					label: user.name,
@@ -186,14 +190,14 @@ export function CompaniesTable() {
 		},
 		{
 			id: "industry",
-			label: "Industry",
+			label: t("industry"),
 			options: Object.keys(facetCounts?.industry ?? {})
 				.sort()
 				.map((value) => ({ value, label: value })),
 		},
 		{
 			id: "enrichment",
-			label: "Enrichment",
+			label: t("enrichment"),
 			options: ENRICHMENT_FACET_OPTIONS.filter(
 				(option) => (facetCounts?.enrichment?.[option.value] ?? 0) > 0,
 			),
@@ -201,7 +205,10 @@ export function CompaniesTable() {
 	];
 
 	const fieldColumns = useFieldColumns<CompanyRow>("COMPANY");
-	const columns = useMemo(() => [...COLUMNS, ...fieldColumns], [fieldColumns]);
+	const columns = useMemo(
+		() => [...columnsFor(t), ...fieldColumns],
+		[fieldColumns, t],
+	);
 
 	return (
 		<DataTable

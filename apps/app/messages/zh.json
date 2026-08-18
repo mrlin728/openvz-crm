@@ -36,5 +36,72 @@
 		"settings": "设置",
 		"primary": "主导航",
 		"close": "关闭导航"
+	},
+	"header": {
+		"openNavigation": "打开导航",
+		"homepage": "首页",
+		"accountMenu": "账号菜单",
+		"signOut": "退出登录",
+		"signOutFailed": "无法退出登录。",
+		"lightMode": "浅色模式",
+		"darkMode": "深色模式"
+	},
+	"companies": {
+		"columns": {
+			"name": "公司",
+			"domain": "域名",
+			"industry": "行业",
+			"owner": "负责人",
+			"contacts": "联系人",
+			"openDeals": "进行中的交易",
+			"created": "创建时间",
+			"createdDate": "创建日期",
+			"lastActivity": "最近动态",
+			"enrichment": "资料补全",
+			"enrichmentStatus": "资料补全状态",
+			"unassigned": "未分配"
+		},
+		"page": {
+			"title": "公司",
+			"description": "管道里的每一家客户。"
+		}
+	},
+	"contacts": {
+		"columns": {
+			"name": "姓名",
+			"title": "职位",
+			"email": "邮箱",
+			"company": "公司",
+			"owner": "负责人",
+			"created": "创建时间",
+			"createdDate": "创建日期",
+			"lastActivity": "最近动态",
+			"unassigned": "未分配",
+			"noCompany": "无公司"
+		},
+		"page": {
+			"title": "联系人",
+			"description": "管道里的每一个人。"
+		}
+	},
+	"deals": {
+		"columns": {
+			"name": "交易",
+			"company": "公司",
+			"stage": "阶段",
+			"amount": "金额",
+			"owner": "负责人",
+			"closeDate": "预计成交日",
+			"created": "创建时间",
+			"createdDate": "创建日期",
+			"lastActivity": "最近动态",
+			"closing": "成交情况",
+			"open": "进行中",
+			"closed": "已结束"
+		},
+		"page": {
+			"title": "交易",
+			"description": "管道，以及所有已经结束的交易。"
+		}
 	}
 }

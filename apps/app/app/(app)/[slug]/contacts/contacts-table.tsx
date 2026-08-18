@@ -10,6 +10,7 @@ import { PersonAvatar } from "@openvz/ui/components/person-avatar";
 import { useSearchInput } from "@openvz/ui/hooks/use-search-input";
 import { useTableSelection } from "@openvz/ui/hooks/use-table-selection";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { CompanyCell } from "@/components/crm/company-cell";
 import { contactName } from "@/components/crm/contact-name";
@@ -27,10 +28,12 @@ import { contactsSearchParams } from "./contacts-search-params";
 
 type ContactRow = RouterOutputs["contacts"]["list"]["rows"][number];
 
-const COLUMNS: DataTableColumn<ContactRow>[] = [
+type Translate = ReturnType<typeof useTranslations<"contacts.columns">>;
+
+const columnsFor = (t: Translate): DataTableColumn<ContactRow>[] => [
 	{
 		id: "name",
-		header: "Name",
+		header: t("name"),
 		sortable: true,
 		hideable: false,
 		width: "w-[22%]",
@@ -48,7 +51,7 @@ const COLUMNS: DataTableColumn<ContactRow>[] = [
 	},
 	{
 		id: "title",
-		header: "Title",
+		header: t("title"),
 		sortable: true,
 		width: "w-[20%]",
 		hideBelow: "lg",
@@ -61,7 +64,7 @@ const COLUMNS: DataTableColumn<ContactRow>[] = [
 	},
 	{
 		id: "email",
-		header: "Email",
+		header: t("email"),
 		sortable: true,
 		width: "w-[24%]",
 		hideBelow: "md",
@@ -74,14 +77,14 @@ const COLUMNS: DataTableColumn<ContactRow>[] = [
 	},
 	{
 		id: "company",
-		header: "Company",
+		header: t("company"),
 		sortable: true,
 		width: "w-[18%]",
 		cell: (row) => <CompanyCell company={row.company} />,
 	},
 	{
 		id: "owner",
-		header: "Owner",
+		header: t("owner"),
 		sortable: true,
 		width: "w-[16%]",
 		hideBelow: "md",
@@ -89,8 +92,8 @@ const COLUMNS: DataTableColumn<ContactRow>[] = [
 	},
 	{
 		id: "createdAt",
-		header: "Created",
-		label: "Created date",
+		header: t("created"),
+		label: t("createdDate"),
 		sortable: true,
 		align: "right",
 		width: "w-[10%]",
@@ -103,7 +106,7 @@ const COLUMNS: DataTableColumn<ContactRow>[] = [
 	},
 	{
 		id: "lastActivity",
-		header: "Last activity",
+		header: t("lastActivity"),
 		sortable: true,
 		align: "right",
 		width: "w-[12%]",
@@ -121,6 +124,7 @@ const COLUMNS: DataTableColumn<ContactRow>[] = [
 ];
 
 export function ContactsTable() {
+	const t = useTranslations("contacts.columns");
 	const openRecord = useOpenRecord();
 	const trpc = useTRPC();
 	const prefetchRecord = usePrefetchRecord();
@@ -152,9 +156,9 @@ export function ContactsTable() {
 	const facets: DataTableFacet[] = [
 		{
 			id: "owner",
-			label: "Owner",
+			label: t("owner"),
 			options: [
-				{ value: "unassigned", label: "Unassigned" },
+				{ value: "unassigned", label: t("unassigned") },
 				...(users.data ?? []).map((user) => ({
 					value: user.id,
 					label: user.name,
@@ -163,7 +167,7 @@ export function ContactsTable() {
 		},
 		{
 			id: "company",
-			label: "Company",
+			label: t("company"),
 			searchable: true,
 			search: companyText,
 			onSearchChange: setCompanyText,
@@ -172,7 +176,7 @@ export function ContactsTable() {
 			options: [
 				...(companyQuery.trim()
 					? []
-					: [{ value: "none", label: "No company" }]),
+					: [{ value: "none", label: t("noCompany") }]),
 				...(companies.data ?? []).map((company) => ({
 					value: company.id,
 					label: company.name,
@@ -182,7 +186,10 @@ export function ContactsTable() {
 	];
 
 	const fieldColumns = useFieldColumns<ContactRow>("CONTACT");
-	const columns = useMemo(() => [...COLUMNS, ...fieldColumns], [fieldColumns]);
+	const columns = useMemo(
+		() => [...columnsFor(t), ...fieldColumns],
+		[fieldColumns, t],
+	);
 
 	return (
 		<DataTable

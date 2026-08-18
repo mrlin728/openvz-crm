@@ -9,6 +9,7 @@ import { EmptyCellValue } from "@openvz/ui/components/empty-cell";
 import { useTableSelection } from "@openvz/ui/hooks/use-table-selection";
 import { formatMoney } from "@openvz/ui/lib/format";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { CLOSING_OPTIONS } from "@/components/crm/closing-window";
 import { CompanyCell } from "@/components/crm/company-cell";
@@ -28,10 +29,12 @@ import { dealsSearchParams } from "./deals-search-params";
 
 type DealRow = RouterOutputs["deals"]["list"]["rows"][number];
 
-const COLUMNS: DataTableColumn<DealRow>[] = [
+type Translate = ReturnType<typeof useTranslations<"deals.columns">>;
+
+const columnsFor = (t: Translate): DataTableColumn<DealRow>[] => [
 	{
 		id: "name",
-		header: "Deal",
+		header: t("name"),
 		sortable: true,
 		hideable: false,
 		width: "w-[24%]",
@@ -39,21 +42,21 @@ const COLUMNS: DataTableColumn<DealRow>[] = [
 	},
 	{
 		id: "company",
-		header: "Company",
+		header: t("company"),
 		sortable: true,
 		width: "w-[18%]",
 		cell: (row) => <CompanyCell company={row.company} />,
 	},
 	{
 		id: "stage",
-		header: "Stage",
+		header: t("stage"),
 		sortable: true,
 		width: "w-[18%]",
 		cell: (row) => <DealStageMenu dealId={row.id} stage={row.stage} />,
 	},
 	{
 		id: "amount",
-		header: "Amount",
+		header: t("amount"),
 		sortable: true,
 		align: "right",
 		width: "w-[12%]",
@@ -69,7 +72,7 @@ const COLUMNS: DataTableColumn<DealRow>[] = [
 	},
 	{
 		id: "owner",
-		header: "Owner",
+		header: t("owner"),
 		sortable: true,
 		width: "w-[14%]",
 		hideBelow: "md",
@@ -77,7 +80,7 @@ const COLUMNS: DataTableColumn<DealRow>[] = [
 	},
 	{
 		id: "expectedCloseDate",
-		header: "Close date",
+		header: t("closeDate"),
 		sortable: true,
 		width: "w-[12%]",
 		hideBelow: "lg",
@@ -92,8 +95,8 @@ const COLUMNS: DataTableColumn<DealRow>[] = [
 	},
 	{
 		id: "createdAt",
-		header: "Created",
-		label: "Created date",
+		header: t("created"),
+		label: t("createdDate"),
 		sortable: true,
 		align: "right",
 		width: "w-[10%]",
@@ -106,7 +109,7 @@ const COLUMNS: DataTableColumn<DealRow>[] = [
 	},
 	{
 		id: "lastActivity",
-		header: "Last activity",
+		header: t("lastActivity"),
 		sortable: true,
 		align: "right",
 		width: "w-[12%]",
@@ -124,6 +127,7 @@ const COLUMNS: DataTableColumn<DealRow>[] = [
 ];
 
 export function DealsTable() {
+	const t = useTranslations("deals.columns");
 	const openRecord = useOpenRecord();
 	const trpc = useTRPC();
 	const prefetchRecord = usePrefetchRecord();
@@ -145,7 +149,7 @@ export function DealsTable() {
 	const facets: DataTableFacet[] = [
 		{
 			id: "owner",
-			label: "Owner",
+			label: t("owner"),
 			options: (users.data ?? []).flatMap((user) =>
 				(facetCounts?.owner?.[user.id] ?? 0) > 0
 					? [{ value: user.id, label: user.name }]
@@ -154,14 +158,14 @@ export function DealsTable() {
 		},
 		{
 			id: "stage",
-			label: "Stage",
+			label: t("stage"),
 			options: DEAL_STAGE_OPTIONS.filter(
 				(option) => (facetCounts?.stage?.[option.value] ?? 0) > 0,
 			),
 		},
 		{
 			id: "closing",
-			label: "Closing",
+			label: t("closing"),
 			options: CLOSING_OPTIONS.flatMap((option) =>
 				(facetCounts?.closing?.[option.value] ?? 0) > 0
 					? [{ value: option.value, label: option.label }]
@@ -177,7 +181,10 @@ export function DealsTable() {
 	const openPipelineCents = openValueCents ?? (uncounted > 0 ? 0 : null);
 
 	const fieldColumns = useFieldColumns<DealRow>("DEAL");
-	const columns = useMemo(() => [...COLUMNS, ...fieldColumns], [fieldColumns]);
+	const columns = useMemo(
+		() => [...columnsFor(t), ...fieldColumns],
+		[fieldColumns, t],
+	);
 
 	return (
 		<DataTable
@@ -192,8 +199,8 @@ export function DealsTable() {
 				id: "status",
 				allLabel: "All deals",
 				options: [
-					{ value: "open", label: "Open" },
-					{ value: "closed", label: "Closed" },
+					{ value: "open", label: t("open") },
+					{ value: "closed", label: t("closed") },
 				],
 			}}
 			selection={{

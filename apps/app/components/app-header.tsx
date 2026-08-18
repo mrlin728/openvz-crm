@@ -24,6 +24,7 @@ import { Separator } from "@openvz/ui/components/separator";
 import { Skeleton } from "@openvz/ui/components/skeleton";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
 import { useMobileNav } from "@/components/mobile-nav";
@@ -35,6 +36,7 @@ import { workspaceLabel } from "@/lib/workspace-label";
 type User = { name: string; email: string; image: string | null };
 
 export function AppHeader({ user }: { user: User }) {
+	const t = useTranslations("header");
 	const { setOpen: setMobileNavOpen } = useMobileNav();
 	const trpc = useTRPC();
 	const workspaceUrl = useWorkspaceUrl();
@@ -48,14 +50,14 @@ export function AppHeader({ user }: { user: User }) {
 					variant="ghost"
 					size="icon"
 					className="md:hidden"
-					aria-label="Open navigation"
+					aria-label={t("openNavigation")}
 					onClick={() => setMobileNavOpen(true)}
 				>
 					<Menu />
 				</Button>
 				<Link
 					href={workspaceUrl()}
-					aria-label="Homepage"
+					aria-label={t("homepage")}
 					className="hidden size-8 items-center justify-center text-foreground md:flex"
 				>
 					<Logo className="size-5" />
@@ -68,9 +70,7 @@ export function AppHeader({ user }: { user: User }) {
 				<UserMenu
 					user={user}
 					onSignOut={() => {
-						signOutAndRedirect().catch(() =>
-							toast.error("Could not sign out."),
-						);
+						signOutAndRedirect().catch(() => toast.error(t("signOutFailed")));
 					}}
 				/>
 			</div>
@@ -105,6 +105,7 @@ export function AppHeaderFallback() {
 }
 
 function UserMenu({ user, onSignOut }: { user: User; onSignOut: () => void }) {
+	const t = useTranslations("header");
 	const { resolvedTheme, setTheme } = useTheme();
 	const isDark = resolvedTheme === "dark";
 
@@ -114,7 +115,7 @@ function UserMenu({ user, onSignOut }: { user: User; onSignOut: () => void }) {
 				<Button
 					variant="ghost"
 					size="icon"
-					aria-label="Account menu"
+					aria-label={t("accountMenu")}
 					className="hover:bg-transparent aria-expanded:bg-transparent dark:hover:bg-transparent"
 				>
 					<Avatar className="size-7">
@@ -138,12 +139,12 @@ function UserMenu({ user, onSignOut }: { user: User; onSignOut: () => void }) {
 					}}
 				>
 					{isDark ? <Light /> : <Asleep />}
-					{isDark ? "Light mode" : "Dark mode"}
+					{t(isDark ? "lightMode" : "darkMode")}
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem onClick={onSignOut}>
 					<Logout />
-					Sign out
+					{t("signOut")}
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
