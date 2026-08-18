@@ -39,6 +39,7 @@ import { StatusIndicator } from "@openvz/ui/components/status-indicator";
 import { Switch } from "@openvz/ui/components/switch";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { LocalRelativeTime } from "@/components/local-date-time";
@@ -48,12 +49,12 @@ import { useTRPC } from "@/lib/trpc/client";
 
 const SOURCES = {
 	calendar: {
-		label: "Meetings",
-		autoCreate: "Add the company and contact when you meet someone new",
+		labelKey: "meetings",
+		autoCreateKey: "autoCreateMeeting",
 	},
 	gmail: {
-		label: "Email",
-		autoCreate: "Add the company and contact when you reply to someone new",
+		labelKey: "email",
+		autoCreateKey: "autoCreateEmail",
 	},
 } as const;
 
@@ -105,13 +106,19 @@ function failureSignature(
 }
 
 function GoogleUnavailable() {
+	const t = useTranslations("settings.google");
+
 	return (
 		<Card>
 			<CardHeader>
 				<CardTitle>
 					<div className="flex items-center gap-2">
 						Google
-						<StatusIndicator size="sm" tone="neutral" label="Not configured" />
+						<StatusIndicator
+							size="sm"
+							tone="neutral"
+							label={t("notConfigured")}
+						/>
 					</div>
 				</CardTitle>
 				<CardDescription>
@@ -123,9 +130,8 @@ function GoogleUnavailable() {
 	);
 }
 
-const CONNECT_ERRORS: Record<string, string> = {
-	"email_doesn't_match":
-		"That Google account has a different email address to the one you sign in with, so it cannot be attached to your account. Connect the Google account that matches your sign-in address.",
+const CONNECT_ERROR_KEYS: Record<string, string> = {
+	"email_doesn't_match": "wrongAccount",
 };
 
 function ConnectGoogle({
@@ -135,11 +141,12 @@ function ConnectGoogle({
 	slug: string;
 	connectError?: string;
 }) {
+	const t = useTranslations("settings.google");
 	const [pending, setPending] = useState(false);
 
 	function fail(message?: string) {
 		setPending(false);
-		toast.error(message ?? "Could not reach Google.");
+		toast.error(message ?? t("unreachable"));
 	}
 
 	async function handleConnect() {
@@ -163,13 +170,14 @@ function ConnectGoogle({
 				<CardTitle>
 					<div className="flex items-center gap-2">
 						Google
-						<StatusIndicator size="sm" tone="neutral" label="Not connected" />
+						<StatusIndicator
+							size="sm"
+							tone="neutral"
+							label={t("notConnected")}
+						/>
 					</div>
 				</CardTitle>
-				<CardDescription>
-					Read-only Gmail and Calendar. Only conversations with companies in the
-					CRM are stored.
-				</CardDescription>
+				<CardDescription>{t("description")}</CardDescription>
 
 				<CardAction>
 					<Button
@@ -194,10 +202,11 @@ function ConnectGoogle({
 				<CardContent>
 					<Alert variant="destructive">
 						<Icon icon={Warning} />
-						<AlertTitle>Google did not finish connecting</AlertTitle>
+						<AlertTitle>{t("didNotFinish")}</AlertTitle>
 						<AlertDescription>
-							{CONNECT_ERRORS[connectError] ??
-								"Google returned an error before the connection was made. Try again."}
+							{connectError && CONNECT_ERROR_KEYS[connectError]
+								? t(CONNECT_ERROR_KEYS[connectError])
+								: t("returnedError")}
 						</AlertDescription>
 					</Alert>
 				</CardContent>
@@ -213,6 +222,7 @@ export function GoogleConnection({
 	slug: string;
 	connectError?: string;
 }) {
+	const t = useTranslations("settings.google");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 	const queryClient = useQueryClient();
@@ -229,7 +239,7 @@ export function GoogleConnection({
 		trpc.google.purgeSyncedData.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.google();
-				toast.success(`Removed ${result.purged} synced items.`);
+				toast.success(t("purged", { count: result.purged }));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -299,7 +309,7 @@ export function GoogleConnection({
 						<StatusIndicator
 							size="sm"
 							tone={healthy ? "success" : "warning"}
-							label={healthy ? "Connected" : "Needs attention"}
+							label={t(healthy ? "connected" : "needsAttention")}
 						/>
 					</div>
 				</CardTitle>
@@ -315,7 +325,7 @@ export function GoogleConnection({
 						disabled={syncNow.isPending}
 						onClick={() => syncNow.mutate()}
 					>
-						{syncNow.isPending ? "Checking…" : "Check now"}
+						{t(syncNow.isPending ? "checking" : "checkNow")}
 					</Button>
 				</CardAction>
 			</CardHeader>
@@ -324,13 +334,13 @@ export function GoogleConnection({
 				{!hasRefreshToken ? (
 					<Alert variant="destructive" attention={insistence}>
 						<Icon icon={Warning} />
-						<AlertTitle>Google did not return a refresh token</AlertTitle>
-						<AlertDescription>Sign out and back in.</AlertDescription>
+						<AlertTitle>{t("noRefreshToken")}</AlertTitle>
+						<AlertDescription>{t("signOutAndIn")}</AlertDescription>
 					</Alert>
 				) : failing.length > 0 ? (
 					failing.map((source) => {
 						const { summary, url } = explain(
-							source.lastError ?? "Google needs reconnecting.",
+							source.lastError ?? t("needsReconnect"),
 						);
 
 						return (
@@ -341,7 +351,9 @@ export function GoogleConnection({
 							>
 								<Icon icon={Warning} />
 								<AlertTitle>
-									{SOURCES[source.source].label} sync failed
+									{t("syncFailed", {
+										source: t(SOURCES[source.source].labelKey),
+									})}
 								</AlertTitle>
 								<AlertDescription>{summary}</AlertDescription>
 
@@ -365,7 +377,7 @@ export function GoogleConnection({
 								Last checked <LocalRelativeTime date={lastSyncedAt} />
 							</>
 						) : (
-							"Waiting for the first check"
+							t("waitingFirstCheck")
 						)}
 					</p>
 				)}
@@ -382,9 +394,9 @@ export function GoogleConnection({
 								htmlFor={`auto-create-${source.source}`}
 								className="flex flex-col items-start gap-1"
 							>
-								<span className="text-sm">{copy.label}</span>
+								<span className="text-sm">{t(copy.labelKey)}</span>
 								<span className="font-normal text-muted-foreground text-xs">
-									{copy.autoCreate}
+									{t(copy.autoCreateKey)}
 								</span>
 							</Label>
 
@@ -405,22 +417,20 @@ export function GoogleConnection({
 						<AlertDialog>
 							<AlertDialogTrigger asChild>
 								<Button variant="ghost" size="xs" disabled={purge.isPending}>
-									Delete synced data
+									{t("deleteSynced")}
 								</Button>
 							</AlertDialogTrigger>
 
 							<AlertDialogContent>
 								<AlertDialogHeader>
-									<AlertDialogTitle>Delete synced data?</AlertDialogTitle>
+									<AlertDialogTitle>{t("deleteSyncedTitle")}</AlertDialogTitle>
 									<AlertDialogDescription>
-										Every email and meeting brought in from Google is removed
-										from the CRM. The next check starts from now, so nothing
-										deleted here comes back.
+										{t("deleteSyncedDescription")}
 									</AlertDialogDescription>
 								</AlertDialogHeader>
 
 								<AlertDialogFooter>
-									<AlertDialogCancel>Cancel</AlertDialogCancel>
+									<AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
 									<AlertDialogAction
 										variant="destructive"
 										onClick={() => purge.mutate()}
@@ -434,22 +444,20 @@ export function GoogleConnection({
 						<AlertDialog>
 							<AlertDialogTrigger asChild>
 								<Button variant="ghost" size="xs" disabled={revoke.isPending}>
-									Revoke Google access
+									{t("revoke")}
 								</Button>
 							</AlertDialogTrigger>
 
 							<AlertDialogContent>
 								<AlertDialogHeader>
-									<AlertDialogTitle>Revoke Google access?</AlertDialogTitle>
+									<AlertDialogTitle>{t("revokeTitle")}</AlertDialogTitle>
 									<AlertDialogDescription>
-										{required
-											? "You will be signed out, and you cannot use the CRM again until you grant access."
-											: "New email and meetings stop arriving. Everything already synced stays, and you can connect Google again from this page."}
+										{required ? t("revokeRequired") : t("revokeOptional")}
 									</AlertDialogDescription>
 								</AlertDialogHeader>
 
 								<AlertDialogFooter>
-									<AlertDialogCancel>Cancel</AlertDialogCancel>
+									<AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
 									<AlertDialogAction
 										variant="destructive"
 										onClick={() => revoke.mutate()}
