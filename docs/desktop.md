@@ -122,7 +122,10 @@ person who installed it does not need to write a config file to get in.
   them — `react`, `pg`, `react-dom` and the rest — get a manifest and no code, and
   the interface dies on the first one it imports. It fails the same way under
   Node, so it is the trace and not the runtime. `fillStubs` in `scripts/payload.ts`
-  replaces each one from the workspace's own `node_modules` after the copy.
+  replaces each one from the workspace's own `node_modules` after the copy, and
+  `completeClosure` then walks the dependencies of what it put back — those
+  packages bring their own, which the trace never carried either. That is how
+  the interface came to die on `postgres-interval` reaching for `xtend`.
 - **The trace misses `@swc/helpers`.** Next's compiled output reaches it through
   paths the tracer cannot follow, so the standalone tree got the package.json and
   none of the code — and the interface died on its first import with
