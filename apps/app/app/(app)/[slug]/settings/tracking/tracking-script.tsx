@@ -33,12 +33,14 @@ import { Label } from "@openvz/ui/components/label";
 import { StatusIndicator } from "@openvz/ui/components/status-indicator";
 import { Switch } from "@openvz/ui/components/switch";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useCrmCache } from "@/lib/trpc/cache";
 import { useTRPC } from "@/lib/trpc/client";
 
 export function TrackingScript() {
+	const t = useTranslations("settings.tracking");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 	const tracking = useQuery(trpc.tracking.settings.queryOptions());
@@ -48,11 +50,7 @@ export function TrackingScript() {
 		trpc.tracking.setFlag.mutationOptions({
 			onSuccess: async (_result, input) => {
 				await cache.tracking();
-				toast.success(
-					input.enabled
-						? "Tracking paused. The script stops recording within five minutes."
-						: "Tracking resumed.",
-				);
+				toast.success(input.enabled ? t("paused") : t("resumed"));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -62,7 +60,7 @@ export function TrackingScript() {
 		trpc.tracking.rotateSiteId.mutationOptions({
 			onSuccess: async () => {
 				await cache.tracking();
-				toast.success("Site ID rotated. Paste the new tag on your website.");
+				toast.success(t("rotated"));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -84,14 +82,14 @@ export function TrackingScript() {
 		const clipboard = navigator.clipboard;
 
 		if (!value || !clipboard) {
-			toast.error("Could not copy the script. Select it instead.");
+			toast.error(t("copyFailedSelect"));
 			return;
 		}
 
 		clipboard
 			.writeText(value)
-			.then(() => toast.success("Script copied."))
-			.catch(() => toast.error("Could not copy the script."));
+			.then(() => toast.success(t("copied")))
+			.catch(() => toast.error(t("copyFailed")));
 	};
 
 	return (
@@ -105,17 +103,15 @@ export function TrackingScript() {
 							tone={paused ? "warning" : receivingSince ? "success" : "neutral"}
 							label={
 								paused
-									? "Paused"
+									? t("statusPaused")
 									: receivingSince
-										? "Receiving page views"
-										: "No page views yet"
+										? t("receiving")
+										: t("noViews")
 							}
 						/>
 					</div>
 				</CardTitle>
-				<CardDescription>
-					One tag, 4 KB, in the head of every page you measure.
-				</CardDescription>
+				<CardDescription>{t("scriptDescription")}</CardDescription>
 
 				<CardAction>
 					<Button

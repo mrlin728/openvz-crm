@@ -33,6 +33,7 @@ import {
 import { Spinner } from "@openvz/ui/components/spinner";
 import { TableCell } from "@openvz/ui/components/table";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { toast } from "sonner";
 import { LocalRelativeTime } from "@/components/local-date-time";
@@ -41,20 +42,23 @@ import { useTRPC } from "@/lib/trpc/client";
 
 const CELL = "px-3 py-2.5 align-middle";
 
-const COLUMNS: SimpleTableColumn[] = [
-	{ id: "domain", header: "Domain" },
-	{ id: "scope", header: "Scope", width: "w-40" },
-	{ id: "pageViews", header: "Page views", width: "w-28", align: "right" },
-	{ id: "lastSeen", header: "Last seen", width: "w-28", align: "right" },
-	{ id: "actions", srLabel: "Actions", width: "w-24" },
+type Translate = ReturnType<typeof useTranslations<"settings.tracking">>;
+
+const columnsFor = (t: Translate): SimpleTableColumn[] => [
+	{ id: "domain", header: t("domain") },
+	{ id: "scope", header: t("scope"), width: "w-40" },
+	{ id: "pageViews", header: t("pageViews"), width: "w-28", align: "right" },
+	{ id: "lastSeen", header: t("lastSeen"), width: "w-28", align: "right" },
+	{ id: "actions", srLabel: t("actions"), width: "w-24" },
 ];
 
 const SCOPES = {
-	SITE_AND_SUBDOMAINS: "Site + subdomains",
-	EXACT_HOST: "Exact host",
+	SITE_AND_SUBDOMAINS: "siteAndSubdomains",
+	EXACT_HOST: "exactHost",
 } as const;
 
 export function AllowedDomains() {
+	const t = useTranslations("settings.tracking");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 
@@ -64,7 +68,7 @@ export function AllowedDomains() {
 		trpc.tracking.removeDomain.mutationOptions({
 			onSuccess: async () => {
 				await cache.tracking();
-				toast.success("Domain removed.");
+				toast.success(t("domainRemoved"));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -77,10 +81,8 @@ export function AllowedDomains() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Allowed domains</CardTitle>
-				<CardDescription>
-					The script records page views on these hosts only.
-				</CardDescription>
+				<CardTitle>{t("allowedDomains")}</CardTitle>
+				<CardDescription>{t("allowedDomainsDescription")}</CardDescription>
 
 				<CardAction>
 					<AddDomain disabled={!canManage} />
@@ -92,7 +94,7 @@ export function AllowedDomains() {
 					Add the domain your website runs on to get your tracking script.
 				</CardTableEmpty>
 			) : (
-				<SimpleTable columns={COLUMNS}>
+				<SimpleTable columns={columnsFor(t)}>
 					{domains.map((domain) => (
 						<SimpleTableRow key={domain.id}>
 							<TableCell className={CELL}>
@@ -132,6 +134,7 @@ export function AllowedDomains() {
 }
 
 function AddDomain({ disabled }: { disabled: boolean }) {
+	const t = useTranslations("settings.tracking");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 
@@ -150,7 +153,7 @@ function AddDomain({ disabled }: { disabled: boolean }) {
 				await cache.tracking();
 				setOpen(false);
 				setHost("");
-				toast.success("Domain added.");
+				toast.success(t("domainAdded"));
 			},
 			onError: (error) => toast.error(error.message),
 		}),

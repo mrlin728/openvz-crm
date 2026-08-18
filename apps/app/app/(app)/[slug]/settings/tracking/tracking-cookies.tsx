@@ -22,6 +22,7 @@ import {
 } from "@openvz/ui/components/select";
 import { Switch } from "@openvz/ui/components/switch";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useId } from "react";
 import { toast } from "sonner";
 import { useCrmCache } from "@/lib/trpc/cache";
@@ -30,22 +31,23 @@ import { useTRPC } from "@/lib/trpc/client";
 const TOGGLES = [
 	{
 		flag: "cookieSubdomains",
-		label: "Limit cookies to subdomains",
-		hint: "Set the cookie on the exact host that served the page, never on the parent domain",
+		labelKey: "limitCookies",
+		hintKey: "limitCookiesHint",
 	},
 	{
 		flag: "secureCookies",
-		label: "Use secure cookies only",
-		hint: "Send the cookie over HTTPS and drop it on plain HTTP",
+		labelKey: "secureCookies",
+		hintKey: "secureCookiesHint",
 	},
 	{
 		flag: "honourDnt",
-		label: "Honour Do Not Track",
-		hint: "Record nothing at all when the browser asks not to be tracked",
+		labelKey: "doNotTrack",
+		hintKey: "doNotTrackHint",
 	},
 ] as const;
 
 export function TrackingCookies() {
+	const t = useTranslations("settings.tracking");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 	const lifetimeId = useId();
@@ -63,7 +65,7 @@ export function TrackingCookies() {
 		trpc.tracking.setCookieLifetime.mutationOptions({
 			onSuccess: async () => {
 				await cache.tracking();
-				toast.success("Cookie lifetime saved.");
+				toast.success(t("cookieLifetimeSaved"));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -77,10 +79,8 @@ export function TrackingCookies() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Cookies</CardTitle>
-				<CardDescription>
-					How a returning visitor is recognised.
-				</CardDescription>
+				<CardTitle>{t("cookies")}</CardTitle>
+				<CardDescription>{t("cookiesDescription")}</CardDescription>
 			</CardHeader>
 
 			<CardContent>
@@ -93,9 +93,9 @@ export function TrackingCookies() {
 							htmlFor={`tracking-${toggle.flag}`}
 							className="flex flex-col items-start gap-1"
 						>
-							<span className="text-sm">{toggle.label}</span>
+							<span className="text-sm">{t(toggle.labelKey)}</span>
 							<span className="font-normal text-muted-foreground text-xs">
-								{toggle.hint}
+								{t(toggle.hintKey)}
 							</span>
 						</Label>
 

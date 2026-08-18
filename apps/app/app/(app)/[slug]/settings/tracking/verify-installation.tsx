@@ -31,6 +31,7 @@ import {
 import { Spinner } from "@openvz/ui/components/spinner";
 import { StatusIndicator } from "@openvz/ui/components/status-indicator";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { toast } from "sonner";
 import { useTRPC } from "@/lib/trpc/client";
@@ -39,6 +40,7 @@ import type { RouterOutputs } from "@/lib/trpc/types";
 type Result = RouterOutputs["tracking"]["verify"];
 
 export function VerifyInstallation() {
+	const t = useTranslations("settings.tracking");
 	const trpc = useTRPC();
 	const urlId = useId();
 
@@ -67,10 +69,7 @@ export function VerifyInstallation() {
 						{result ? <Indicator result={result} /> : null}
 					</div>
 				</CardTitle>
-				<CardDescription>
-					We load one page and look for the script, then read your Tag Manager
-					container if it is not in the HTML.
-				</CardDescription>
+				<CardDescription>{t("verifyDescription")}</CardDescription>
 
 				<CardAction>
 					<Button
@@ -130,19 +129,16 @@ export function VerifyInstallation() {
 }
 
 function Indicator({ result }: { result: Result }) {
+	const t = useTranslations("settings.tracking");
 	if (result.status === "found" && result.pageView) {
 		return (
-			<StatusIndicator size="sm" tone="success" label="Verified just now" />
+			<StatusIndicator size="sm" tone="success" label={t("verifiedNow")} />
 		);
 	}
 
 	if (result.status === "found" && result.container?.carriesSiteId === false) {
 		return (
-			<StatusIndicator
-				size="sm"
-				tone="warning"
-				label="Tag Manager needs a fix"
-			/>
+			<StatusIndicator size="sm" tone="warning" label={t("tagManagerFix")} />
 		);
 	}
 
@@ -150,7 +146,7 @@ function Indicator({ result }: { result: Result }) {
 		<StatusIndicator
 			size="sm"
 			tone="warning"
-			label={result.status === "found" ? "No page view yet" : "Not detected"}
+			label={t(result.status === "found" ? "noViewYet" : "notDetected")}
 		/>
 	);
 }
