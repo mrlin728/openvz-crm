@@ -167,6 +167,12 @@ async function buildApp(repoRoot: string, payload: string): Promise<void> {
 
 	const filled = await fillStubs(payload, repoRoot);
 	console.log(`filled ${filled} traced packages that had only a package.json`);
+
+	const added = await completeClosure(
+		join(payload, "server", "app", "node_modules"),
+		join(repoRoot, "node_modules"),
+	);
+	console.log(`added ${added} packages the trace never carried`);
 }
 
 async function packageDirectories(modules: string): Promise<string[]> {
@@ -197,6 +203,57 @@ async function packageDirectories(modules: string): Promise<string[]> {
 async function isStub(directory: string): Promise<boolean> {
 	const entries: string[] = await readdir(directory).catch(() => []);
 	return entries.length <= 1 && entries.includes("package.json");
+}
+
+async function dependenciesOf(manifest: string): Promise<string[]> {
+	const parsed: unknown = await readFile(manifest, "utf8")
+		.then((text) => JSON.parse(text))
+		.catch(() => null);
+
+	if (typeof parsed !== "object" || parsed === null) return [];
+
+	const record = parsed as Record<string, unknown>;
+	const named = record.dependencies;
+
+	return typeof named === "object" && named !== null ? Object.keys(named) : [];
+}
+
+/**
+ * A package the trace left out is not the end of it: the ones we put back
+ * bring dependencies of their own that the trace never saw either. Walk the
+ * closure until nothing new is missing.
+ */
+async function completeClosure(traced: string, real: string): Promise<number> {
+	const queue = await packageDirectories(traced);
+	const seen = new Set(queue);
+	let copied = 0;
+
+	while (queue.length > 0) {
+		const name = queue.shift();
+		if (name === undefined) continue;
+
+		for (const dependency of await dependenciesOf(
+			join(traced, name, "package.json"),
+		)) {
+			if (seen.has(dependency)) continue;
+			seen.add(dependency);
+
+			const destination = join(traced, dependency);
+			if (await stat(destination).catch(() => null)) {
+				queue.push(dependency);
+				continue;
+			}
+
+			const source = join(real, dependency);
+			if (!(await stat(source).catch(() => null))) continue;
+
+			await cp(source, destination, COPY);
+			copied += 1;
+			queue.push(dependency);
+		}
+	}
+
+	return copied;
 }
 
 async function fillStubs(payload: string, repoRoot: string): Promise<number> {
