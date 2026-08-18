@@ -43,10 +43,7 @@ export function TrafficSources() {
 			</CardHeader>
 
 			{sources.data.length === 0 ? (
-				<CardTableEmpty>
-					No sources yet. They appear once the script records its first page
-					view.
-				</CardTableEmpty>
+				<CardTableEmpty>{t("noSources")}</CardTableEmpty>
 			) : (
 				<SimpleTable columns={columnsFor(t)}>
 					{sources.data.map((row) => (

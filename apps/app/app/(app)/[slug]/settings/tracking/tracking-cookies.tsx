@@ -111,7 +111,7 @@ export function TrackingCookies() {
 				))}
 
 				<Field>
-					<FieldLabel htmlFor={lifetimeId}>Cookie lifetime</FieldLabel>
+					<FieldLabel htmlFor={lifetimeId}>{t("cookieLifetime")}</FieldLabel>
 					<Select
 						value={String(cookieDays)}
 						disabled={busy}
@@ -130,10 +130,7 @@ export function TrackingCookies() {
 							))}
 						</SelectContent>
 					</Select>
-					<FieldDescription>
-						After this a returning visitor counts as somebody new. Shorten it if
-						your policy asks you to.
-					</FieldDescription>
+					<FieldDescription>{t("cookieLifetimeHint")}</FieldDescription>
 				</Field>
 			</CardContent>
 		</Card>

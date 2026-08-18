@@ -94,7 +94,7 @@ export function VerifyInstallation() {
 					}}
 				>
 					<Field>
-						<FieldLabel htmlFor={urlId}>Page to check</FieldLabel>
+						<FieldLabel htmlFor={urlId}>{t("pageToCheck")}</FieldLabel>
 						<InputGroup>
 							<InputGroupAddon>
 								<InputGroupText>https://</InputGroupText>
@@ -115,10 +115,7 @@ export function VerifyInstallation() {
 								disabled={!canManage || verify.isPending}
 							/>
 						</InputGroup>
-						<FieldDescription>
-							The page has to be public. A page behind a login always fails this
-							check.
-						</FieldDescription>
+						<FieldDescription>{t("mustBePublic")}</FieldDescription>
 					</Field>
 				</form>
 
@@ -152,6 +149,7 @@ function Indicator({ result }: { result: Result }) {
 }
 
 function Outcome({ result, siteId }: { result: Result; siteId: string }) {
+	const t = useTranslations("settings.tracking");
 	if (result.status === "unreachable") {
 		return (
 			<Alert variant="destructive">
@@ -186,12 +184,9 @@ function Outcome({ result, siteId }: { result: Result; siteId: string }) {
 		return (
 			<Alert variant="destructive">
 				<Icon icon={Warning} />
-				<AlertTitle>Tag Manager will drop the site ID</AlertTitle>
+				<AlertTitle>{t("tagManagerDropsId")}</AlertTitle>
 				<AlertDescription>
-					Container {result.container.id} carries the tag, but the site ID is
-					not in the script URL. Tag Manager keeps only the URL when it injects
-					a script, so a data-site attribute never reaches the page and the
-					tracker never starts. Copy the Tag Manager snippet above and replace
+					{t("tagManagerDropsIdDetail", { container: result.container.id })}
 					the tag's HTML.
 					{result.pageView
 						? " A page view did arrive in the last five minutes, so something on this site is still recording."

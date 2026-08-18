@@ -90,9 +90,7 @@ export function AllowedDomains() {
 			</CardHeader>
 
 			{domains.length === 0 ? (
-				<CardTableEmpty>
-					Add the domain your website runs on to get your tracking script.
-				</CardTableEmpty>
+				<CardTableEmpty>{t("addDomainPrompt")}</CardTableEmpty>
 			) : (
 				<SimpleTable columns={columnsFor(t)}>
 					{domains.map((domain) => (
@@ -121,7 +119,7 @@ export function AllowedDomains() {
 										disabled={remove.isPending}
 										onClick={() => remove.mutate({ id: domain.id })}
 									>
-										Remove
+										{t("remove")}
 									</Button>
 								) : null}
 							</TableCell>
@@ -164,7 +162,7 @@ function AddDomain({ disabled }: { disabled: boolean }) {
 			<PopoverTrigger asChild>
 				<Button size="sm" disabled={disabled}>
 					<Icon icon={Add} data-icon="inline-start" />
-					Add domain
+					{t("addDomain")}
 				</Button>
 			</PopoverTrigger>
 
@@ -177,7 +175,7 @@ function AddDomain({ disabled }: { disabled: boolean }) {
 					}}
 				>
 					<Field>
-						<FieldLabel htmlFor={hostId}>Domain</FieldLabel>
+						<FieldLabel htmlFor={hostId}>{t("domain")}</FieldLabel>
 						<Input
 							id={hostId}
 							value={host}
@@ -191,7 +189,7 @@ function AddDomain({ disabled }: { disabled: boolean }) {
 					</Field>
 
 					<Field>
-						<FieldLabel htmlFor={scopeId}>Scope</FieldLabel>
+						<FieldLabel htmlFor={scopeId}>{t("scope")}</FieldLabel>
 						<Select
 							value={scope}
 							onValueChange={(next) => setScope(next as keyof typeof SCOPES)}
@@ -211,7 +209,7 @@ function AddDomain({ disabled }: { disabled: boolean }) {
 
 					<Button type="submit" disabled={add.isPending || host.trim() === ""}>
 						{add.isPending ? <Spinner data-icon="inline-start" /> : null}
-						Add domain
+						{t("addDomain")}
 					</Button>
 				</form>
 			</PopoverContent>
