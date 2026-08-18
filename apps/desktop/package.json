@@ -13,6 +13,9 @@
 		"test": "bun test",
 		"lint": "biome check ."
 	},
+	"dependencies": {
+		"@openvz/env": "workspace:*"
+	},
 	"devDependencies": {
 		"@openvz/typescript-config": "workspace:*",
 		"@tauri-apps/cli": "^2.11.4",

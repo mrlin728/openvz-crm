@@ -197,6 +197,10 @@ Windows.
 Neither installer is signed. macOS needs a right-click → Open the first time, and
 Windows SmartScreen warns once.
 
+That folder also holds `settings.env`, written on first run as a commented
+template. It is where `ALLOWED_SIGN_IN` goes to let a second person in, and where
+Google credentials go if you would rather sign in that way.
+
 The research agent is not in the installer: it needs a model key and its own
 runtime. The CRM works without it. [docs/desktop.md](./docs/desktop.md) covers how
 the build is made and what is in it.

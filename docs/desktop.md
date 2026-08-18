@@ -61,6 +61,14 @@ Everything the install owns is under one folder:
 `OPENVZ_CRM_HOME` moves it. Deleting it is a factory reset, and it takes the
 user's data with it.
 
+`settings.env` in that folder is how an installed copy is configured. The
+supervisor writes it on first run as a commented template and reads it on every
+start, because a GUI application inherits no environment a person can edit. It
+is where `ALLOWED_SIGN_IN` goes to let a second person in, and where Google
+credentials go if somebody wants to sign in that way instead. It cannot set
+`DATABASE_URL`, `API_URL` or `BETTER_AUTH_SECRET` — the supervisor owns those,
+and it strips them.
+
 ## Signing in
 
 A downloaded copy has no Google project behind it, so `AUTH_LOCAL_ACCOUNTS=1`
@@ -68,7 +76,8 @@ turns on email and password. The rule is in `packages/auth/src/auth.ts`:
 
 - With no `ALLOWED_SIGN_IN`, **exactly one** account can be created — the first.
   It becomes the workspace owner.
-- Everybody after them needs to be on `ALLOWED_SIGN_IN`.
+- Everybody after them needs to be on `ALLOWED_SIGN_IN`, which an installed copy
+  reads from `settings.env`.
 
 So an install that somebody else can reach does not hand itself out, and the
 person who installed it does not need to write a config file to get in.

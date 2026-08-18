@@ -115,6 +115,9 @@
     "apps/desktop": {
       "name": "desktop",
       "version": "0.0.1",
+      "dependencies": {
+        "@openvz/env": "workspace:*",
+      },
       "devDependencies": {
         "@openvz/typescript-config": "workspace:*",
         "@tauri-apps/cli": "^2.11.4",

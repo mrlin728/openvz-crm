@@ -7,6 +7,7 @@ import { crmHome, layout } from "../runtime/paths";
 import { freePorts } from "../runtime/ports";
 import { connectionUrl } from "../runtime/postgres";
 import { readOrCreateSecrets } from "../runtime/secrets";
+import { readOrCreateSettings } from "../runtime/settings";
 
 const MIGRATIONS = resolve(
 	import.meta.dir,
@@ -175,5 +176,51 @@ describe("secrets", () => {
 		expect(await readFile(paths.secrets, "utf8")).toBe(
 			'{"databasePassword":""}',
 		);
+	});
+});
+
+describe("settings.env", () => {
+	test("is created with a template a person can read", async () => {
+		const home = await scratch();
+		const paths = layout(home);
+
+		expect(await readOrCreateSettings(paths)).toEqual({});
+
+		const template = await readFile(paths.settings, "utf8");
+		expect(template).toContain("ALLOWED_SIGN_IN");
+		expect(
+			template.split("\n").every((line) => line === "" || line.startsWith("#")),
+		).toBe(true);
+	});
+
+	test("hands back what somebody put in it", async () => {
+		const home = await scratch();
+		const paths = layout(home);
+
+		await mkdir(home, { recursive: true });
+		await writeFile(
+			paths.settings,
+			'# a note\nALLOWED_SIGN_IN="colleague@example.com"\nGOOGLE_CLIENT_ID=abc\n',
+		);
+
+		expect(await readOrCreateSettings(paths)).toEqual({
+			ALLOWED_SIGN_IN: "colleague@example.com",
+			GOOGLE_CLIENT_ID: "abc",
+		});
+	});
+
+	test("cannot take over what the supervisor decides", async () => {
+		const home = await scratch();
+		const paths = layout(home);
+
+		await mkdir(home, { recursive: true });
+		await writeFile(
+			paths.settings,
+			"DATABASE_URL=postgresql://elsewhere\nBETTER_AUTH_SECRET=guessable\nAPI_URL=http://evil\nALLOWED_SIGN_IN=acme.com\n",
+		);
+
+		expect(await readOrCreateSettings(paths)).toEqual({
+			ALLOWED_SIGN_IN: "acme.com",
+		});
 	});
 });

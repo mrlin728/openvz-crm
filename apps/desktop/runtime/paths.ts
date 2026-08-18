@@ -26,6 +26,7 @@ export interface Layout {
 	runtime: string;
 	runtimeStamp: string;
 	logs: string;
+	settings: string;
 	secrets: string;
 	state: string;
 }
@@ -37,6 +38,7 @@ export function layout(home = crmHome()): Layout {
 		runtime: join(home, "runtime"),
 		runtimeStamp: join(home, "runtime", ".payload-version"),
 		logs: join(home, "logs"),
+		settings: join(home, "settings.env"),
 		secrets: join(home, "secrets.json"),
 		state: join(home, "state.json"),
 	};

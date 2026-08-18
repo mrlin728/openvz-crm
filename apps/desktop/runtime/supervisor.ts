@@ -17,6 +17,7 @@ import {
 	stopCluster,
 } from "./postgres";
 import { readOrCreateSecrets } from "./secrets";
+import { readOrCreateSettings } from "./settings";
 
 const API_TIMEOUT_MS = 90_000;
 const APP_TIMEOUT_MS = 120_000;
@@ -67,6 +68,7 @@ async function main(): Promise<void> {
 	await mkdir(paths.logs, { recursive: true });
 
 	const secrets = await readOrCreateSecrets(paths);
+	const settings = await readOrCreateSettings(paths);
 	const postgresRoot = join(root, "postgres");
 
 	if (!clusterExists(paths)) {
@@ -113,11 +115,11 @@ async function main(): Promise<void> {
 
 	const shared: NodeJS.ProcessEnv = {
 		...process.env,
+		...settings,
 		DATABASE_URL: databaseUrl,
 		DIRECT_DATABASE_URL: databaseUrl,
 		BETTER_AUTH_SECRET: secrets.authSecret,
 		AUTH_LOCAL_ACCOUNTS: "1",
-		ALLOWED_SIGN_IN: process.env.ALLOWED_SIGN_IN ?? "",
 		API_URL: apiUrl,
 		APP_URL: appUrl,
 		OPENVZ_CRM_HOME: home,
