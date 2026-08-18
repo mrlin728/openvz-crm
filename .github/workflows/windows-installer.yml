@@ -13,6 +13,15 @@ on:
 permissions:
   contents: write
 
+env:
+  TURBO_TELEMETRY_DISABLED: 1
+  DO_NOT_TRACK: 1
+  # `prisma generate` runs in @openvz/db's postinstall and reads the datasource
+  # URL through prisma.config, so `bun install` fails without one. Nothing in
+  # this job connects to a database — the installer creates its own.
+  DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/openvz_crm
+  DIRECT_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/openvz_crm
+
 jobs:
   build:
     name: Build Windows installer (x64, unsigned)
