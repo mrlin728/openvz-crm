@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import {
 	DetailSheetProperties,
 	DetailSheetProperty,
@@ -23,6 +24,7 @@ export function WebsiteActivity({
 	companyId?: string;
 	contactId?: string;
 }) {
+	const t = useTranslations("crm.website");
 	const trpc = useTRPC();
 
 	const company = useQuery({
@@ -52,9 +54,9 @@ export function WebsiteActivity({
 	const campaign = last?.campaign ?? first?.campaign ?? null;
 
 	return (
-		<DetailSheetSection title="Website activity">
+		<DetailSheetSection title={t("title")}>
 			<DetailSheetProperties>
-				<DetailSheetProperty label="Page views">
+				<DetailSheetProperty label={t("pageViews")}>
 					<span className="tabular-nums">
 						{activity.views.toLocaleString()}
 					</span>
@@ -67,13 +69,13 @@ export function WebsiteActivity({
 				</DetailSheetProperty>
 
 				{first ? (
-					<DetailSheetProperty label="Original source">
+					<DetailSheetProperty label={t("originalSource")}>
 						{channel(first)}
 					</DetailSheetProperty>
 				) : null}
 
 				{topPage ? (
-					<DetailSheetProperty label="Top page">
+					<DetailSheetProperty label={t("topPage")}>
 						<span className="flex min-w-0 items-baseline gap-1">
 							<span className="truncate font-mono" title={topPage.path}>
 								{topPage.path}
@@ -87,19 +89,21 @@ export function WebsiteActivity({
 				) : null}
 
 				{channelChanged ? (
-					<DetailSheetProperty label="Latest source">
+					<DetailSheetProperty label={t("latestSource")}>
 						{channel(last)}
 					</DetailSheetProperty>
 				) : null}
 
 				{first?.at ? (
-					<DetailSheetProperty label="First seen">
+					<DetailSheetProperty label={t("firstSeen")}>
 						<LocalRelativeTime date={first.at} />
 					</DetailSheetProperty>
 				) : null}
 
 				{campaign ? (
-					<DetailSheetProperty label="Campaign">{campaign}</DetailSheetProperty>
+					<DetailSheetProperty label={t("campaign")}>
+						{campaign}
+					</DetailSheetProperty>
 				) : null}
 			</DetailSheetProperties>
 		</DetailSheetSection>

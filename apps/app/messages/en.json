@@ -620,6 +620,37 @@
 			"takeOff": "Take off this deal",
 			"addContact": "Add contact",
 			"deleteConsequence": "Its stage history, notes and agent conversations go too. {company} and the {count, plural, =1 {person} other {people}} on it stay in the CRM."
+		},
+		"website": {
+			"title": "Website activity",
+			"pageViews": "Page views",
+			"originalSource": "Original source",
+			"topPage": "Top page",
+			"latestSource": "Latest source",
+			"firstSeen": "First seen",
+			"campaign": "Campaign"
+		},
+		"enrichment": {
+			"reEnrich": "Re-enrich",
+			"research": "Research",
+			"briefAdded": "Brief added to the timeline.",
+			"takingAnotherLook": "Taking another look — this page will update when it finishes."
+		},
+		"quickSwitcher": {
+			"search": "Search",
+			"jumpTo": "Jump to a company, contact or deal",
+			"placeholder": "Search companies, contacts and deals…"
+		},
+		"companyPicker": {
+			"choose": "Choose a company",
+			"search": "Search companies…",
+			"company": "Company"
+		},
+		"agentConversations": {
+			"nothingYet": "Nothing yet",
+			"newConversation": "New conversation",
+			"deleteConversation": "Delete this conversation",
+			"deleted": "Conversation deleted."
 		}
 	},
 	"overview": {

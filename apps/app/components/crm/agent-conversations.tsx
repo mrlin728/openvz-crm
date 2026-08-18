@@ -13,6 +13,7 @@ import {
 } from "@openvz/ui/components/dropdown-menu";
 import { Icon } from "@openvz/ui/components/icon";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { LocalDateTime } from "@/components/local-date-time";
 import { useTRPC } from "@/lib/trpc/client";
@@ -40,7 +41,8 @@ export function ConversationPicker({
 	onNew: () => void;
 	busy: boolean;
 }) {
-	const label = current?.title ?? "New conversation";
+	const t = useTranslations("crm.agentConversations");
+	const label = current?.title ?? t("newConversation");
 
 	return (
 		<div className="flex min-w-0 items-center gap-2 border-b px-4 py-2 sm:px-5">
@@ -58,7 +60,7 @@ export function ConversationPicker({
 
 				<DropdownMenuContent align="start" className="w-72">
 					{conversations.length === 0 ? (
-						<DropdownMenuItem disabled>Nothing yet</DropdownMenuItem>
+						<DropdownMenuItem disabled>{t("nothingYet")}</DropdownMenuItem>
 					) : (
 						conversations.map((conversation) => (
 							<DropdownMenuItem
@@ -81,7 +83,7 @@ export function ConversationPicker({
 					<DropdownMenuSeparator />
 					<DropdownMenuItem onSelect={onNew}>
 						<Icon icon={Add} data-icon="inline-start" />
-						New conversation
+						{t("newConversation")}
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
@@ -102,6 +104,7 @@ function Forget({
 	onDone: () => void;
 	busy: boolean;
 }) {
+	const t = useTranslations("crm.agentConversations");
 	const trpc = useTRPC();
 	const conversations = useConversationCache();
 
@@ -110,7 +113,7 @@ function Forget({
 			onSuccess: async () => {
 				await conversations.invalidate();
 				onDone();
-				toast.success("Conversation deleted.");
+				toast.success(t("deleted"));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -124,7 +127,7 @@ function Forget({
 			onClick={() => remove.mutate({ id: conversation.id })}
 		>
 			<Icon icon={TrashCan} />
-			<span className="sr-only">Delete this conversation</span>
+			<span className="sr-only">{t("deleteConversation")}</span>
 		</Button>
 	);
 }

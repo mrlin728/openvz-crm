@@ -620,6 +620,37 @@
 			"takeOff": "从这笔交易移除",
 			"addContact": "添加联系人",
 			"deleteConsequence": "它的阶段历史、备注和与智能体的对话都会一起删除。{company} 以及参与的 {count} 个人会留在 CRM 里。"
+		},
+		"website": {
+			"title": "网站行为",
+			"pageViews": "页面浏览",
+			"originalSource": "首次来源",
+			"topPage": "访问最多的页面",
+			"latestSource": "最近来源",
+			"firstSeen": "首次出现",
+			"campaign": "广告系列"
+		},
+		"enrichment": {
+			"reEnrich": "重新补全",
+			"research": "调研",
+			"briefAdded": "调研简报已加入时间线。",
+			"takingAnotherLook": "正在重新查一遍 —— 完成后这个页面会自动更新。"
+		},
+		"quickSwitcher": {
+			"search": "搜索",
+			"jumpTo": "跳转到公司、联系人或交易",
+			"placeholder": "搜索公司、联系人和交易…"
+		},
+		"companyPicker": {
+			"choose": "选择一家公司",
+			"search": "搜索公司…",
+			"company": "公司"
+		},
+		"agentConversations": {
+			"nothingYet": "还没有",
+			"newConversation": "新建对话",
+			"deleteConversation": "删除这个对话",
+			"deleted": "对话已删除。"
 		}
 	},
 	"overview": {

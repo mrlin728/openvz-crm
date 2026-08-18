@@ -15,6 +15,7 @@ import {
 } from "@openvz/ui/components/entity-logo";
 import { PersonAvatar } from "@openvz/ui/components/person-avatar";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { parseAsBoolean, useQueryState } from "nuqs";
 import { useEffect, useState } from "react";
 import { useOpenRecord } from "@/components/crm/record-sheet/record-stack";
@@ -29,6 +30,7 @@ const GROUP_LABEL = {
 const KINDS = ["company", "contact", "deal"] as const;
 
 export function QuickSwitcher() {
+	const t = useTranslations("crm.quickSwitcher");
 	const openRecord = useOpenRecord();
 	const trpc = useTRPC();
 
@@ -66,11 +68,11 @@ export function QuickSwitcher() {
 			open={open}
 			onOpenChange={(next) => setOpen(next || null)}
 			title="Search"
-			description="Jump to a company, contact or deal"
+			description={t("jumpTo")}
 		>
 			<Command shouldFilter={false}>
 				<CommandInput
-					placeholder="Search companies, contacts and deals…"
+					placeholder={t("placeholder")}
 					value={query}
 					onValueChange={setQuery}
 				/>

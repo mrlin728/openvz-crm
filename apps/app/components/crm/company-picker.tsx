@@ -13,6 +13,7 @@ import { Spinner } from "@openvz/ui/components/spinner";
 import { useSearchInput } from "@openvz/ui/hooks/use-search-input";
 import { cn } from "@openvz/ui/lib/utils";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { type Ref, useId, useState } from "react";
 import { PROPERTY_LABEL, PROPERTY_ROW } from "@/components/detail-sheet";
 import { useTRPC } from "@/lib/trpc/client";
@@ -21,7 +22,7 @@ export function CompanyPicker({
 	id,
 	value,
 	onValueChange,
-	placeholder = "Choose a company",
+	placeholder,
 	none,
 	selected,
 	disabled,
@@ -38,6 +39,7 @@ export function CompanyPicker({
 	variant?: "default" | "ghost";
 	className?: string;
 }) {
+	const t = useTranslations("crm.companyPicker");
 	const trpc = useTRPC();
 
 	const [query, setQuery] = useState("");
@@ -77,7 +79,7 @@ export function CompanyPicker({
 			options={options}
 			selectedOption={current}
 			disabled={disabled}
-			placeholder={placeholder}
+			placeholder={placeholder ?? t("choose")}
 			searchPlaceholder="Search companies…"
 			empty={companies.isFetching ? "Searching…" : "No company matches."}
 			search={text}
@@ -98,6 +100,7 @@ export function CompanyMenuSearch({
 	onSelect: (companyId: string | null) => void;
 	inputRef?: Ref<HTMLInputElement>;
 }) {
+	const t = useTranslations("crm.companyPicker");
 	const trpc = useTRPC();
 
 	const [query, setQuery] = useState("");
@@ -117,7 +120,7 @@ export function CompanyMenuSearch({
 		>
 			<CommandInput
 				ref={inputRef}
-				placeholder="Search companies…"
+				placeholder={t("search")}
 				value={text}
 				onValueChange={setText}
 				autoFocus
@@ -172,6 +175,7 @@ export function InlineCompanyField({
 	none?: { value: string; label: string };
 	company?: { id: string; name: string } | null;
 }) {
+	const t = useTranslations("crm.companyPicker");
 	const id = useId();
 
 	return (
