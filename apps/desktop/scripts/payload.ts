@@ -139,7 +139,11 @@ async function buildApp(repoRoot: string, payload: string): Promise<void> {
 		COPY,
 	);
 
-	await cp(join(app, "public"), join(destination, "apps", "app", "public"), COPY);
+	await cp(
+		join(app, "public"),
+		join(destination, "apps", "app", "public"),
+		COPY,
+	);
 }
 
 async function buildSupervisor(
