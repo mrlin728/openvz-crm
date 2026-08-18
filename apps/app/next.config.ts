@@ -1,3 +1,4 @@
+import { join } from "node:path";
 import { loadRootEnv } from "@openvz/env";
 import type { NextConfig } from "next";
 
@@ -20,6 +21,10 @@ const allowedDevOrigins = (process.env.APP_URL ?? "")
 
 const nextConfig: NextConfig = {
 	allowedDevOrigins,
+
+	...(process.env.DESKTOP_BUILD === "1"
+		? { output: "standalone" as const, outputFileTracingRoot: join(import.meta.dirname, "../..") }
+		: {}),
 
 	env: {
 		NEXT_PUBLIC_API_URL: apiUrl,

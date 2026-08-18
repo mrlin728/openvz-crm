@@ -46,3 +46,11 @@ yarn-error.log*
 
 # Built by `bun run build:vercel` — the Vercel function itself.
 apps/api/api/index.js
+
+# Downloaded by `bun run --filter=desktop vendor` — Bun and Postgres per target.
+apps/desktop/vendor/
+apps/desktop/payload/
+apps/desktop/dist/
+apps/desktop/src-tauri/target/
+apps/desktop/src-tauri/gen/
+apps/desktop/src-tauri/payload.tar.gz

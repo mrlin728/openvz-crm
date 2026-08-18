@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>OPENVZ CRM</title>
+		<style>
+			:root { color-scheme: dark; }
+			* { box-sizing: border-box; }
+			body {
+				margin: 0;
+				height: 100vh;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 28px;
+				background: #0a0a0a;
+				color: #fafafa;
+				font: 400 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI",
+					system-ui, sans-serif;
+				-webkit-user-select: none;
+				user-select: none;
+			}
+			.mark { width: 44px; height: 44px; }
+			.mark rect { fill: #2a2aff; }
+			.mark g { fill: #fff; }
+			.lines { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+			.stage { font-size: 14px; }
+			.hint { font-size: 12px; color: #8f8f8f; max-width: 42ch; text-align: center; }
+			.bar { width: 220px; height: 2px; background: #1f1f1f; overflow: hidden; }
+			.bar span {
+				display: block; width: 40%; height: 100%; background: #2a2aff;
+				animation: slide 1.4s ease-in-out infinite;
+			}
+			@keyframes slide {
+				0% { transform: translateX(-100%); }
+				100% { transform: translateX(250%); }
+			}
+			.failed .bar { display: none; }
+			.failed .stage { color: #ff6b6b; }
+			pre {
+				margin: 0; max-width: 70ch; max-height: 40vh; overflow: auto;
+				font-size: 11px; color: #8f8f8f; white-space: pre-wrap;
+			}
+		</style>
+	</head>
+	<body>
+		<svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="OPENVZ CRM">
+			<rect width="512" height="512" rx="112" />
+			<g>
+				<rect x="238" y="96" width="36" height="320" rx="18" />
+				<rect x="238" y="96" width="36" height="320" rx="18" transform="rotate(60 256 256)" />
+				<rect x="238" y="96" width="36" height="320" rx="18" transform="rotate(120 256 256)" />
+			</g>
+		</svg>
+
+		<div class="lines">
+			<div class="stage" id="stage">Starting OPENVZ CRM</div>
+			<div class="hint" id="hint">
+				The first start takes a moment: it creates your database on this
+				computer.
+			</div>
+		</div>
+
+		<div class="bar"><span></span></div>
+		<pre id="detail"></pre>
+
+		<script type="module">
+			const { listen } = window.__TAURI__.event;
+
+			const stage = document.getElementById("stage");
+			const hint = document.getElementById("hint");
+			const detail = document.getElementById("detail");
+
+			const WORDS = {
+				"creating the database": "Creating your database",
+				"starting the database": "Starting your database",
+				"updating the database": "Updating your database",
+				"starting the server": "Starting the server",
+				"starting the interface": "Almost there",
+				unpacking: "Unpacking OPENVZ CRM",
+			};
+
+			listen("stage", (event) => {
+				stage.textContent = WORDS[event.payload] ?? event.payload;
+			});
+
+			listen("failed", (event) => {
+				document.body.classList.add("failed");
+				stage.textContent = "OPENVZ CRM could not start";
+				hint.textContent = "The log is in the CRM folder in Application Support.";
+				detail.textContent = event.payload;
+			});
+		</script>
+	</body>
+</html>

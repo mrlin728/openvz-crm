@@ -1,0 +1,23 @@
+{
+	"name": "desktop",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"license": "MIT",
+	"scripts": {
+		"vendor": "bun scripts/vendor.ts",
+		"payload": "bun scripts/payload.ts",
+		"build:installer": "bun scripts/build.ts",
+		"supervisor": "bun runtime/supervisor.ts",
+		"check-types": "tsc --noEmit",
+		"test": "bun test",
+		"lint": "biome check ."
+	},
+	"devDependencies": {
+		"@openvz/typescript-config": "workspace:*",
+		"@tauri-apps/cli": "^2.11.4",
+		"@types/bun": "^1.3.14",
+		"@types/node": "^24.0.0",
+		"typescript": "5.9.2"
+	}
+}
