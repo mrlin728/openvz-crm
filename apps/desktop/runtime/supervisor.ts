@@ -98,15 +98,18 @@ async function main(): Promise<void> {
 
 	const databaseUrl = connectionUrl(cluster);
 
+	report("stage", "opening the database");
 	await ensureDatabase(
 		connectionUrl({ ...cluster, database: ADMIN_DATABASE }),
 		DATABASE,
+		(message) => report("note", message),
 	);
 
 	report("stage", "updating the database");
 	const migrations = await applyMigrations(
 		databaseUrl,
 		join(root, "migrations"),
+		(message) => report("note", message),
 	);
 	report("migrations", `${migrations.applied.length} applied`);
 

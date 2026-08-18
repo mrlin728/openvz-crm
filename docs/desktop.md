@@ -87,6 +87,10 @@ person who installed it does not need to write a config file to get in.
 - **No unix socket.** The socket path is capped at 103 bytes, and a home
   directory a few levels deep exceeds it on its own. Everything connects over
   `127.0.0.1`.
+- **`sslmode=disable` is on the connection string.** It is a loopback connection
+  to a cluster this install started, so TLS buys nothing — and on Windows the
+  first connection hung without it. Bun's client and the Prisma driver adapter
+  both read the parameter themselves rather than sending it to the server.
 - **No `?schema=public` on the connection string.** Prisma parses that
   parameter itself, but the driver adapter and Bun's client hand unknown
   parameters to the server as settings, and there is no setting called

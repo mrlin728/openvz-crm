@@ -48,11 +48,51 @@ export async function readMigrations(directory: string): Promise<Migration[]> {
 	return migrations;
 }
 
+const CONNECT_TIMEOUT_MS = 30_000;
+const CONNECT_ATTEMPTS = 10;
+
+export async function connect(
+	url: string,
+	label: string,
+	log: (message: string) => void = () => {},
+): Promise<SQL> {
+	let last: unknown;
+
+	for (let attempt = 1; attempt <= CONNECT_ATTEMPTS; attempt += 1) {
+		const sql = new SQL(url);
+
+		try {
+			await Promise.race([
+				sql`SELECT 1`,
+				Bun.sleep(CONNECT_TIMEOUT_MS).then(() => {
+					throw new Error(`no answer in ${CONNECT_TIMEOUT_MS}ms`);
+				}),
+			]);
+
+			return sql;
+		} catch (error) {
+			last = error;
+			await sql.end().catch(() => {});
+			log(`${label}: attempt ${attempt} failed (${describe(error)})`);
+			await Bun.sleep(1000);
+		}
+	}
+
+	throw new Error(
+		`Could not reach the database to ${label}: ${describe(last)}`,
+	);
+}
+
+function describe(error: unknown): string {
+	return error instanceof Error ? error.message : String(error);
+}
+
 export async function ensureDatabase(
 	adminUrl: string,
 	database: string,
+	log: (message: string) => void = () => {},
 ): Promise<void> {
-	const sql = new SQL(adminUrl);
+	const sql = await connect(adminUrl, "create the database", log);
 
 	try {
 		const existing = await sql`
@@ -99,7 +139,7 @@ export async function applyMigrations(
 	report: (migration: string) => void = () => {},
 ): Promise<MigrationReport> {
 	const migrations = await readMigrations(directory);
-	const sql = new SQL(url);
+	const sql = await connect(url, "apply the migrations", report);
 	const applied: string[] = [];
 
 	try {

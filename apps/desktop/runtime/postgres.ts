@@ -28,7 +28,7 @@ function binary(postgresRoot: string, name: string): string {
 
 export function connectionUrl(cluster: Cluster): string {
 	const auth = `${encodeURIComponent(cluster.user)}:${encodeURIComponent(cluster.password)}`;
-	return `postgresql://${auth}@127.0.0.1:${cluster.port}/${cluster.database}`;
+	return `postgresql://${auth}@127.0.0.1:${cluster.port}/${cluster.database}?sslmode=disable`;
 }
 
 async function run(
