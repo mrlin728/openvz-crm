@@ -20,12 +20,14 @@ import { Input } from "@openvz/ui/components/input";
 import { Spinner } from "@openvz/ui/components/spinner";
 import { StatusIndicator } from "@openvz/ui/components/status-indicator";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { toast } from "sonner";
 import { useCrmCache } from "@/lib/trpc/cache";
 import { useTRPC } from "@/lib/trpc/client";
 
 export function ResearchKey() {
+	const t = useTranslations("settings.researchKey");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 
@@ -39,7 +41,7 @@ export function ResearchKey() {
 			onSuccess: async () => {
 				await cache.settings();
 				setDraft("");
-				toast.success("Context API key saved.");
+				toast.success(t("saved"));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -52,11 +54,8 @@ export function ResearchKey() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Company research</CardTitle>
-				<CardDescription>
-					Enter your Context API key so our agents can research every company in
-					the CRM.
-				</CardDescription>
+				<CardTitle>{t("title")}</CardTitle>
+				<CardDescription>{t("description")}</CardDescription>
 
 				<CardAction>
 					<Button
@@ -65,7 +64,7 @@ export function ResearchKey() {
 						disabled={save.isPending || draft.trim() === ""}
 					>
 						{save.isPending ? <Spinner data-icon="inline-start" /> : null}
-						{configured ? "Replace key" : "Save key"}
+						{t(configured ? "replace" : "save")}
 					</Button>
 				</CardAction>
 			</CardHeader>
@@ -81,11 +80,11 @@ export function ResearchKey() {
 					<FieldGroup>
 						<Field>
 							<div className="flex items-center justify-between gap-3">
-								<FieldLabel htmlFor={keyId}>Context API key</FieldLabel>
+								<FieldLabel htmlFor={keyId}>{t("label")}</FieldLabel>
 								<StatusIndicator
 									size="sm"
 									tone={configured ? "success" : "warning"}
-									label={configured ? "Connected" : "Not connected"}
+									label={t(configured ? "connected" : "notConnected")}
 								/>
 							</div>
 							<Input
@@ -93,7 +92,7 @@ export function ResearchKey() {
 								type="password"
 								value={draft}
 								onChange={(event) => setDraft(event.target.value)}
-								placeholder={hint ?? "Paste the key"}
+								placeholder={hint ?? t("placeholder")}
 								autoComplete="off"
 								autoCapitalize="off"
 								autoCorrect="off"

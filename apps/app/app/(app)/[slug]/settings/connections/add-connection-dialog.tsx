@@ -15,6 +15,7 @@ import {
 } from "@openvz/ui/components/dialog";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export function AddConnectionDialog({
 	slug,
@@ -25,6 +26,7 @@ export function AddConnectionDialog({
 	open: boolean;
 	connected: string[];
 }) {
+	const t = useTranslations("settings.connections");
 	const router = useRouter();
 	return (
 		<Dialog
@@ -35,57 +37,58 @@ export function AddConnectionDialog({
 		>
 			<DialogContent className="max-w-(--container-narrow) gap-0 p-0 md:left-[calc(50%+calc((56px+213px)/2))]">
 				<DialogHeader className="gap-2 px-(--spacing-block-inline) pt-5 pb-4">
-					<DialogTitle className="text-base">Add a connection</DialogTitle>
-					<DialogDescription>
-						Nothing moves until you finish setting one up.
-					</DialogDescription>
+					<DialogTitle className="text-base">{t("addTitle")}</DialogTitle>
+					<DialogDescription>{t("addDescription")}</DialogDescription>
 				</DialogHeader>
 				<div className="flex flex-col border-y px-2 py-2">
-					{!connected.includes("Google Workspace") ? (
+					{!connected.includes("google") ? (
 						<CatalogRow
 							logo={GoogleLogo}
-							name="Google Workspace"
-							description="Bring in Gmail messages and Google Calendar meetings"
+							name={t("google")}
+							description={t("googleCatalog")}
 							href={`/${slug}/settings/connections/google`}
 						/>
 					) : null}
-					{!connected.includes("Slack") ? (
+					{!connected.includes("slack") ? (
 						<CatalogRow
 							logo={SlackLogo}
-							name="Slack"
-							description="Let deployed agents notify approved channels and people"
+							name={t("slack")}
+							description={t("slackTeaser")}
 							href={`/${slug}/settings/connections/slack`}
 						/>
 					) : null}
-					{!connected.includes("Microsoft 365") ? (
+					{!connected.includes("microsoft") ? (
 						<CatalogRow
 							logo={MicrosoftLogo}
-							name="Microsoft 365"
-							description="Bring in Outlook email and the people on it"
+							name={t("microsoft")}
+							description={t("microsoftCatalog")}
 							href={`/${slug}/settings/connections/microsoft`}
 						/>
 					) : null}
 					<CatalogRow
 						logo={StripeLogo}
 						name="Stripe"
-						description="Coming soon"
+						description={t("comingSoon")}
 					/>
 					<CatalogRow
 						logo={DocusignLogo}
 						name="Docusign"
-						description="Coming soon"
+						description={t("comingSoon")}
 					/>
 					<CatalogRow
 						logo={Plug}
-						name="Anything else"
-						description="The intake API is not available yet"
+						name={t("anythingElse")}
+						description={t("intakeUnavailable")}
 						href={`/${slug}/settings/connections/intake`}
 					/>
 				</div>
 				<p className="px-(--spacing-block-inline) py-4 text-muted-foreground text-xs">
 					{connected.length > 0
-						? `${connected.join(", ")} ${connected.length === 1 ? "is" : "are"} already connected.`
-						: "Nothing is connected yet."}
+						? t("alreadyConnected", {
+								count: connected.length,
+								names: connected.map((id) => t(id)).join(", "),
+							})
+						: t("noneYet")}
 				</p>
 			</DialogContent>
 		</Dialog>

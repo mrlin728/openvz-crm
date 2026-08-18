@@ -25,6 +25,78 @@
 			"label": "界面语言",
 			"hint": "新装的副本跟随你的操作系统。这个选择记在这台电脑上。",
 			"failed": "无法切换语言。"
+		},
+		"nav": {
+			"general": "通用",
+			"tracking": "追踪与分析",
+			"connections": "连接",
+			"currencies": "币种",
+			"members": "成员",
+			"sso": "单点登录",
+			"aria": "工作区设置"
+		},
+		"general": {
+			"title": "通用",
+			"description": "你是谁，以及调研智能体用哪个模型思考。"
+		},
+		"workspace": {
+			"title": "工作区",
+			"description": "使用这个 CRM 的公司名称和网站。",
+			"name": "名称",
+			"namePlaceholder": "某某公司",
+			"website": "网站",
+			"websiteHint": "你自己公司的网站。",
+			"save": "保存",
+			"saved": "工作区已保存。"
+		},
+		"researchKey": {
+			"title": "公司调研",
+			"description": "填入你的 Context API 密钥，智能体就能调研 CRM 里的每一家公司。",
+			"replace": "更换密钥",
+			"save": "保存密钥",
+			"label": "Context API 密钥",
+			"connected": "已连接",
+			"notConnected": "未连接",
+			"placeholder": "粘贴密钥",
+			"saved": "Context API 密钥已保存。"
+		},
+		"agentModel": {
+			"title": "调研智能体",
+			"description": "智能体思考所用的模型，经由 Vercel AI Gateway 调用。",
+			"model": "模型",
+			"search": "搜索模型…",
+			"noMatch": "没有匹配的模型。",
+			"defaultModel": "默认 —— {name}",
+			"unavailable": "连不上 AI Gateway，列不出模型。智能体仍在使用 {model}。",
+			"saved": "智能体从下一次会话起使用这个模型。"
+		},
+		"connections": {
+			"title": "连接",
+			"google": "Google Workspace",
+			"slack": "Slack",
+			"microsoft": "Microsoft 365",
+			"connected": "已连接",
+			"connectedTo": "已连接到 {workspace}",
+			"nothingYet": "暂无",
+			"googleBringsIn": "邮件、会议，以及参与的人",
+			"slackBringsIn": "工作区成员，以及应用已加入的频道",
+			"slackSends": "发给已批准的频道和人的消息",
+			"microsoftBringsIn": "Outlook 邮件，以及参与的人",
+			"googleTeaser": "把邮件和会议归到正确的公司名下",
+			"slackTeaser": "让已部署的智能体通知已批准的频道和人",
+			"microsoftTeaser": "把 Outlook 邮件归到正确的公司名下",
+			"googleCatalog": "接入 Gmail 邮件和 Google 日历会议",
+			"microsoftCatalog": "接入 Outlook 邮件，以及参与的人",
+			"manage": "管理",
+			"bringsIn": "带进来",
+			"sends": "发出去",
+			"noneYet": "还没有连接任何东西",
+			"addTitle": "添加连接",
+			"addDescription": "在你完成设置之前，什么都不会开始同步。",
+			"comingSoon": "即将支持",
+			"anythingElse": "其他",
+			"intakeUnavailable": "接入 API 还不可用",
+			"alreadyConnected": "{names} 已连接。"
 		}
 	},
 	"nav": {

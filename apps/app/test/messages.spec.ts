@@ -60,19 +60,29 @@ describe("the two catalogues", () => {
 		expect(chinese).toEqual(english);
 	});
 
-	it("take the same values", () => {
+	it("never invent a value the message does not take", () => {
 		const english = flatten(en as Tree);
 		const chinese = flatten(zh as Tree);
 
 		for (const [key, value] of english) {
-			expect(placeholders(chinese.get(key) ?? "")).toEqual(placeholders(value));
+			const offered = placeholders(value);
+			const used = placeholders(chinese.get(key) ?? "");
+
+			// A translation may ignore one — Chinese does not inflect for number,
+			// so it has no use for a count the English needs for "is" and "are".
+			expect(used.filter((name) => !offered.includes(name))).toEqual([]);
 		}
 	});
 
 	it("is actually translated", () => {
 		// Brand names are spelled the same in both languages. Every other
 		// identical string is a key somebody forgot.
-		const brands = new Set(["crm.contact.github"]);
+		const brands = new Set([
+			"crm.contact.github",
+			"settings.connections.google",
+			"settings.connections.slack",
+			"settings.connections.microsoft",
+		]);
 
 		const english = flatten(en as Tree);
 		const chinese = flatten(zh as Tree);

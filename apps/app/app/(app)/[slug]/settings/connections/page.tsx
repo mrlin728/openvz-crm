@@ -5,12 +5,16 @@ import { Button } from "@openvz/ui/components/button";
 import { Spinner } from "@openvz/ui/components/spinner";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { requireSession } from "@/lib/session";
 import { getServerQueryClient, getServerTrpc } from "@/lib/trpc/server";
 import { AddConnectionDialog } from "./add-connection-dialog";
 
-export const metadata: Metadata = { title: "Connections" };
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations("settings.connections");
+	return { title: t("title") };
+}
 
 export default function ConnectionsSettingsPage(
 	props: PageProps<"/[slug]/settings/connections">,
@@ -27,6 +31,7 @@ async function ConnectionsSettingsPageContent({
 	searchParams,
 }: PageProps<"/[slug]/settings/connections">) {
 	await requireSession();
+	const t = await getTranslations("settings.connections");
 	const [{ slug }, query] = await Promise.all([params, searchParams]);
 	const queryClient = getServerQueryClient();
 	const trpc = getServerTrpc();
@@ -39,10 +44,11 @@ async function ConnectionsSettingsPageContent({
 		...(google.linked
 			? [
 					{
-						name: "Google Workspace",
-						status: "Connected",
-						bringsIn: "Emails, meetings and the people on them",
-						sends: "Nothing yet",
+						id: "google",
+						name: t("google"),
+						status: t("connected"),
+						bringsIn: t("googleBringsIn"),
+						sends: t("nothingYet"),
 						href: `/${slug}/settings/connections/google`,
 						logo: GoogleLogo,
 					},
@@ -51,12 +57,13 @@ async function ConnectionsSettingsPageContent({
 		...(slack.connected
 			? [
 					{
-						name: "Slack",
+						id: "slack",
+						name: t("slack"),
 						status: slack.workspace
-							? `Connected to ${slack.workspace}`
-							: "Connected",
-						bringsIn: "Workspace members and channels the app has joined",
-						sends: "Messages to approved channels and people",
+							? t("connectedTo", { workspace: slack.workspace })
+							: t("connected"),
+						bringsIn: t("slackBringsIn"),
+						sends: t("slackSends"),
 						href: `/${slug}/settings/connections/slack`,
 						logo: SlackLogo,
 					},
@@ -65,10 +72,11 @@ async function ConnectionsSettingsPageContent({
 		...(microsoft.linked
 			? [
 					{
-						name: "Microsoft 365",
-						status: "Connected",
-						bringsIn: "Outlook email and the people on it",
-						sends: "Nothing yet",
+						id: "microsoft",
+						name: t("microsoft"),
+						status: t("connected"),
+						bringsIn: t("microsoftBringsIn"),
+						sends: t("nothingYet"),
 						href: `/${slug}/settings/connections/microsoft`,
 						logo: MicrosoftLogo,
 					},
@@ -98,7 +106,7 @@ async function ConnectionsSettingsPageContent({
 					</header>
 					<div className="flex flex-col gap-3">
 						{rows.map((row) => (
-							<ConnectionCard key={row.name} {...row} />
+							<ConnectionCard key={row.id} t={t} {...row} />
 						))}
 					</div>
 				</div>
@@ -106,7 +114,7 @@ async function ConnectionsSettingsPageContent({
 				<div className="mx-auto flex w-full max-w-(--container-narrow) flex-1 flex-col justify-center gap-(--spacing-page-gap) text-center">
 					<div className="flex flex-col gap-2 px-(--spacing-block-inline)">
 						<h1 className="font-medium text-2xl tracking-tight">
-							Nothing is connected yet
+							{t("noneYet")}
 						</h1>
 						<p className="text-muted-foreground text-sm leading-relaxed">
 							Right now every deal, contact and note has to be typed in by hand.
@@ -117,20 +125,20 @@ async function ConnectionsSettingsPageContent({
 					<div className="flex flex-col divide-y rounded-lg border bg-card px-(--spacing-block-inline)">
 						<StarterRow
 							logo={GoogleLogo}
-							name="Google Workspace"
-							description="File email and meetings against the right company"
+							name={t("google")}
+							description={t("googleTeaser")}
 							href={`/${slug}/settings/connections/google`}
 						/>
 						<StarterRow
 							logo={SlackLogo}
-							name="Slack"
-							description="Let deployed agents notify approved channels and people"
+							name={t("slack")}
+							description={t("slackTeaser")}
 							href={`/${slug}/settings/connections/slack`}
 						/>
 						<StarterRow
 							logo={MicrosoftLogo}
-							name="Microsoft 365"
-							description="File Outlook email against the right company"
+							name={t("microsoft")}
+							description={t("microsoftTeaser")}
 							href={`/${slug}/settings/connections/microsoft`}
 						/>
 					</div>
@@ -148,7 +156,7 @@ async function ConnectionsSettingsPageContent({
 			<AddConnectionDialog
 				slug={slug}
 				open={first(query.add) === "1"}
-				connected={rows.map((row) => row.name)}
+				connected={rows.map((row) => row.id)}
 			/>
 		</main>
 	);
@@ -169,7 +177,9 @@ function ConnectionCard({
 	sends,
 	href,
 	logo: Logo,
+	t,
 }: {
+	t: (key: string) => string;
 	name: string;
 	status: string;
 	bringsIn: string;
@@ -186,12 +196,12 @@ function ConnectionCard({
 					{status}
 				</p>
 				<Button asChild size="sm" variant="outline">
-					<Link href={href}>Manage</Link>
+					<Link href={href}>{t("manage")}</Link>
 				</Button>
 			</div>
 			<div className="flex flex-col gap-2 pl-8 text-sm">
-				<CapabilityRow label="Brings in" value={bringsIn} />
-				<CapabilityRow label="Sends" value={sends} />
+				<CapabilityRow label={t("bringsIn")} value={bringsIn} />
+				<CapabilityRow label={t("sends")} value={sends} />
 			</div>
 		</section>
 	);

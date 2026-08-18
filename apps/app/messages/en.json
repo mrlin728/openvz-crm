@@ -25,6 +25,78 @@
 			"label": "Interface language",
 			"hint": "New installs follow your operating system. This choice is remembered on this computer.",
 			"failed": "Could not change the language."
+		},
+		"nav": {
+			"general": "General",
+			"tracking": "Tracking & Analytics",
+			"connections": "Connections",
+			"currencies": "Currencies",
+			"members": "Members",
+			"sso": "SSO",
+			"aria": "Workspace settings"
+		},
+		"general": {
+			"title": "General",
+			"description": "Who you are, and the model the research agent thinks with."
+		},
+		"workspace": {
+			"title": "Workspace",
+			"description": "The name and website of the company using this CRM.",
+			"name": "Name",
+			"namePlaceholder": "Acme Inc.",
+			"website": "Website",
+			"websiteHint": "Your own company's website.",
+			"save": "Save",
+			"saved": "Workspace saved."
+		},
+		"researchKey": {
+			"title": "Company research",
+			"description": "Enter your Context API key so our agents can research every company in the CRM.",
+			"replace": "Replace key",
+			"save": "Save key",
+			"label": "Context API key",
+			"connected": "Connected",
+			"notConnected": "Not connected",
+			"placeholder": "Paste the key",
+			"saved": "Context API key saved."
+		},
+		"agentModel": {
+			"title": "Research agent",
+			"description": "The model the agent thinks with, routed through the Vercel AI Gateway.",
+			"model": "Model",
+			"search": "Search models…",
+			"noMatch": "No model matches that.",
+			"defaultModel": "Default — {name}",
+			"unavailable": "Could not reach the AI Gateway to list models. The agent is still running {model}.",
+			"saved": "The agent will use this model from its next session."
+		},
+		"connections": {
+			"title": "Connections",
+			"google": "Google Workspace",
+			"slack": "Slack",
+			"microsoft": "Microsoft 365",
+			"connected": "Connected",
+			"connectedTo": "Connected to {workspace}",
+			"nothingYet": "Nothing yet",
+			"googleBringsIn": "Emails, meetings and the people on them",
+			"slackBringsIn": "Workspace members and channels the app has joined",
+			"slackSends": "Messages to approved channels and people",
+			"microsoftBringsIn": "Outlook email and the people on it",
+			"googleTeaser": "File email and meetings against the right company",
+			"slackTeaser": "Let deployed agents notify approved channels and people",
+			"microsoftTeaser": "File Outlook email against the right company",
+			"googleCatalog": "Bring in Gmail messages and Google Calendar meetings",
+			"microsoftCatalog": "Bring in Outlook email and the people on it",
+			"manage": "Manage",
+			"bringsIn": "Brings in",
+			"sends": "Sends",
+			"noneYet": "Nothing is connected yet",
+			"addTitle": "Add a connection",
+			"addDescription": "Nothing moves until you finish setting one up.",
+			"comingSoon": "Coming soon",
+			"anythingElse": "Anything else",
+			"intakeUnavailable": "The intake API is not available yet",
+			"alreadyConnected": "{names} {count, plural, =1 {is} other {are}} already connected."
 		}
 	},
 	"nav": {
