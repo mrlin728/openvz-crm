@@ -4,6 +4,7 @@ import {
 	ToggleGroup,
 	ToggleGroupItem,
 } from "@openvz/ui/components/toggle-group";
+import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import {
 	OVERVIEW_SCOPES,
@@ -12,8 +13,8 @@ import {
 } from "./overview-search-params";
 
 const LABELS: Record<OverviewScope, string> = {
-	me: "Me",
-	everyone: "Everyone",
+	me: "me",
+	everyone: "everyone",
 };
 
 function isScope(value: string): value is OverviewScope {
@@ -21,6 +22,7 @@ function isScope(value: string): value is OverviewScope {
 }
 
 export function OverviewScopeToggleFallback() {
+	const t = useTranslations("overview");
 	return (
 		<ToggleGroup
 			type="single"
@@ -28,11 +30,11 @@ export function OverviewScopeToggleFallback() {
 			size="sm"
 			spacing={0}
 			disabled
-			aria-label="Whose numbers to show"
+			aria-label={t("whose")}
 		>
 			{OVERVIEW_SCOPES.map((value) => (
 				<ToggleGroupItem key={value} value={value}>
-					{LABELS[value]}
+					{t(LABELS[value])}
 				</ToggleGroupItem>
 			))}
 		</ToggleGroup>
@@ -40,6 +42,7 @@ export function OverviewScopeToggleFallback() {
 }
 
 export function OverviewScopeToggle() {
+	const t = useTranslations("overview");
 	const [scope, setScope] = useQueryState("scope", overviewParsers.scope);
 
 	return (
@@ -52,11 +55,11 @@ export function OverviewScopeToggle() {
 			onValueChange={(next) => {
 				if (isScope(next)) void setScope(next);
 			}}
-			aria-label="Whose numbers to show"
+			aria-label={t("whose")}
 		>
 			{OVERVIEW_SCOPES.map((value) => (
 				<ToggleGroupItem key={value} value={value}>
-					{LABELS[value]}
+					{t(LABELS[value])}
 				</ToggleGroupItem>
 			))}
 		</ToggleGroup>

@@ -25,9 +25,10 @@ import {
 import { Spinner } from "@openvz/ui/components/spinner";
 import { StatusIndicator } from "@openvz/ui/components/status-indicator";
 import { TableCell } from "@openvz/ui/components/table";
-import { formatCount, formatMoneyCompact } from "@openvz/ui/lib/format";
+import { formatMoneyCompact } from "@openvz/ui/lib/format";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import type { CSSProperties, ReactNode } from "react";
 import { toast } from "sonner";
@@ -44,38 +45,40 @@ import { overviewParsers } from "./overview-search-params";
 import { SalesDashboard } from "./sales-dashboard";
 
 const CELL = "px-3 py-2.5 align-middle";
-const OPEN_COLUMNS: SimpleTableColumn[] = [
-	{ id: "deal", header: "Deal" },
+type Translate = ReturnType<typeof useTranslations<"overview">>;
+
+const openColumnsFor = (t: Translate): SimpleTableColumn[] => [
+	{ id: "deal", header: t("deal") },
 	{
 		id: "stage",
-		header: "Stage",
+		header: t("stage"),
 		width: "w-32",
 		className: "hidden lg:table-cell",
 	},
 	{
 		id: "share",
-		srLabel: "Share of the largest",
+		srLabel: t("shareOfLargest"),
 		width: "w-24",
 		className: "hidden sm:table-cell",
 	},
-	{ id: "value", header: "Value", width: "w-20", align: "right" },
+	{ id: "value", header: t("value"), width: "w-20", align: "right" },
 ];
-const TASK_COLUMNS: SimpleTableColumn[] = [
-	{ id: "done", srLabel: "Done", width: "w-8" },
-	{ id: "task", header: "Task" },
-	{ id: "overdue", header: "Overdue", width: "w-24", align: "right" },
+const taskColumnsFor = (t: Translate): SimpleTableColumn[] => [
+	{ id: "done", srLabel: t("done"), width: "w-8" },
+	{ id: "task", header: t("task") },
+	{ id: "overdue", header: t("overdue"), width: "w-24", align: "right" },
 ];
-const ACTIVITY_COLUMNS: SimpleTableColumn[] = [
-	{ id: "activity", header: "Activity" },
+const activityColumnsFor = (t: Translate): SimpleTableColumn[] => [
+	{ id: "activity", header: t("activity") },
 	{
 		id: "company",
-		header: "Company",
+		header: t("company"),
 		width: "w-44",
 		className: "hidden md:table-cell",
 	},
 	{
 		id: "deal",
-		header: "Deal",
+		header: t("deal"),
 		width: "w-48",
 		className: "hidden lg:table-cell",
 	},
@@ -85,10 +88,11 @@ const ACTIVITY_COLUMNS: SimpleTableColumn[] = [
 		width: "w-32",
 		className: "hidden md:table-cell",
 	},
-	{ id: "when", header: "When", width: "w-20", align: "right" },
+	{ id: "when", header: t("when"), width: "w-20", align: "right" },
 ];
 
 export function DashboardSummary() {
+	const t = useTranslations("overview");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 	const openRecord = useOpenRecord();
@@ -130,13 +134,11 @@ export function DashboardSummary() {
 			<div className="grid gap-6 @3xl/page-content:grid-cols-2">
 				<Card className="min-w-0">
 					<CardHeader>
-						<CardTitle>Deals in progress</CardTitle>
-						<CardDescription>
-							The largest open deals, and how long each has sat in its stage
-						</CardDescription>
+						<CardTitle>{t("dealsInProgress")}</CardTitle>
+						<CardDescription>{t("dealsInProgressDescription")}</CardDescription>
 						<CardAction>
 							<Button asChild variant="contrast" size="sm">
-								<Link href={workspaceUrl("/deals")}>Open deals</Link>
+								<Link href={workspaceUrl("/deals")}>{t("openDeals")}</Link>
 							</Button>
 						</CardAction>
 					</CardHeader>
@@ -149,7 +151,7 @@ export function DashboardSummary() {
 							<SimpleTable
 								variant="panel"
 								surface="page"
-								columns={OPEN_COLUMNS}
+								columns={openColumnsFor(t)}
 							>
 								{biggestOpen.map((deal) => (
 									<SimpleTableRow
@@ -194,21 +196,21 @@ export function DashboardSummary() {
 
 				<Card className="min-w-0">
 					<CardHeader>
-						<CardTitle>Overdue tasks</CardTitle>
+						<CardTitle>{t("overdueTasks")}</CardTitle>
 						<CardDescription>
 							{overdueTasks.length === 0
-								? "Every task you have logged is either done or still to come"
-								: `${formatCount(overdueTasks.length, "task")} past due`}
+								? t("nothingOverdue")
+								: t("pastDue", { count: overdueTasks.length })}
 						</CardDescription>
 					</CardHeader>
 					<CardPanel>
 						{overdueTasks.length === 0 ? (
-							<CardPanelEmpty>Nothing overdue. Good.</CardPanelEmpty>
+							<CardPanelEmpty>{t("nothingOverdueGood")}</CardPanelEmpty>
 						) : (
 							<SimpleTable
 								variant="panel"
 								surface="page"
-								columns={TASK_COLUMNS}
+								columns={taskColumnsFor(t)}
 							>
 								{overdueTasks.map((task) => (
 									<SimpleTableRow key={task.id}>
@@ -216,7 +218,7 @@ export function DashboardSummary() {
 											<Checkbox
 												checked={false}
 												disabled={complete.isPending}
-												aria-label="Mark as done"
+												aria-label={t("markAsDone")}
 												onCheckedChange={() =>
 													complete.mutate({ id: task.id, completed: true })
 												}
@@ -245,7 +247,7 @@ export function DashboardSummary() {
 													task.dueAt ? (
 														<LocalRelativeTime date={task.dueAt} />
 													) : (
-														"No due date"
+														t("noDueDate")
 													)
 												}
 											/>
@@ -260,24 +262,20 @@ export function DashboardSummary() {
 
 			<Card className="min-w-0">
 				<CardHeader>
-					<CardTitle>
-						{mine ? "Your recent activity" : "Recent activity"}
-					</CardTitle>
+					<CardTitle>{t(mine ? "yourActivity" : "recentActivity")}</CardTitle>
 					<CardDescription>
-						{mine
-							? "Every note, task and stage change you have logged"
-							: "Every note, task and stage change across the workspace"}
+						{mine ? t("activityMine") : t("activityAll")}
 					</CardDescription>
 					<CardAction>
 						<Button asChild variant="contrast" size="sm">
-							<Link href={workspaceUrl("/companies")}>All companies</Link>
+							<Link href={workspaceUrl("/companies")}>{t("allCompanies")}</Link>
 						</Button>
 					</CardAction>
 				</CardHeader>
 				{recentActivity.length === 0 ? (
-					<CardTableEmpty>Nothing has happened yet.</CardTableEmpty>
+					<CardTableEmpty>{t("nothingHappened")}</CardTableEmpty>
 				) : (
-					<SimpleTable columns={ACTIVITY_COLUMNS}>
+					<SimpleTable columns={activityColumnsFor(t)}>
 						{recentActivity.map((entry) => (
 							<SimpleTableRow key={entry.id}>
 								<TableCell className={CELL}>

@@ -1,13 +1,15 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { PageShellDescription, PageShellTitle } from "@/components/page-shell";
 import { overviewParsers } from "./overview-search-params";
 
 export function OverviewGreetingFallback() {
+	const t = useTranslations("overview");
 	return (
 		<>
-			<PageShellTitle>Welcome back</PageShellTitle>
+			<PageShellTitle>{t("welcome")}</PageShellTitle>
 			<PageShellDescription>
 				What you have closed, what is still in play, and what needs you today.
 			</PageShellDescription>
@@ -16,15 +18,14 @@ export function OverviewGreetingFallback() {
 }
 
 export function OverviewGreeting() {
+	const t = useTranslations("overview");
 	const [scope] = useQueryState("scope", overviewParsers.scope);
 
 	return (
 		<>
-			<PageShellTitle>Welcome back</PageShellTitle>
+			<PageShellTitle>{t("welcome")}</PageShellTitle>
 			<PageShellDescription>
-				{scope === "me"
-					? "What you have closed, what is still in play, and what needs you today."
-					: "What the team has closed, what is still in play, and what needs you today."}
+				{scope === "me" ? t("mine") : t("team")}
 			</PageShellDescription>
 		</>
 	);
