@@ -1,5 +1,14 @@
-import { cp, mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
-import { join, resolve } from "node:path";
+import {
+	cp,
+	mkdir,
+	readFile,
+	readlink,
+	realpath,
+	rm,
+	stat,
+	writeFile,
+} from "node:fs/promises";
+import { isAbsolute, join, relative, resolve } from "node:path";
 import { hostTarget, TARGETS, type Target, vendor } from "./vendor";
 
 const API_EXTERNALS = [
@@ -191,6 +200,37 @@ async function copyRuntimes(
 	});
 }
 
+export async function escapingLinks(payload: string): Promise<string[]> {
+	const glob = new Bun.Glob("**/*");
+	const escaping: string[] = [];
+
+	for await (const entry of glob.scan({
+		cwd: payload,
+		onlyFiles: false,
+		followSymlinks: false,
+	})) {
+		const path = join(payload, entry);
+
+		let target: string;
+		try {
+			target = await readlink(path);
+		} catch {
+			continue;
+		}
+
+		const resolved = isAbsolute(target)
+			? target
+			: resolve(join(path, ".."), target);
+
+		const inside = await realpath(payload).catch(() => payload);
+		const outside = relative(inside, resolved).startsWith("..");
+
+		if (isAbsolute(target) || outside) escaping.push(`${entry} -> ${target}`);
+	}
+
+	return escaping;
+}
+
 export async function build(target: Target): Promise<string> {
 	const desktopRoot = resolve(import.meta.dir, "..");
 	const repoRoot = resolve(desktopRoot, "..", "..");
@@ -213,6 +253,23 @@ export async function build(target: Target): Promise<string> {
 	);
 
 	await writeFile(join(payload, "VERSION"), `${await version(repoRoot)}\n`);
+
+	const escaping = await escapingLinks(payload);
+
+	if (escaping.length > 0) {
+		throw new Error(
+			[
+				`${escaping.length} links in the payload point outside it, so this build only runs on this machine:`,
+				...escaping.slice(0, 10).map((line) => `  ${line}`),
+				escaping.length > 10 ? `  …and ${escaping.length - 10} more` : "",
+				"",
+				"Next traces a workspace as symlinks into whatever node_modules layout it finds.",
+				"Install with `bun install --linker=hoisted` before building the payload.",
+			]
+				.filter(Boolean)
+				.join("\n"),
+		);
+	}
 
 	return payload;
 }

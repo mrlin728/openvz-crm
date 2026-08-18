@@ -33,6 +33,14 @@ That vendors the runtimes for this machine, builds both servers, packs the
 payload, and hands it to Tauri. The result is in
 `apps/desktop/src-tauri/target/release/bundle`.
 
+`build:installer` reinstalls the workspace with `--linker=hoisted` before it
+packs anything, and the payload is checked for links that leave it. Both exist
+for the same reason: Next traces a workspace as symlinks into whatever
+`node_modules` layout it finds, and bun's default isolated layout gives absolute
+links into the developer's own checkout. A payload built that way runs on the
+machine that built it and nowhere else. Run `bun install` afterwards to put the
+isolated layout back, if you want it.
+
 **Build each installer on the system it is for.** The Next.js trace picks up
 `@img/sharp-<platform>`, which is a native library, and neither a dmg nor an
 NSIS installer can be produced from the other side. `scripts/build.ts` refuses a

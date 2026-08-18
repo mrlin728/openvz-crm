@@ -42,6 +42,12 @@ if (import.meta.main) {
 		process.exit(1);
 	}
 
+	await shell(
+		"bun",
+		["install", "--frozen-lockfile", "--linker=hoisted"],
+		resolve(desktopRoot, "..", ".."),
+	);
+
 	const payload = await build(target);
 	const tarball = await archive(payload, target);
 
