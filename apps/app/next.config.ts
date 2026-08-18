@@ -23,7 +23,10 @@ const nextConfig: NextConfig = {
 	allowedDevOrigins,
 
 	...(process.env.DESKTOP_BUILD === "1"
-		? { output: "standalone" as const, outputFileTracingRoot: join(import.meta.dirname, "../..") }
+		? {
+				output: "standalone" as const,
+				outputFileTracingRoot: join(import.meta.dirname, "../.."),
+			}
 		: {}),
 
 	env: {

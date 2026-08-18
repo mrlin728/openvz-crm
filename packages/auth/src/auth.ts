@@ -7,10 +7,7 @@ import { genericOAuth } from "better-auth/plugins/generic-oauth";
 import { organization } from "better-auth/plugins/organization";
 import { AUTH_COOKIE_PREFIX } from "./cookies";
 import { env, isLocalAccountsEnabled } from "./env";
-import {
-	ensureWorkspaceMembership,
-	workspaceHasNoUsers,
-} from "./organization";
+import { ensureWorkspaceMembership, workspaceHasNoUsers } from "./organization";
 import {
 	GOOGLE_PROVIDER_ID,
 	MICROSOFT_PROVIDER_ID,
