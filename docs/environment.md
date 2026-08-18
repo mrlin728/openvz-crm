@@ -52,6 +52,14 @@ list, read by the sign-in guard *and* the sync's "which side is external" decisi
 if they drifted a colleague would be refused at the door or filed as a lead. **An empty
 list fails closed.** Parsed on demand. `packages/auth/src/workspace.ts`.
 
+**`AUTH_LOCAL_ACCOUNTS`** — email and password sign-in, off unless set to `1`. It
+exists for the desktop build, which has no identity provider behind it and nobody
+to create one. **With no `ALLOWED_SIGN_IN`, exactly one account can be created** —
+the first, which becomes the workspace owner; everybody after them has to be on
+the list. Leave it off on a hosted install and use an identity provider. An
+installed copy reads both of these from `settings.env` beside its data, because a
+GUI application inherits no environment a person can edit — see `desktop.md`.
+
 ## Where things are
 
 - **`API_URL`** (`:3001`) mints session cookies and serves `/api/auth/*`;
