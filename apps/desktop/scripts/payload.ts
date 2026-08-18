@@ -15,6 +15,11 @@ const RUNTIME_PACKAGES = ["express"] as const;
 
 const NPM = process.platform === "win32" ? "npm.cmd" : "npm";
 
+const COPY = {
+	recursive: true,
+	dereference: process.platform === "win32",
+} as const;
+
 async function shell(
 	command: string,
 	args: string[],
@@ -126,17 +131,15 @@ async function buildApp(repoRoot: string, payload: string): Promise<void> {
 
 	const destination = join(payload, "server", "app");
 	await rm(destination, { recursive: true, force: true });
-	await cp(join(app, ".next", "standalone"), destination, { recursive: true });
+	await cp(join(app, ".next", "standalone"), destination, COPY);
 
 	await cp(
 		join(app, ".next", "static"),
 		join(destination, "apps", "app", ".next", "static"),
-		{ recursive: true },
+		COPY,
 	);
 
-	await cp(join(app, "public"), join(destination, "apps", "app", "public"), {
-		recursive: true,
-	});
+	await cp(join(app, "public"), join(destination, "apps", "app", "public"), COPY);
 }
 
 async function buildSupervisor(

@@ -46,8 +46,11 @@ const slackCredentials = ():
 	| { clientId: string; clientSecret: string }
 	| undefined => pair("SLACK_CLIENT_ID", "SLACK_CLIENT_SECRET");
 
-const apiUrl =
-	optional("API_URL") ?? optional("BETTER_AUTH_URL") ?? DEFAULT_API_URL;
+export function currentApiUrl(): string {
+	return optional("API_URL") ?? optional("BETTER_AUTH_URL") ?? DEFAULT_API_URL;
+}
+
+const apiUrl = currentApiUrl();
 
 const appUrls = (optional("APP_URL") ?? DEFAULT_APP_URL)
 	.split(",")

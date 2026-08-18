@@ -1,4 +1,4 @@
-import { apiUrl } from "./env";
+import { currentApiUrl } from "./env";
 import { isWorkspaceAdmin, type WorkspaceRole } from "./organization";
 
 export function canConfigureSso(role: WorkspaceRole | null): boolean {
@@ -6,7 +6,7 @@ export function canConfigureSso(role: WorkspaceRole | null): boolean {
 }
 
 export function ssoCallbackBase(): string {
-	return `${apiUrl}/api/auth/sso/callback`;
+	return `${currentApiUrl()}/api/auth/sso/callback`;
 }
 
 export function ssoCallbackURL(providerId: string): string {
