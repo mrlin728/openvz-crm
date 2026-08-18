@@ -101,6 +101,8 @@ person who installed it does not need to write a config file to get in.
   ignores the inner `BEGIN`, and the inner `COMMIT` then ends the outer one, so
   the wrapper commits nothing and warns again on the way out. `managesItsOwnTransaction`
   detects it and lets it run unwrapped.
+- **`npm` is `npm.cmd` on Windows.** `Bun.spawn` does not apply PATHEXT, so
+  spawning `npm` there is ENOENT. The payload script names the right one.
 - **Do not create the directory you are about to rename onto.** POSIX replaces
   an empty destination directory; Windows returns EPERM. `vendor.ts` creates the
   parent and lets the rename make the directory itself.

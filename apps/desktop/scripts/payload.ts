@@ -13,6 +13,8 @@ const API_EXTERNALS = [
 
 const RUNTIME_PACKAGES = ["express"] as const;
 
+const NPM = process.platform === "win32" ? "npm.cmd" : "npm";
+
 async function shell(
 	command: string,
 	args: string[],
@@ -96,7 +98,7 @@ async function buildApi(repoRoot: string, payload: string): Promise<void> {
 
 	console.log(`installing ${wanted.join(", ")} beside the API`);
 
-	await shell("npm", [
+	await shell(NPM, [
 		"install",
 		"--no-save",
 		"--no-audit",
