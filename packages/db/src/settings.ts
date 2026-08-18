@@ -75,6 +75,26 @@ export async function writeContextDevKey(db: Db, key: string): Promise<void> {
 	});
 }
 
+export async function readResearchKeySkipped(db: Db): Promise<boolean> {
+	const row = await db.appSetting.findUnique({
+		where: { id: SETTINGS_ID },
+		select: { researchKeySkipped: true },
+	});
+
+	return row?.researchKeySkipped ?? false;
+}
+
+export async function writeResearchKeySkipped(
+	db: Db,
+	researchKeySkipped: boolean,
+): Promise<void> {
+	await db.appSetting.upsert({
+		where: { id: SETTINGS_ID },
+		create: { id: SETTINGS_ID, researchKeySkipped },
+		update: { researchKeySkipped },
+	});
+}
+
 export async function readReportingCurrency(db: Db): Promise<string> {
 	const row = await db.appSetting.findUnique({
 		where: { id: SETTINGS_ID },

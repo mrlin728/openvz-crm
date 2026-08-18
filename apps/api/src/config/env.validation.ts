@@ -8,6 +8,7 @@ import {
 	Max,
 	Min,
 	MinLength,
+	ValidateIf,
 	validateSync,
 } from "class-validator";
 
@@ -15,6 +16,11 @@ export enum NodeEnv {
 	Development = "development",
 	Production = "production",
 	Test = "test",
+}
+
+function isEnabled(value: string | undefined): boolean {
+	const flag = value?.toLowerCase();
+	return flag === "1" || flag === "true";
 }
 
 export class EnvironmentVariables {
@@ -41,12 +47,19 @@ export class EnvironmentVariables {
 	})
 	BETTER_AUTH_SECRET!: string;
 
+	@ValidateIf(
+		(env: EnvironmentVariables) => !isEnabled(env.AUTH_LOCAL_ACCOUNTS),
+	)
 	@IsString()
 	@MinLength(1, {
 		message:
-			'ALLOWED_SIGN_IN is required — it is the only thing deciding who can sign in. Set it to your email domain, e.g. ALLOWED_SIGN_IN="acme.com", or to a single address for a one-person install.',
+			'ALLOWED_SIGN_IN is required — it is the only thing deciding who can sign in. Set it to your email domain, e.g. ALLOWED_SIGN_IN="acme.com", or to a single address for a one-person install. An installed copy sets AUTH_LOCAL_ACCOUNTS=1 instead, and admits its first account without a list.',
 	})
 	ALLOWED_SIGN_IN!: string;
+
+	@IsOptional()
+	@IsString()
+	AUTH_LOCAL_ACCOUNTS?: string;
 
 	@IsOptional()
 	@IsString()

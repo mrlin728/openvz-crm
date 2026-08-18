@@ -57,6 +57,12 @@ list fails closed.** Parsed on demand. `packages/auth/src/workspace.ts`.
 - **`API_URL`** (`:3001`) mints session cookies and serves `/api/auth/*`;
   `next.config.ts` republishes it as `NEXT_PUBLIC_API_URL`, so one variable does both
   sides. `BETTER_AUTH_URL` is a legacy fallback.
+  **The app's server reads `API_URL` from the live environment first** and only
+  falls back to the copy baked in at build time (`apps/app/lib/env.ts`). Nothing
+  in the browser calls the API by origin — the tRPC client and the auth client
+  both use relative paths through `app/api/[...path]` — so the baked copy is not
+  what anything requests. The desktop build depends on this: it picks a free
+  port for the API at launch, long after the build.
 - **Editing a file under `packages/` does not restart the API. Restart it by hand.**
   `bun --watch src/main.ts` refuses to watch outside its project directory and
   says so once at boot: `File ... is not in the project directory and will not be

@@ -32,6 +32,18 @@ export function ResearchForm() {
 		}),
 	);
 
+	const skip = useMutation(
+		trpc.settings.skipResearchKey.mutationOptions({
+			onSuccess: () => {
+				router.refresh();
+				router.replace("/");
+			},
+			onError: (error) => toast.error(error.message),
+		}),
+	);
+
+	const busy = save.isPending || skip.isPending;
+
 	return (
 		<form
 			onSubmit={(event) => {
@@ -70,10 +82,22 @@ export function ResearchForm() {
 				</Field>
 			</FieldGroup>
 
-			<Button type="submit" disabled={save.isPending}>
-				{save.isPending ? <Spinner data-icon="inline-start" /> : null}
-				Continue
-			</Button>
+			<div className="flex flex-col gap-2">
+				<Button type="submit" disabled={busy}>
+					{save.isPending ? <Spinner data-icon="inline-start" /> : null}
+					Continue
+				</Button>
+
+				<Button
+					disabled={busy}
+					onClick={() => skip.mutate()}
+					type="button"
+					variant="ghost"
+				>
+					{skip.isPending ? <Spinner data-icon="inline-start" /> : null}
+					Skip for now
+				</Button>
+			</div>
 		</form>
 	);
 }

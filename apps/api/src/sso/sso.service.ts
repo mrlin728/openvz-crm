@@ -10,6 +10,7 @@ import {
 	auth,
 	canConfigureSso,
 	isGoogleConfigured,
+	isLocalAccountsEnabled,
 	isMicrosoftConfigured,
 	ssoCallbackBase,
 	ssoCallbackURL,
@@ -33,6 +34,8 @@ export interface PublicSsoProvider {
 }
 
 export interface SignInOptions {
+	password: boolean;
+	firstRun: boolean;
 	google: boolean;
 	microsoft: boolean;
 	providers: PublicSsoProvider[];
@@ -136,13 +139,20 @@ export class SsoService {
 	constructor(@InjectDatabase() private readonly db: Db) {}
 
 	async signInOptions(): Promise<SignInOptions> {
-		const rows = await this.db.ssoProvider.findMany({
-			where: { organizationId: WORKSPACE_ID },
-			select: { providerId: true },
-			orderBy: { providerId: "asc" },
-		});
+		const password = isLocalAccountsEnabled();
+
+		const [rows, users] = await Promise.all([
+			this.db.ssoProvider.findMany({
+				where: { organizationId: WORKSPACE_ID },
+				select: { providerId: true },
+				orderBy: { providerId: "asc" },
+			}),
+			password ? this.db.user.count() : Promise.resolve(1),
+		]);
 
 		return {
+			password,
+			firstRun: password && users === 0,
 			google: isGoogleConfigured(),
 			microsoft: isMicrosoftConfigured(),
 			providers: rows.map((row) => ({

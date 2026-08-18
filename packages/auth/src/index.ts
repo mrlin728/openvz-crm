@@ -3,6 +3,7 @@ export { AUTH_COOKIE_PREFIX } from "./cookies";
 export {
 	appUrl,
 	isGoogleConfigured,
+	isLocalAccountsEnabled,
 	isMicrosoftConfigured,
 	isSlackConfigured,
 } from "./env";

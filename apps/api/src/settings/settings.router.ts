@@ -36,4 +36,9 @@ export class SettingsRouter {
 	async setResearchKey(@Input() input: z.infer<typeof setResearchKeyInput>) {
 		return this.settings.setResearchKey(input.apiKey);
 	}
+
+	@Mutation()
+	async skipResearchKey() {
+		return this.settings.skipResearchKey();
+	}
 }

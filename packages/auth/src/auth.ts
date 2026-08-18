@@ -6,8 +6,11 @@ import { APIError } from "better-auth/api";
 import { genericOAuth } from "better-auth/plugins/generic-oauth";
 import { organization } from "better-auth/plugins/organization";
 import { AUTH_COOKIE_PREFIX } from "./cookies";
-import { env } from "./env";
-import { ensureWorkspaceMembership } from "./organization";
+import { env, isLocalAccountsEnabled } from "./env";
+import {
+	ensureWorkspaceMembership,
+	workspaceHasNoUsers,
+} from "./organization";
 import {
 	GOOGLE_PROVIDER_ID,
 	MICROSOFT_PROVIDER_ID,
@@ -72,7 +75,8 @@ export const auth = betterAuth({
 	}),
 
 	emailAndPassword: {
-		enabled: false,
+		enabled: isLocalAccountsEnabled(),
+		autoSignIn: true,
 	},
 
 	socialProviders,
@@ -101,7 +105,7 @@ export const auth = betterAuth({
 	advanced: {
 		cookiePrefix: AUTH_COOKIE_PREFIX,
 
-		useSecureCookies: env.isProduction,
+		useSecureCookies: env.secureCookies,
 		...(env.cookieDomain && {
 			crossSubDomainCookies: {
 				enabled: true,
@@ -242,9 +246,14 @@ export const auth = betterAuth({
 			create: {
 				before: async (user) => {
 					if (!hasSignInAllowList()) {
+						if (isLocalAccountsEnabled() && (await workspaceHasNoUsers())) {
+							return { data: user };
+						}
+
 						throw new APIError("FORBIDDEN", {
-							message:
-								'No one can sign in yet: set ALLOWED_SIGN_IN in .env to your email domain (for example ALLOWED_SIGN_IN="acme.com") and restart.',
+							message: isLocalAccountsEnabled()
+								? "This CRM already has an account. To let somebody else in, set ALLOWED_SIGN_IN to their address and restart."
+								: 'No one can sign in yet: set ALLOWED_SIGN_IN in .env to your email domain (for example ALLOWED_SIGN_IN="acme.com") and restart.',
 						});
 					}
 

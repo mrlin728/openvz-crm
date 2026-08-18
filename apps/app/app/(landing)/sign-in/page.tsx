@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { AuthHeading, AuthShell } from "@/components/auth-shell";
 import { getSession } from "@/lib/session";
 import { getServerQueryClient, getServerTrpc } from "@/lib/trpc/server";
+import { PasswordSignIn } from "./password-sign-in";
 import { SocialSignIn } from "./social-sign-in";
 import { type SsoProvider, SsoSignIn } from "./sso-sign-in";
 
@@ -13,6 +14,8 @@ export const metadata: Metadata = {
 };
 
 type SignInOptions = {
+	password: boolean;
+	firstRun: boolean;
 	google: boolean;
 	microsoft: boolean;
 	providers: SsoProvider[];
@@ -79,7 +82,10 @@ async function SignIn({
 				? configured
 				: [];
 
-	if (!showSso && social.length === 0) {
+	const password = (options?.password ?? false) && insisted === undefined;
+	const firstRun = password && (options?.firstRun ?? false);
+
+	if (!showSso && social.length === 0 && !password) {
 		return (
 			<>
 				<AuthHeading
@@ -100,10 +106,15 @@ async function SignIn({
 	return (
 		<>
 			<AuthHeading
-				title="Welcome back"
-				description="Sign in with your account to continue."
+				description={
+					firstRun
+						? "This copy is yours. The account you make here is the workspace owner."
+						: "Sign in with your account to continue."
+				}
+				title={firstRun ? "Set up your CRM" : "Welcome back"}
 			/>
 
+			{password ? <PasswordSignIn create={firstRun} /> : null}
 			{showSso ? <SsoSignIn providers={providers} /> : null}
 			{social.map((provider) => (
 				<SocialSignIn key={provider} provider={provider} />

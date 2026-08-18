@@ -65,6 +65,8 @@ describe("Auth (e2e)", () => {
 		);
 
 		expect(response.body.result.data).toEqual({
+			password: false,
+			firstRun: false,
 			google: true,
 			microsoft: microsoftConfigured,
 			providers: [],

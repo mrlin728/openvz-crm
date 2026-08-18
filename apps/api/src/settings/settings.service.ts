@@ -5,8 +5,10 @@ import {
 	maskKey,
 	readAgentModel,
 	readContextDevKey,
+	readResearchKeySkipped,
 	writeAgentModel,
 	writeContextDevKey,
+	writeResearchKeySkipped,
 } from "@openvz/db/settings";
 import { ResearchKeyService } from "../agent/research-key.service";
 import { BackfillService } from "../backfill/backfill.service";
@@ -31,6 +33,7 @@ export interface ModelCatalogResult {
 
 export interface ResearchKeySettings {
 	configured: boolean;
+	skipped: boolean;
 	hint: string | null;
 }
 
@@ -99,9 +102,24 @@ export class SettingsService {
 	}
 
 	async researchKey(): Promise<ResearchKeySettings> {
-		const key = await readContextDevKey(this.db);
+		const [key, skipped] = await Promise.all([
+			readContextDevKey(this.db),
+			readResearchKeySkipped(this.db),
+		]);
 
-		return { configured: key !== null, hint: key ? maskKey(key) : null };
+		return {
+			configured: key !== null,
+			skipped,
+			hint: key ? maskKey(key) : null,
+		};
+	}
+
+	async skipResearchKey(): Promise<ResearchKeySettings> {
+		await writeResearchKeySkipped(this.db, true);
+
+		this.logger.log({ message: "Research key postponed" });
+
+		return this.researchKey();
 	}
 
 	async setResearchKey(apiKey: string): Promise<ResearchKeySettings> {
@@ -112,6 +130,7 @@ export class SettingsService {
 		}
 
 		await writeContextDevKey(this.db, apiKey);
+		await writeResearchKeySkipped(this.db, false);
 
 		this.logger.log({
 			message: "Context key saved",

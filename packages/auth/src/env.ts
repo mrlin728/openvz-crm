@@ -64,8 +64,13 @@ export const env = {
 	slack: slackCredentials(),
 	cookieDomain: optional("AUTH_COOKIE_DOMAIN"),
 	trustedOrigins: [...new Set([...appUrls, apiUrl])],
-	isProduction: process.env.NODE_ENV === "production",
+	secureCookies: apiUrl.startsWith("https://"),
 } as const;
+
+export function isLocalAccountsEnabled(): boolean {
+	const value = process.env.AUTH_LOCAL_ACCOUNTS?.toLowerCase();
+	return value === "1" || value === "true";
+}
 
 export function isGoogleConfigured(): boolean {
 	return env.google !== undefined;

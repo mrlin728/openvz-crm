@@ -1273,6 +1273,8 @@ model AppSetting {
 
   contextDevApiKey String?
 
+  researchKeySkipped Boolean @default(false)
+
   reportingCurrency String?
 
   ratesRefreshedAt DateTime?

@@ -37,6 +37,10 @@ export function canManageTracking(role: WorkspaceRole | null): boolean {
 	return isWorkspaceAdmin(role);
 }
 
+export async function workspaceHasNoUsers(): Promise<boolean> {
+	return (await db.user.count()) === 0;
+}
+
 export async function ensureWorkspaceMembership(
 	userId: string,
 ): Promise<string | undefined> {

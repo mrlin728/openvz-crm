@@ -58,12 +58,12 @@ export async function readWorkspaceGate(
 }
 
 export async function readResearchGate(request: NextRequest): Promise<Gate> {
-	const key = await read<{ configured?: boolean }>(
+	const key = await read<{ configured?: boolean; skipped?: boolean }>(
 		request,
 		"settings.researchKey",
 	);
 
 	if (typeof key?.configured !== "boolean") return "unknown";
 
-	return key.configured ? "settled" : "required";
+	return key.configured || key.skipped === true ? "settled" : "required";
 }
