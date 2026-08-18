@@ -204,6 +204,46 @@
 			"disconnecting": "Disconnecting…",
 			"refreshFromSlack": "Refresh from Slack",
 			"continue": "Continue"
+		},
+		"sso": {
+			"title": "SSO",
+			"description": "Let your people sign in through your own identity provider. While one is configured, the sign-in page offers it instead of Google.",
+			"provider": "Provider",
+			"emailDomain": "Email domain",
+			"issuer": "Issuer",
+			"redirectUri": "Redirect URI",
+			"actions": "Actions",
+			"cancel": "Cancel",
+			"removed": "Identity provider removed.",
+			"search": "Search by name, domain or issuer…",
+			"empty": "No identity provider yet — everyone signs in with Google.",
+			"addTitle": "Add an identity provider",
+			"issuerUrl": "Issuer URL",
+			"issuerHint": "Where discovery lives.",
+			"domainHint": "Comma-separate several.",
+			"clientId": "Client ID",
+			"clientSecret": "Client secret",
+			"secretHint": "Never shown again."
+		},
+		"currencies": {
+			"title": "Currencies",
+			"description": "What your numbers are reported in, and how the other currencies get there."
+		},
+		"members": {
+			"title": "Members",
+			"description": "Everyone who has access to your CRM.",
+			"name": "Name",
+			"email": "Email",
+			"roleColumn": "Role",
+			"joined": "Joined",
+			"joinedDate": "Joined date",
+			"actions": "Actions",
+			"roleChanged": "Role changed.",
+			"search": "Search by name or email…",
+			"empty": "Nobody matches this view.",
+			"owner": "Owner",
+			"admin": "Admin",
+			"member": "Member"
 		}
 	},
 	"nav": {

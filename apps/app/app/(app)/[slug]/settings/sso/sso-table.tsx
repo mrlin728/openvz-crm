@@ -19,6 +19,7 @@ import {
 } from "@openvz/ui/components/data-table";
 import { Icon } from "@openvz/ui/components/icon";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { ListSearch } from "@/components/data-table/list-search";
 import { useTableQuery } from "@/components/data-table/use-table-query";
@@ -30,7 +31,10 @@ import { ssoSearchParams } from "./sso-search-params";
 
 type ProviderRow = RouterOutputs["sso"]["list"]["rows"][number];
 
+type Translate = ReturnType<typeof useTranslations<"settings.sso">>;
+
 function columns(
+	t: Translate,
 	canConfigure: boolean,
 	onRemove: (provider: ProviderRow) => void,
 	pending: boolean,
@@ -38,7 +42,7 @@ function columns(
 	return [
 		{
 			id: "providerId",
-			header: "Provider",
+			header: t("provider"),
 			sortable: true,
 			hideable: false,
 			width: "w-[30%]",
@@ -54,7 +58,7 @@ function columns(
 		},
 		{
 			id: "domain",
-			header: "Email domain",
+			header: t("emailDomain"),
 			sortable: true,
 			width: "w-[22%]",
 			hideBelow: "sm",
@@ -66,7 +70,7 @@ function columns(
 		},
 		{
 			id: "issuer",
-			header: "Issuer",
+			header: t("issuer"),
 			sortable: true,
 			width: "w-[22%]",
 			hideBelow: "md",
@@ -76,20 +80,20 @@ function columns(
 		},
 		{
 			id: "callbackURL",
-			header: "Redirect URI",
+			header: t("redirectUri"),
 			width: "w-[20%]",
 			hideBelow: "lg",
 			cell: (row) => (
 				<span className="flex min-w-0 items-center gap-1 text-muted-foreground">
 					<span className="truncate">{row.callbackURL}</span>
-					<CopyValue value={row.callbackURL} label="Redirect URI" />
+					<CopyValue value={row.callbackURL} label={t("redirectUri")} />
 				</span>
 			),
 		},
 		{
 			id: "actions",
 			header: <span className="sr-only">Actions</span>,
-			label: "Actions",
+			label: t("actions"),
 			hideable: false,
 			align: "right",
 			width: "w-[6%]",
@@ -113,7 +117,7 @@ function columns(
 							</AlertDialogHeader>
 
 							<AlertDialogFooter>
-								<AlertDialogCancel>Cancel</AlertDialogCancel>
+								<AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
 								<AlertDialogAction
 									variant="destructive"
 									onClick={() => onRemove(row)}
@@ -129,6 +133,7 @@ function columns(
 }
 
 export function SsoTable() {
+	const t = useTranslations("settings.sso");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 	const { query, input } = useTableQuery(ssoSearchParams);
@@ -143,7 +148,7 @@ export function SsoTable() {
 		trpc.sso.remove.mutationOptions({
 			onSuccess: async () => {
 				await cache.sso();
-				toast.success("Identity provider removed.");
+				toast.success(t("removed"));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -152,8 +157,9 @@ export function SsoTable() {
 	return (
 		<DataTable
 			query={query}
-			search={<ListSearch placeholder="Search by name, domain or issuer…" />}
+			search={<ListSearch placeholder={t("search")} />}
 			columns={columns(
+				t,
 				settings.data?.canConfigure ?? false,
 				(provider) => remove.mutate({ providerId: provider.providerId }),
 				remove.isPending,
@@ -162,7 +168,7 @@ export function SsoTable() {
 			total={providers.data?.total ?? 0}
 			getRowId={(row) => row.providerId}
 			loading={providers.isFetching}
-			empty="No identity provider yet — everyone signs in with Google."
+			empty={t("empty")}
 		/>
 	);
 }

@@ -204,6 +204,46 @@
 			"disconnecting": "断开中…",
 			"refreshFromSlack": "从 Slack 刷新",
 			"continue": "继续"
+		},
+		"sso": {
+			"title": "单点登录",
+			"description": "让你的人通过你自己的身份提供方登录。配置好之后，登录页会用它代替 Google。",
+			"provider": "身份提供方",
+			"emailDomain": "邮箱域名",
+			"issuer": "颁发者",
+			"redirectUri": "回调地址",
+			"actions": "操作",
+			"cancel": "取消",
+			"removed": "身份提供方已移除。",
+			"search": "按名称、域名或颁发者搜索…",
+			"empty": "还没有身份提供方 —— 所有人都用 Google 登录。",
+			"addTitle": "添加身份提供方",
+			"issuerUrl": "颁发者地址",
+			"issuerHint": "发现文档所在的位置。",
+			"domainHint": "多个用逗号分隔。",
+			"clientId": "客户端 ID",
+			"clientSecret": "客户端密钥",
+			"secretHint": "只显示这一次。"
+		},
+		"currencies": {
+			"title": "币种",
+			"description": "你的数字以哪种货币报出，以及其他货币怎么换算过来。"
+		},
+		"members": {
+			"title": "成员",
+			"description": "所有能访问这个 CRM 的人。",
+			"name": "姓名",
+			"email": "邮箱",
+			"roleColumn": "角色",
+			"joined": "加入时间",
+			"joinedDate": "加入日期",
+			"actions": "操作",
+			"roleChanged": "角色已更改。",
+			"search": "按姓名或邮箱搜索…",
+			"empty": "没有符合这个视图的人。",
+			"owner": "所有者",
+			"admin": "管理员",
+			"member": "成员"
 		}
 	},
 	"nav": {

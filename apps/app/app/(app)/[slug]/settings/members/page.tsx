@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import {
 	PageShell,
@@ -15,21 +17,22 @@ import { getServerQueryClient, getServerTrpc } from "@/lib/trpc/server";
 import { membersSearchParams } from "./members-search-params";
 import { MembersTable } from "./members-table";
 
-export const metadata: Metadata = {
-	title: "Members",
-};
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getTranslations("settings.members");
+	return { title: t("title") };
+}
 
 export default function MembersSettingsPage({
 	searchParams,
 }: PageProps<"/[slug]/settings/members">) {
+	const t = useTranslations("settings.members");
+
 	return (
 		<PageShell className="min-h-0">
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>Members</PageShellTitle>
-					<PageShellDescription>
-						Everyone who has access to your CRM.
-					</PageShellDescription>
+					<PageShellTitle>{t("title")}</PageShellTitle>
+					<PageShellDescription>{t("description")}</PageShellDescription>
 				</PageShellHeading>
 			</PageShellHeader>
 

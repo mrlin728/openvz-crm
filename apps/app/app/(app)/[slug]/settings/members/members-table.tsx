@@ -16,6 +16,7 @@ import {
 import { Icon } from "@openvz/ui/components/icon";
 import { PersonAvatar } from "@openvz/ui/components/person-avatar";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { ListSearch } from "@/components/data-table/list-search";
 import { useTableQuery } from "@/components/data-table/use-table-query";
@@ -26,16 +27,19 @@ import type { RouterOutputs } from "@/lib/trpc/types";
 import { membersSearchParams } from "./members-search-params";
 
 const ROLE_LABEL = {
-	owner: "Owner",
-	admin: "Admin",
-	member: "Member",
+	owner: "owner",
+	admin: "admin",
+	member: "member",
 } as const;
 
 type Role = keyof typeof ROLE_LABEL;
 
 type MemberRow = RouterOutputs["workspace"]["members"]["rows"][number];
 
+type Translate = ReturnType<typeof useTranslations<"settings.members">>;
+
 function columns(
+	t: Translate,
 	canChangeRoles: boolean,
 	onChangeRole: (member: MemberRow, role: Role) => void,
 	pending: boolean,
@@ -43,7 +47,7 @@ function columns(
 	return [
 		{
 			id: "name",
-			header: "Name",
+			header: t("name"),
 			sortable: true,
 			hideable: false,
 			width: "w-[34%]",
@@ -64,7 +68,7 @@ function columns(
 		},
 		{
 			id: "email",
-			header: "Email",
+			header: t("email"),
 			sortable: true,
 			width: "w-[32%]",
 			hideBelow: "md",
@@ -74,17 +78,17 @@ function columns(
 		},
 		{
 			id: "role",
-			header: "Role",
+			header: t("roleColumn"),
 			sortable: true,
 			width: "w-[14%]",
 			cell: (row) => (
-				<span className="text-muted-foreground">{ROLE_LABEL[row.role]}</span>
+				<span className="text-muted-foreground">{t(ROLE_LABEL[row.role])}</span>
 			),
 		},
 		{
 			id: "joinedAt",
-			header: "Joined",
-			label: "Joined date",
+			header: t("joined"),
+			label: t("joinedDate"),
 			sortable: true,
 			align: "right",
 			width: "w-[14%]",
@@ -98,7 +102,7 @@ function columns(
 		{
 			id: "actions",
 			header: <span className="sr-only">Actions</span>,
-			label: "Actions",
+			label: t("actions"),
 			hideable: false,
 			align: "right",
 			width: "w-[6%]",
@@ -122,7 +126,7 @@ function columns(
 										onChangeRole(row, role);
 									}}
 								>
-									{ROLE_LABEL[role]}
+									{t(ROLE_LABEL[role])}
 								</DropdownMenuItem>
 							))}
 						</DropdownMenuContent>
@@ -133,6 +137,7 @@ function columns(
 }
 
 export function MembersTable() {
+	const t = useTranslations("settings.members");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 	const { query, input } = useTableQuery(membersSearchParams);
@@ -147,7 +152,7 @@ export function MembersTable() {
 		trpc.workspace.setMemberRole.mutationOptions({
 			onSuccess: async () => {
 				await cache.workspace();
-				toast.success("Role changed.");
+				toast.success(t("roleChanged"));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -158,10 +163,10 @@ export function MembersTable() {
 	const facets: DataTableFacet[] = [
 		{
 			id: "role",
-			label: "Role",
+			label: t("roleColumn"),
 			options: (Object.keys(ROLE_LABEL) as Role[]).flatMap((role) =>
 				(facetCounts?.role?.[role] ?? 0) > 0
-					? [{ value: role, label: ROLE_LABEL[role] }]
+					? [{ value: role, label: t(ROLE_LABEL[role]) }]
 					: [],
 			),
 		},
@@ -170,8 +175,9 @@ export function MembersTable() {
 	return (
 		<DataTable
 			query={query}
-			search={<ListSearch placeholder="Search by name or email…" />}
+			search={<ListSearch placeholder={t("search")} />}
 			columns={columns(
+				t,
 				workspace.data?.canChangeRoles ?? false,
 				(member, role) => setRole.mutate({ memberId: member.id, role }),
 				setRole.isPending,
@@ -182,7 +188,7 @@ export function MembersTable() {
 			facets={facets}
 			getRowId={(row) => row.id}
 			loading={members.isFetching}
-			empty="Nobody matches this view."
+			empty={t("empty")}
 		/>
 	);
 }
