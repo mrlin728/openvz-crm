@@ -6,6 +6,7 @@
 </p>
 
 <p align="center">
+  <a href="#download"><strong>Download</strong></a> ·
   <a href="#the-agent"><strong>The agent</strong></a> ·
   <a href="#the-stack"><strong>Stack</strong></a> ·
   <a href="#quick-start"><strong>Quick start</strong></a> ·
@@ -177,9 +178,33 @@ Written up where the work happens, not in a style guide:
   that is always the same value is a column, an index and a permissions check that
   buys nothing and reads like a real one at review time.
 
+## Download
+
+There is an installer, and it is the shortest way to see this working. It carries
+its own Postgres and its own JavaScript runtime, so there is no database to
+provision, no Docker, and no account to create anywhere.
+
+| | |
+| --- | --- |
+| macOS (Apple silicon) | [`.dmg`](https://github.com/mrlin728/openvz-crm/releases/latest) |
+| Windows (x64) | [`.exe`](https://github.com/mrlin728/openvz-crm/releases/latest) |
+
+Open it and create the first account with an email and a password — that account
+owns the workspace. Everything stays on the machine it is installed on:
+`~/Library/Application Support/OPENVZ CRM` on macOS, `%APPDATA%\OPENVZ CRM` on
+Windows.
+
+Neither installer is signed. macOS needs a right-click → Open the first time, and
+Windows SmartScreen warns once.
+
+The research agent is not in the installer: it needs a model key and its own
+runtime. The CRM works without it. [docs/desktop.md](./docs/desktop.md) covers how
+the build is made and what is in it.
+
 ## Quick start
 
-You need [Bun](https://bun.com), [Node 24 or newer](https://nodejs.org) — the agent
+This is the development setup, and it is also how you host it. You need
+[Bun](https://bun.com), [Node 24 or newer](https://nodejs.org) — the agent
 runtime requires it — and Docker.
 
 ```sh
