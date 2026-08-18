@@ -4,6 +4,8 @@ import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { Layout } from "./paths";
 
+const FLUSH_GRACE_MS = 250;
+
 export const ROLE = "openvz";
 export const DATABASE = "openvz_crm";
 export const ADMIN_DATABASE = "postgres";
@@ -49,9 +51,18 @@ async function run(
 		child.stderr.on("data", (chunk: Buffer) => {
 			stderr += chunk.toString();
 		});
-		child.on("error", reject);
-		child.on("close", (code) => {
+		let settled = false;
+
+		const finish = (code: number | null) => {
+			if (settled) return;
+			settled = true;
 			resolve({ code: code ?? -1, stdout, stderr });
+		};
+
+		child.on("error", reject);
+		child.on("close", finish);
+		child.on("exit", (code) => {
+			setTimeout(() => finish(code), FLUSH_GRACE_MS);
 		});
 	});
 }

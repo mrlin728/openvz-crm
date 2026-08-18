@@ -84,6 +84,11 @@ person who installed it does not need to write a config file to get in.
 
 ## Things that were learned the hard way
 
+- **Wait for a child to exit, not for its output to end.** `pg_ctl start` leaves
+  the postmaster holding the stdout and stderr handles it inherited, so on
+  Windows the stream never closes and a wait on that never returns — the cluster
+  comes up and the supervisor sits there. On POSIX `pg_ctl` detaches the
+  postmaster onto the log file, which is why it only shows up on Windows.
 - **No unix socket.** The socket path is capped at 103 bytes, and a home
   directory a few levels deep exceeds it on its own. Everything connects over
   `127.0.0.1`.
