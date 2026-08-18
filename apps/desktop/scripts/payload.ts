@@ -1,4 +1,4 @@
-import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { hostTarget, TARGETS, type Target, vendor } from "./vendor";
 
@@ -15,9 +15,19 @@ const RUNTIME_PACKAGES = ["express"] as const;
 
 const NPM = process.platform === "win32" ? "npm.cmd" : "npm";
 
+async function leadsSomewhere(source: string): Promise<boolean> {
+	try {
+		await stat(source);
+		return true;
+	} catch {
+		return false;
+	}
+}
+
 const COPY = {
 	recursive: true,
 	dereference: process.platform === "win32",
+	filter: leadsSomewhere,
 } as const;
 
 async function shell(

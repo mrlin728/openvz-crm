@@ -104,6 +104,10 @@ person who installed it does not need to write a config file to get in.
 - **The standalone build is copied with `dereference` on Windows.** Next traces
   the workspace packages in as symlinks, and creating a symlink on Windows needs
   elevation, so a plain recursive copy is EPERM. macOS keeps the links.
+- **The trace also contains links that lead nowhere.** Bun's isolated layout
+  leaves symlinks into `node_modules/.bun` that Next did not trace a target for,
+  and following one is another EPERM. The copy filters out anything that does not
+  `stat`, which is the same thing as "this link has no target to copy".
 - **`npm` is `npm.cmd` on Windows.** `Bun.spawn` does not apply PATHEXT, so
   spawning `npm` there is ENOENT. The payload script names the right one.
 - **Do not create the directory you are about to rename onto.** POSIX replaces
