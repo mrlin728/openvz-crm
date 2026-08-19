@@ -66,14 +66,13 @@ export function SlackPeopleMatches({
 			</div>
 			{matches.data.sync === "stalled" ? (
 				<p className="text-center text-warning text-xs">
-					OPENVZ AI is not reading Slack right now. These matches can be out of
-					date.
+					{t("notReadingSlack")}
 				</p>
 			) : null}
 			<div className="flex flex-col divide-y border-y">
 				{rows.length === 0 ? (
 					<p className="py-5 text-center text-muted-foreground text-sm">
-						No CRM teammates are available to match.
+						{t("noTeammates")}
 					</p>
 				) : null}
 				{rows.map((row) => (
@@ -94,7 +93,7 @@ export function SlackPeopleMatches({
 								</div>
 							) : (
 								<p className="px-2.5 py-2 text-muted-foreground text-xs">
-									No exact email match
+									{t("noExactMatch")}
 								</p>
 							)}
 						</div>
@@ -102,9 +101,7 @@ export function SlackPeopleMatches({
 				))}
 			</div>
 			<p className="text-muted-foreground text-xs leading-relaxed">
-				Refresh after a Slack email changes. The CRM matches exact email
-				addresses only. Someone with no exact match stays unmatched, and an
-				agent stops instead of guessing at a similar name.
+				{t("matchNote")}
 			</p>
 			<div className="flex justify-end">
 				<Button asChild>

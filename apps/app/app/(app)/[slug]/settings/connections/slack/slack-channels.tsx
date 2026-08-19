@@ -77,10 +77,8 @@ export function SlackChannels() {
 		<section className="flex flex-col gap-3 px-(--spacing-block-inline)">
 			<div className="flex items-end justify-between gap-4">
 				<div>
-					<h2 className="font-medium text-sm">Channels OPENVZ AI can reach</h2>
-					<p className="text-muted-foreground text-xs">
-						Agents pick from this list.
-					</p>
+					<h2 className="font-medium text-sm">{t("channelsReachable")}</h2>
+					<p className="text-muted-foreground text-xs">{t("agentsPickFrom")}</p>
 				</div>
 				<Button
 					disabled={refreshing}

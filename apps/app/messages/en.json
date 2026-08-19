@@ -47,7 +47,9 @@
 			"website": "Website",
 			"websiteHint": "Your own company's website.",
 			"save": "Save",
-			"saved": "Workspace saved."
+			"saved": "Workspace saved.",
+			"nameHint": "Shown wherever the CRM refers to your own company.",
+			"adminOnly": "Only an owner or an admin can change this."
 		},
 		"researchKey": {
 			"title": "Company research",
@@ -96,7 +98,11 @@
 			"comingSoon": "Coming soon",
 			"anythingElse": "Anything else",
 			"intakeUnavailable": "The intake API is not available yet",
-			"alreadyConnected": "{names} {count, plural, =1 {is} other {are}} already connected."
+			"alreadyConnected": "{names} {count, plural, =1 {is} other {are}} already connected.",
+			"pageDescription": "Where your CRM gets its information, and what it is allowed to send on your behalf.",
+			"addConnection": "Add connection",
+			"browseAll": "Browse all connections",
+			"connect": "Connect"
 		},
 		"google": {
 			"meetings": "Meetings",
@@ -127,7 +133,13 @@
 			"revoke": "Revoke Google access",
 			"revokeTitle": "Revoke Google access?",
 			"revokeRequired": "You will be signed out, and you cannot use the CRM again until you grant access.",
-			"revokeOptional": "New email and meetings stop arriving. Everything already synced stays, and you can connect Google again from this page."
+			"revokeOptional": "New email and meetings stop arriving. Everything already synced stays, and you can connect Google again from this page.",
+			"landsOnCompany": "Meetings and email threads land on the matching company as they happen.",
+			"resolve": "Resolve",
+			"lastChecked": "Last checked",
+			"delete": "Delete",
+			"revokeShort": "Revoke",
+			"manageInAccount": "Manage in your Google account"
 		},
 		"microsoft": {
 			"autoCreateEmail": "Add the company and contact when you reply to someone new",
@@ -156,7 +168,13 @@
 			"disconnectTitle": "Disconnect Microsoft?",
 			"disconnectRequired": "You will be signed out, and you cannot use the CRM again until you grant access.",
 			"disconnectOptional": "New email stops arriving. Everything already synced stays, and you can connect Microsoft again from this page.",
-			"disconnectNote": "Microsoft has no way for us to withdraw the consent itself — remove this app from your Microsoft account to do that."
+			"disconnectNote": "Microsoft has no way for us to withdraw the consent itself — remove this app from your Microsoft account to do that.",
+			"landsOnCompany": "Email threads land on the matching company as they happen.",
+			"lastChecked": "Last checked",
+			"email": "Email",
+			"delete": "Delete",
+			"disconnectShort": "Disconnect",
+			"manageInAccount": "Manage in your Microsoft account"
 		},
 		"slack": {
 			"notConnected": "Not connected",
@@ -203,7 +221,20 @@
 			"disconnectTitle": "Disconnect {workspace}?",
 			"disconnecting": "Disconnecting…",
 			"refreshFromSlack": "Refresh from Slack",
-			"continue": "Continue"
+			"continue": "Continue",
+			"agentsUsingSlack": "Agents that use Slack",
+			"builtInChat": "Built in chat, not here. Open one to change it.",
+			"noDeployedAgents": "No deployed agents use Slack yet.",
+			"describeAnother": "Describe another agent in chat",
+			"review": "Review",
+			"channelsReachable": "Channels OPENVZ AI can reach",
+			"agentsPickFrom": "Agents pick from this list.",
+			"disconnectShort": "Disconnect",
+			"disconnectConsequence": "Agents stop sending to Slack immediately, and the cached channel list is cleared so a new app re-reads it.",
+			"notReadingSlack": "OPENVZ AI is not reading Slack right now. These matches can be out of date.",
+			"noTeammates": "No CRM teammates are available to match.",
+			"noExactMatch": "No exact email match",
+			"matchNote": "Refresh after a Slack email changes. The CRM matches exact email addresses only."
 		},
 		"sso": {
 			"title": "SSO",
@@ -223,7 +254,13 @@
 			"domainHint": "Comma-separate several.",
 			"clientId": "Client ID",
 			"clientSecret": "Client secret",
-			"secretHint": "Never shown again."
+			"secretHint": "Never shown again.",
+			"addProvider": "Add provider",
+			"configureOidc": "Configure an OpenID Connect provider.",
+			"name": "Name",
+			"nameHint": "Names the sign-in button. Cannot be changed later.",
+			"addAtProvider": "Add this at your provider before saving.",
+			"remove": "Remove"
 		},
 		"currencies": {
 			"title": "Currencies",
@@ -250,7 +287,10 @@
 			"inUse": "Currencies in use",
 			"allConvertible": "Every deal with an amount can be converted into the reporting currency.",
 			"noAmounts": "No deals have an amount yet.",
-			"noRate": "No rate"
+			"noRate": "No rate",
+			"noRates": "No rates yet. Refresh to fetch them, or enter one by hand.",
+			"remove": "Remove",
+			"yes": "Yes"
 		},
 		"members": {
 			"title": "Members",

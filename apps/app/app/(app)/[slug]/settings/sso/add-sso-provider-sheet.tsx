@@ -46,10 +46,12 @@ const EMPTY = {
 };
 
 function AddButton(props: ComponentProps<typeof Button>) {
+	const t = useTranslations("settings.sso");
+
 	return (
 		<Button {...props}>
 			<Icon icon={Add} data-icon="inline-start" />
-			Add provider
+			{t("addProvider")}
 		</Button>
 	);
 }
@@ -114,9 +116,7 @@ function AddSsoProviderForm() {
 			<SheetContent side="right">
 				<SheetHeader>
 					<SheetTitle>{t("addTitle")}</SheetTitle>
-					<SheetDescription>
-						Configure an OpenID Connect provider.
-					</SheetDescription>
+					<SheetDescription>{t("configureOidc")}</SheetDescription>
 				</SheetHeader>
 
 				<form
@@ -135,7 +135,7 @@ function AddSsoProviderForm() {
 				>
 					<FieldGroup>
 						<Field>
-							<FieldLabel htmlFor={providerIdId}>Name</FieldLabel>
+							<FieldLabel htmlFor={providerIdId}>{t("name")}</FieldLabel>
 							<Input
 								id={providerIdId}
 								value={values.providerId}
@@ -147,9 +147,7 @@ function AddSsoProviderForm() {
 								spellCheck={false}
 								required
 							/>
-							<FieldDescription>
-								Names the sign-in button. Cannot be changed later.
-							</FieldDescription>
+							<FieldDescription>{t("nameHint")}</FieldDescription>
 						</Field>
 
 						<Field>
@@ -223,9 +221,7 @@ function AddSsoProviderForm() {
 									<CopyValue value={callbackURL} label={t("redirectUri")} />
 								</InputGroupAddon>
 							</InputGroup>
-							<FieldDescription>
-								Add this at your provider before saving.
-							</FieldDescription>
+							<FieldDescription>{t("addAtProvider")}</FieldDescription>
 						</Field>
 					</FieldGroup>
 				</form>

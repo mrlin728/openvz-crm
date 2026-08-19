@@ -121,10 +121,7 @@ function GoogleUnavailable() {
 						/>
 					</div>
 				</CardTitle>
-				<CardDescription>
-					Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in the root .env file
-					and restart.
-				</CardDescription>
+				<CardDescription>{t("notConfiguredHelp")}</CardDescription>
 			</CardHeader>
 		</Card>
 	);
@@ -313,10 +310,7 @@ export function GoogleConnection({
 						/>
 					</div>
 				</CardTitle>
-				<CardDescription>
-					Meetings and email threads land on the matching company as they
-					happen.
-				</CardDescription>
+				<CardDescription>{t("landsOnCompany")}</CardDescription>
 
 				<CardAction>
 					<Button
@@ -361,7 +355,7 @@ export function GoogleConnection({
 									<AlertAction>
 										<Button variant="contrast" size="xs" asChild>
 											<a href={url} target="_blank" rel="noreferrer">
-												Resolve
+												{t("resolve")}
 												<Icon icon={Launch} data-icon="inline-end" />
 											</a>
 										</Button>
@@ -374,7 +368,8 @@ export function GoogleConnection({
 					<p className="text-muted-foreground text-xs">
 						{lastSyncedAt ? (
 							<>
-								Last checked <LocalRelativeTime date={lastSyncedAt} />
+								{t("lastChecked")}
+								<LocalRelativeTime date={lastSyncedAt} />
 							</>
 						) : (
 							t("waitingFirstCheck")
@@ -435,7 +430,7 @@ export function GoogleConnection({
 										variant="destructive"
 										onClick={() => purge.mutate()}
 									>
-										Delete
+										{t("delete")}
 									</AlertDialogAction>
 								</AlertDialogFooter>
 							</AlertDialogContent>
@@ -462,7 +457,7 @@ export function GoogleConnection({
 										variant="destructive"
 										onClick={() => revoke.mutate()}
 									>
-										Revoke
+										{t("revokeShort")}
 									</AlertDialogAction>
 								</AlertDialogFooter>
 							</AlertDialogContent>
@@ -474,7 +469,7 @@ export function GoogleConnection({
 								target="_blank"
 								rel="noreferrer"
 							>
-								Manage in your Google account
+								{t("manageInAccount")}
 							</Link>
 						</Button>
 					</div>

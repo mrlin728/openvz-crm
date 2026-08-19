@@ -57,7 +57,7 @@ export function SlackDisconnectButton({
 				onClick={() => setConfirming(true)}
 				disabled={!canManage || disconnectAction.pending}
 			>
-				Disconnect
+				{t("disconnectShort")}
 			</Button>
 
 			<AlertDialog
@@ -80,7 +80,7 @@ export function SlackDisconnectButton({
 					</AlertDialogHeader>
 					<AlertDialogFooter>
 						<AlertDialogCancel disabled={disconnectAction.pending}>
-							Cancel
+							{t("cancel")}
 						</AlertDialogCancel>
 						<Button
 							variant="destructive"
@@ -91,7 +91,7 @@ export function SlackDisconnectButton({
 								status={disconnectAction.status}
 								pendingLabel={t("disconnecting")}
 							>
-								Disconnect
+								{t("disconnectShort")}
 							</AsyncButtonContent>
 						</Button>
 					</AlertDialogFooter>

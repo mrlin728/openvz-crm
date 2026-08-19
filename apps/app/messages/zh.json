@@ -47,7 +47,9 @@
 			"website": "网站",
 			"websiteHint": "你自己公司的网站。",
 			"save": "保存",
-			"saved": "工作区已保存。"
+			"saved": "工作区已保存。",
+			"nameHint": "CRM 里凡是提到你自己公司的地方都会用它。",
+			"adminOnly": "只有所有者或管理员能改。"
 		},
 		"researchKey": {
 			"title": "公司调研",
@@ -96,7 +98,11 @@
 			"comingSoon": "即将支持",
 			"anythingElse": "其他",
 			"intakeUnavailable": "接入 API 还不可用",
-			"alreadyConnected": "{names} 已连接。"
+			"alreadyConnected": "{names} 已连接。",
+			"pageDescription": "你的 CRM 从哪里获取信息，以及它被允许以你的名义发出什么。",
+			"addConnection": "添加连接",
+			"browseAll": "浏览全部连接",
+			"connect": "连接"
 		},
 		"google": {
 			"meetings": "会议",
@@ -127,7 +133,13 @@
 			"revoke": "撤销 Google 授权",
 			"revokeTitle": "撤销 Google 授权？",
 			"revokeRequired": "你会被登出，并且在重新授权之前无法再使用这个 CRM。",
-			"revokeOptional": "新的邮件和会议不再进来。已经同步的内容会保留，你可以在这个页面重新连接 Google。"
+			"revokeOptional": "新的邮件和会议不再进来。已经同步的内容会保留，你可以在这个页面重新连接 Google。",
+			"landsOnCompany": "会议和邮件往来会实时归到对应的公司名下。",
+			"resolve": "去处理",
+			"lastChecked": "最近检查",
+			"delete": "删除",
+			"revokeShort": "撤销",
+			"manageInAccount": "在你的 Google 账号里管理"
 		},
 		"microsoft": {
 			"autoCreateEmail": "回复新的人时，自动建好公司和联系人",
@@ -156,7 +168,13 @@
 			"disconnectTitle": "断开 Microsoft？",
 			"disconnectRequired": "你会被登出，并且在重新授权之前无法再使用这个 CRM。",
 			"disconnectOptional": "新的邮件不再进来。已经同步的内容会保留，你可以在这个页面重新连接 Microsoft。",
-			"disconnectNote": "Microsoft 不提供由我们主动撤销授权的方式 —— 要彻底撤销，请到你的 Microsoft 账号里移除这个应用。"
+			"disconnectNote": "Microsoft 不提供由我们主动撤销授权的方式 —— 要彻底撤销，请到你的 Microsoft 账号里移除这个应用。",
+			"landsOnCompany": "邮件往来会实时归到对应的公司名下。",
+			"lastChecked": "最近检查",
+			"email": "邮件",
+			"delete": "删除",
+			"disconnectShort": "断开",
+			"manageInAccount": "在你的 Microsoft 账号里管理"
 		},
 		"slack": {
 			"notConnected": "未连接",
@@ -203,7 +221,20 @@
 			"disconnectTitle": "断开 {workspace}？",
 			"disconnecting": "断开中…",
 			"refreshFromSlack": "从 Slack 刷新",
-			"continue": "继续"
+			"continue": "继续",
+			"agentsUsingSlack": "用到 Slack 的智能体",
+			"builtInChat": "在对话里搭建，不在这里。打开一个即可修改。",
+			"noDeployedAgents": "还没有已部署的智能体用到 Slack。",
+			"describeAnother": "在对话里描述另一个智能体",
+			"review": "去审核",
+			"channelsReachable": "OPENVZ AI 能进的频道",
+			"agentsPickFrom": "智能体从这个列表里选。",
+			"disconnectShort": "断开",
+			"disconnectConsequence": "智能体会立刻停止往 Slack 发消息，缓存的频道列表也会清空，新的应用会重新读取。",
+			"notReadingSlack": "OPENVZ AI 目前没有在读 Slack，这些匹配可能已经过时。",
+			"noTeammates": "没有可以匹配的 CRM 同事。",
+			"noExactMatch": "没有完全匹配的邮箱",
+			"matchNote": "Slack 邮箱变更后请刷新。CRM 只按完全一致的邮箱匹配。"
 		},
 		"sso": {
 			"title": "单点登录",
@@ -223,7 +254,13 @@
 			"domainHint": "多个用逗号分隔。",
 			"clientId": "客户端 ID",
 			"clientSecret": "客户端密钥",
-			"secretHint": "只显示这一次。"
+			"secretHint": "只显示这一次。",
+			"addProvider": "添加提供方",
+			"configureOidc": "配置一个 OpenID Connect 提供方。",
+			"name": "名称",
+			"nameHint": "决定登录按钮上的文字。之后不能改。",
+			"addAtProvider": "保存前先在你的提供方那边加上这个。",
+			"remove": "删除"
 		},
 		"currencies": {
 			"title": "币种",
@@ -250,7 +287,10 @@
 			"inUse": "正在使用的币种",
 			"allConvertible": "每一笔有金额的交易都能折算成报表币种。",
 			"noAmounts": "还没有任何交易填了金额。",
-			"noRate": "没有汇率"
+			"noRate": "没有汇率",
+			"noRates": "还没有汇率。点刷新自动获取，或者手工填一个。",
+			"remove": "删除",
+			"yes": "是"
 		},
 		"members": {
 			"title": "成员",

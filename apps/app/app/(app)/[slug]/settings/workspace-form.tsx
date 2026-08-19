@@ -121,9 +121,7 @@ export function WorkspaceForm() {
 								disabled={!canRename || save.isPending}
 								required
 							/>
-							<FieldDescription>
-								Shown wherever the CRM refers to your own company.
-							</FieldDescription>
+							<FieldDescription>{t("nameHint")}</FieldDescription>
 						</Field>
 
 						<Field>
@@ -151,9 +149,7 @@ export function WorkspaceForm() {
 				</form>
 
 				{canRename ? null : (
-					<p className="text-muted-foreground text-xs">
-						Only an owner or an admin can change this.
-					</p>
+					<p className="text-muted-foreground text-xs">{t("adminOnly")}</p>
 				)}
 			</CardContent>
 		</Card>

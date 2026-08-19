@@ -259,9 +259,7 @@ export function CurrencySettings() {
 				</CardContent>
 
 				{rates.length === 0 ? (
-					<CardTableEmpty>
-						No rates yet. Refresh to fetch them, or enter one by hand.
-					</CardTableEmpty>
+					<CardTableEmpty>{t("noRates")}</CardTableEmpty>
 				) : (
 					<SimpleTable columns={rateColumnsFor(t)}>
 						{rates.map((rate) => (
@@ -297,7 +295,7 @@ export function CurrencySettings() {
 												removeRate.mutate({ currency: rate.currency })
 											}
 										>
-											Remove
+											{t("remove")}
 										</Button>
 									) : null}
 								</TableCell>
@@ -346,7 +344,11 @@ export function CurrencySettings() {
 								</TableCell>
 								<TableCell className={`${CELL} text-right`}>
 									{row.convertible ? (
-										<StatusIndicator size="sm" tone="success" label="Yes" />
+										<StatusIndicator
+											size="sm"
+											tone="success"
+											label={t("yes")}
+										/>
 									) : (
 										<StatusIndicator
 											size="sm"

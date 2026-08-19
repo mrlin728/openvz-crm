@@ -5,6 +5,7 @@ import { Button } from "@openvz/ui/components/button";
 import { Spinner } from "@openvz/ui/components/spinner";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { requireSession } from "@/lib/session";
@@ -94,13 +95,12 @@ async function ConnectionsSettingsPageContent({
 								Connections
 							</h1>
 							<p className="max-w-2xl text-muted-foreground text-sm">
-								Where your CRM gets its information, and what it is allowed to
-								send on your behalf.
+								{t("pageDescription")}
 							</p>
 						</div>
 						<Button asChild variant="outline">
 							<Link href={`/${slug}/settings/connections?add=1`}>
-								Add connection
+								{t("addConnection")}
 							</Link>
 						</Button>
 					</header>
@@ -124,18 +124,21 @@ async function ConnectionsSettingsPageContent({
 					</div>
 					<div className="flex flex-col divide-y rounded-lg border bg-card px-(--spacing-block-inline)">
 						<StarterRow
+							t={t}
 							logo={GoogleLogo}
 							name={t("google")}
 							description={t("googleTeaser")}
 							href={`/${slug}/settings/connections/google`}
 						/>
 						<StarterRow
+							t={t}
 							logo={SlackLogo}
 							name={t("slack")}
 							description={t("slackTeaser")}
 							href={`/${slug}/settings/connections/slack`}
 						/>
 						<StarterRow
+							t={t}
 							logo={MicrosoftLogo}
 							name={t("microsoft")}
 							description={t("microsoftTeaser")}
@@ -148,7 +151,7 @@ async function ConnectionsSettingsPageContent({
 							className="font-medium text-foreground underline underline-offset-4"
 							href={`/${slug}/settings/connections?add=1`}
 						>
-							Browse all connections
+							{t("browseAll")}
 						</Link>
 					</p>
 				</div>
@@ -221,11 +224,13 @@ function StarterRow({
 	name,
 	description,
 	href,
+	t,
 }: {
 	logo: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 	name: string;
 	description: string;
 	href: string;
+	t: (key: string) => string;
 }) {
 	return (
 		<div className="flex items-center gap-3 py-4 text-left">
@@ -235,7 +240,7 @@ function StarterRow({
 				<p className="text-muted-foreground text-xs">{description}</p>
 			</div>
 			<Button asChild variant="outline" size="sm">
-				<Link href={href}>Connect</Link>
+				<Link href={href}>{t("connect")}</Link>
 			</Button>
 		</div>
 	);

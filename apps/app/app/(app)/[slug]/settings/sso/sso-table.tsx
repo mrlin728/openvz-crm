@@ -92,7 +92,7 @@ function columns(
 		},
 		{
 			id: "actions",
-			header: <span className="sr-only">Actions</span>,
+			header: <span className="sr-only">{t("actions")}</span>,
 			label: t("actions"),
 			hideable: false,
 			align: "right",
@@ -122,7 +122,7 @@ function columns(
 									variant="destructive"
 									onClick={() => onRemove(row)}
 								>
-									Remove
+									{t("remove")}
 								</AlertDialogAction>
 							</AlertDialogFooter>
 						</AlertDialogContent>

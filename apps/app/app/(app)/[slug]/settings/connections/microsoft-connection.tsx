@@ -238,9 +238,7 @@ export function MicrosoftConnection({
 						/>
 					</div>
 				</CardTitle>
-				<CardDescription>
-					Email threads land on the matching company as they happen.
-				</CardDescription>
+				<CardDescription>{t("landsOnCompany")}</CardDescription>
 
 				<CardAction>
 					<Button
@@ -275,7 +273,8 @@ export function MicrosoftConnection({
 					<p className="text-muted-foreground text-xs">
 						{lastSyncedAt ? (
 							<>
-								Last checked <LocalRelativeTime date={lastSyncedAt} />
+								{t("lastChecked")}
+								<LocalRelativeTime date={lastSyncedAt} />
 							</>
 						) : (
 							t("waitingFirstCheck")
@@ -292,7 +291,7 @@ export function MicrosoftConnection({
 							htmlFor={`auto-create-${source.source}`}
 							className="flex flex-col items-start gap-1"
 						>
-							<span className="text-sm">Email</span>
+							<span className="text-sm">{t("email")}</span>
 							<span className="font-normal text-muted-foreground text-xs">
 								{t("autoCreateEmail")}
 							</span>
@@ -332,7 +331,7 @@ export function MicrosoftConnection({
 										variant="destructive"
 										onClick={() => purge.mutate()}
 									>
-										Delete
+										{t("delete")}
 									</AlertDialogAction>
 								</AlertDialogFooter>
 							</AlertDialogContent>
@@ -362,7 +361,7 @@ export function MicrosoftConnection({
 										variant="destructive"
 										onClick={() => revoke.mutate()}
 									>
-										Disconnect
+										{t("disconnectShort")}
 									</AlertDialogAction>
 								</AlertDialogFooter>
 							</AlertDialogContent>
@@ -374,7 +373,7 @@ export function MicrosoftConnection({
 								target="_blank"
 								rel="noreferrer"
 							>
-								Manage in your Microsoft account
+								{t("manageInAccount")}
 							</Link>
 						</Button>
 					</div>

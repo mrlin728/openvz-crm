@@ -195,10 +195,8 @@ function ConnectedSlack({
 			<section className="flex flex-col gap-3 border-y px-(--spacing-block-inline) py-5">
 				<div className="flex items-end justify-between gap-4">
 					<div>
-						<h2 className="font-medium text-sm">Agents that use Slack</h2>
-						<p className="text-muted-foreground text-xs">
-							Built in chat, not here. Open one to change it.
-						</p>
+						<h2 className="font-medium text-sm">{t("agentsUsingSlack")}</h2>
+						<p className="text-muted-foreground text-xs">{t("builtInChat")}</p>
 					</div>
 					<NewAgentDialog>
 						<Button size="sm">{t("newAgent")}</Button>
@@ -207,7 +205,7 @@ function ConnectedSlack({
 				<div className="flex flex-col divide-y rounded-lg border">
 					{agents.length === 0 ? (
 						<p className="px-(--spacing-block-inline) py-4 text-muted-foreground text-sm">
-							No deployed agents use Slack yet.
+							{t("noDeployedAgents")}
 						</p>
 					) : null}
 					{agents.map(
@@ -241,7 +239,7 @@ function ConnectedSlack({
 						className="px-(--spacing-block-inline) py-4 font-medium text-sm hover:bg-muted/50"
 						href={`/${slug}/chat`}
 					>
-						Describe another agent in chat
+						{t("describeAnother")}
 					</Link>
 				</div>
 			</section>
@@ -253,7 +251,7 @@ function ConnectedSlack({
 				</p>
 				<Button asChild variant="outline" size="sm">
 					<Link href={`/${slug}/settings/connections/slack/people`}>
-						Review
+						{t("review")}
 					</Link>
 				</Button>
 			</div>
