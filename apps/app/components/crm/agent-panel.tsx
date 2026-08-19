@@ -395,6 +395,7 @@ const SOURCE_ICONS: Record<Source["network"], CarbonIcon> = {
 };
 
 function Item({ item }: { item: TranscriptItem }) {
+	const t = useTranslations("crm.agentPanel");
 	if (item.kind === "said") {
 		return item.mine ? (
 			<Message align="end" className="min-w-0">
@@ -421,7 +422,7 @@ function Item({ item }: { item: TranscriptItem }) {
 	if (item.kind === "asked") {
 		return (
 			<div className="w-full max-w-sm border-ring/50 border-l-2 bg-muted/40 px-3 py-2.5">
-				<p className="font-medium text-xs">Follow-up</p>
+				<p className="font-medium text-xs">{t("followUp")}</p>
 				<Markdown className="mt-1.5 wrap-break-word text-sm leading-5">
 					{item.question.prompt}
 				</Markdown>

@@ -1,6 +1,8 @@
 import SlackLogo from "@openvz/ui/components/brand-logos/slack";
 import { Spinner } from "@openvz/ui/components/spinner";
 import { redirect } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { requireSession } from "@/lib/session";
 import { getServerQueryClient, getServerTrpc } from "@/lib/trpc/server";
@@ -26,6 +28,7 @@ export default function SlackPeoplePage(props: SlackPeoplePageProps) {
 }
 
 async function SlackPeoplePageContent({ params }: SlackPeoplePageProps) {
+	const t = await getTranslations("settings.slack");
 	await requireSession();
 	const { slug } = await params;
 	const queryClient = getServerQueryClient();
@@ -41,7 +44,7 @@ async function SlackPeoplePageContent({ params }: SlackPeoplePageProps) {
 			<header className="flex flex-col gap-3 px-(--spacing-block-inline) text-center">
 				<SlackLogo className="mx-auto size-7" />
 				<h1 className="font-medium text-2xl tracking-tight">
-					Slack is connected
+					{t("slackConnected")}
 				</h1>
 				<p className="text-muted-foreground text-sm">
 					Match your CRM people to Slack once. Agents use these exact accounts

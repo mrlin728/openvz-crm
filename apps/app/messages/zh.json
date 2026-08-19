@@ -244,7 +244,8 @@
 			"notGranted": "未授予",
 			"broadMeans": "「宽」指的是整个工作区，不是某一个频道。展开分组看具体内容。",
 			"notReadingList": "OPENVZ AI 目前没有在读 Slack，这个列表可能已经过时。",
-			"adding": "添加中…"
+			"adding": "添加中…",
+			"slackConnected": "Slack 已连接"
 		},
 		"sso": {
 			"title": "单点登录",
@@ -403,7 +404,9 @@
 		"deals": "交易",
 		"settings": "设置",
 		"primary": "主导航",
-		"close": "关闭导航"
+		"close": "关闭导航",
+		"navAndChats": "导航与智能体对话",
+		"navigation": "导航"
 	},
 	"header": {
 		"openNavigation": "打开导航",
@@ -427,7 +430,9 @@
 			"lastActivity": "最近动态",
 			"enrichment": "资料补全",
 			"enrichmentStatus": "资料补全状态",
-			"unassigned": "未分配"
+			"unassigned": "未分配",
+			"search": "按名称或域名搜索公司…",
+			"empty": "没有符合这个视图的公司。"
 		},
 		"page": {
 			"title": "公司",
@@ -466,7 +471,9 @@
 			"createdDate": "创建日期",
 			"lastActivity": "最近动态",
 			"unassigned": "未分配",
-			"noCompany": "无公司"
+			"noCompany": "无公司",
+			"search": "按姓名、邮箱或公司搜索…",
+			"empty": "没有符合这个视图的联系人。"
 		},
 		"page": {
 			"title": "联系人",
@@ -513,7 +520,9 @@
 			"lastActivity": "最近动态",
 			"closing": "成交情况",
 			"open": "进行中",
-			"closed": "已结束"
+			"closed": "已结束",
+			"search": "按名称或公司搜索交易…",
+			"empty": "没有符合这个视图的交易。"
 		},
 		"page": {
 			"title": "交易",
@@ -984,7 +993,8 @@
 		"privacyNote": "对话和智能体草稿只有你能看到。部署之后整个团队才能用。",
 		"submitAnswer": "提交回答",
 		"addDetail": "补充智能体需要的细节",
-		"submitting": "提交中"
+		"submitting": "提交中",
+		"teamAgentsDescription": "从私有构建器对话里创建出来的长期自动化。"
 	},
 	"onboarding": {
 		"title": "介绍一下你的公司",

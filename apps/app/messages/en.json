@@ -244,7 +244,8 @@
 			"notGranted": "Not granted",
 			"broadMeans": "Broad means the whole workspace, not one channel. Open a group to see the details.",
 			"notReadingList": "OPENVZ AI is not reading Slack right now. The list can be out of date.",
-			"adding": "Adding…"
+			"adding": "Adding…",
+			"slackConnected": "Slack is connected"
 		},
 		"sso": {
 			"title": "SSO",
@@ -403,7 +404,9 @@
 		"deals": "Deals",
 		"settings": "Settings",
 		"primary": "Primary",
-		"close": "Close navigation"
+		"close": "Close navigation",
+		"navAndChats": "Navigation and agent chats",
+		"navigation": "Navigation"
 	},
 	"header": {
 		"openNavigation": "Open navigation",
@@ -427,7 +430,9 @@
 			"lastActivity": "Last activity",
 			"enrichment": "Enrichment",
 			"enrichmentStatus": "Enrichment status",
-			"unassigned": "Unassigned"
+			"unassigned": "Unassigned",
+			"search": "Search companies by name or domain…",
+			"empty": "No companies match this view."
 		},
 		"page": {
 			"title": "Companies",
@@ -466,7 +471,9 @@
 			"createdDate": "Created date",
 			"lastActivity": "Last activity",
 			"unassigned": "Unassigned",
-			"noCompany": "No company"
+			"noCompany": "No company",
+			"search": "Search by name, email or company…",
+			"empty": "No contacts match this view."
 		},
 		"page": {
 			"title": "Contacts",
@@ -513,7 +520,9 @@
 			"lastActivity": "Last activity",
 			"closing": "Closing",
 			"open": "Open",
-			"closed": "Closed"
+			"closed": "Closed",
+			"search": "Search deals by name or company…",
+			"empty": "No deals match this view."
 		},
 		"page": {
 			"title": "Deals",
@@ -984,7 +993,8 @@
 		"privacyNote": "Chats and agent drafts stay private to you. Deploying an agent makes it available to the whole team.",
 		"submitAnswer": "Submit answer",
 		"addDetail": "Add the detail the agent needs",
-		"submitting": "Submitting"
+		"submitting": "Submitting",
+		"teamAgentsDescription": "Durable automations created from private agent-builder chats."
 	},
 	"onboarding": {
 		"title": "Tell us about your company",

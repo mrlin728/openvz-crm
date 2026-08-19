@@ -189,7 +189,7 @@ export function DealsTable() {
 	return (
 		<DataTable
 			query={query}
-			search={<ListSearch placeholder="Search deals by name or company…" />}
+			search={<ListSearch placeholder={t("search")} />}
 			columns={columns}
 			rows={rows}
 			total={deals.data?.total ?? 0}
@@ -214,7 +214,7 @@ export function DealsTable() {
 			loading={deals.isFetching}
 			onRowHover={(row) => prefetchRecord({ kind: "deal", id: row.id })}
 			onRowClick={(row) => openRecord({ kind: "deal", id: row.id })}
-			empty="No deals match this view."
+			empty={t("empty")}
 			meta={
 				openPipelineCents === null ? undefined : (
 					<span>

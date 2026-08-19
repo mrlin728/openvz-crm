@@ -213,7 +213,7 @@ export function CompaniesTable() {
 	return (
 		<DataTable
 			query={query}
-			search={<ListSearch placeholder="Search companies by name or domain…" />}
+			search={<ListSearch placeholder={t("search")} />}
 			columns={columns}
 			rows={rows}
 			total={companies.data?.total ?? 0}
@@ -230,7 +230,7 @@ export function CompaniesTable() {
 			loading={companies.isFetching}
 			onRowHover={(row) => prefetchRecord({ kind: "company", id: row.id })}
 			onRowClick={(row) => openRecord({ kind: "company", id: row.id })}
-			empty="No companies match this view."
+			empty={t("empty")}
 		/>
 	);
 }

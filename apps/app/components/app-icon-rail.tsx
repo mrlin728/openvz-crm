@@ -295,7 +295,7 @@ export function AppIconRail() {
 						className="w-5/6 max-w-sm flex-row gap-0 p-0"
 					>
 						<SheetHeader className="sr-only">
-							<SheetTitle>Navigation and agent chats</SheetTitle>
+							<SheetTitle>{t("navAndChats")}</SheetTitle>
 						</SheetHeader>
 						<nav
 							aria-label={t("primary")}
@@ -328,7 +328,7 @@ export function AppIconRail() {
 				) : (
 					<SheetContent side="left" className="w-64 gap-0 p-0">
 						<SheetHeader>
-							<SheetTitle>Navigation</SheetTitle>
+							<SheetTitle>{t("navigation")}</SheetTitle>
 						</SheetHeader>
 						<nav
 							aria-label={t("primary")}

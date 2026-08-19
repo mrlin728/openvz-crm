@@ -11,6 +11,7 @@ import {
 	TooltipTrigger,
 } from "@openvz/ui/components/tooltip";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import {
 	InlineDateField,
 	InlineField,
@@ -43,6 +44,7 @@ const UNASSIGNED = "Unassigned";
 const FORMER_MEMBER = "Former member";
 
 export function FieldsCog({ kind }: { kind: RecordKind }) {
+	const t = useTranslations("crm.fields");
 	const { open } = useFieldsSheet();
 
 	return (
@@ -50,10 +52,10 @@ export function FieldsCog({ kind }: { kind: RecordKind }) {
 			<TooltipTrigger asChild>
 				<Button variant="ghost" size="icon-sm" onClick={() => open(kind)}>
 					<Icon icon={Settings} />
-					<span className="sr-only">Fields</span>
+					<span className="sr-only">{t("fields")}</span>
 				</Button>
 			</TooltipTrigger>
-			<TooltipContent>Fields</TooltipContent>
+			<TooltipContent>{t("fields")}</TooltipContent>
 		</Tooltip>
 	);
 }

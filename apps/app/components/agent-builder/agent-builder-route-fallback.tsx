@@ -1,6 +1,8 @@
 import { Skeleton } from "@openvz/ui/components/skeleton";
+import { useTranslations } from "next-intl";
 
 export function AgentBuilderHomeFallback() {
+	const t = useTranslations("agent");
 	return (
 		<main
 			className="flex min-h-0 flex-1 items-center justify-center px-4"
@@ -17,13 +19,14 @@ export function AgentBuilderHomeFallback() {
 				<Skeleton className="h-24 w-full rounded-lg" aria-hidden="true" />
 			</div>
 			<span role="status" className="sr-only">
-				Opening chat…
+				{t("openingChat")}
 			</span>
 		</main>
 	);
 }
 
 export function AgentBuilderChatFallback() {
+	const t = useTranslations("agent");
 	return (
 		<main className="flex min-h-0 flex-1 flex-col" aria-busy="true">
 			<header className="flex h-12 shrink-0 items-center px-4 sm:px-5">
@@ -43,7 +46,7 @@ export function AgentBuilderChatFallback() {
 				</div>
 			</div>
 			<span role="status" className="sr-only">
-				Opening chat…
+				{t("openingChat")}
 			</span>
 		</main>
 	);

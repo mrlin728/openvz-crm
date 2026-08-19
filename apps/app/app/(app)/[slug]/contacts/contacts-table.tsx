@@ -194,7 +194,7 @@ export function ContactsTable() {
 	return (
 		<DataTable
 			query={query}
-			search={<ListSearch placeholder="Search by name, email or company…" />}
+			search={<ListSearch placeholder={t("search")} />}
 			columns={columns}
 			rows={rows}
 			total={contacts.data?.total ?? 0}
@@ -211,7 +211,7 @@ export function ContactsTable() {
 			loading={contacts.isFetching}
 			onRowHover={(row) => prefetchRecord({ kind: "contact", id: row.id })}
 			onRowClick={(row) => openRecord({ kind: "contact", id: row.id })}
-			empty="No contacts match this view."
+			empty={t("empty")}
 		/>
 	);
 }

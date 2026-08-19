@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { useTranslations } from "next-intl";
 import { Suspense } from "react";
 import { TeamAgentsIndex } from "@/components/agent-builder/team-agents-index";
 import {
@@ -16,13 +17,14 @@ import { getServerQueryClient, getServerTrpc } from "@/lib/trpc/server";
 export const metadata: Metadata = { title: "Agents" };
 
 export default function AgentsPage() {
+	const t = useTranslations("agent");
 	return (
 		<PageShell className="min-h-0">
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>Team agents</PageShellTitle>
+					<PageShellTitle>{t("teamAgents")}</PageShellTitle>
 					<PageShellDescription>
-						Durable automations created from private agent-builder chats.
+						{t("teamAgentsDescription")}
 					</PageShellDescription>
 				</PageShellHeading>
 			</PageShellHeader>
