@@ -67,7 +67,6 @@ export function BulkActionsMenu({
 	onOpenChange?: (open: boolean) => void;
 	children: ReactNode;
 }) {
-	const t = useTranslations("crm.bulkActions");
 	return (
 		<DropdownMenu open={open} onOpenChange={onOpenChange}>
 			<DropdownMenuTrigger asChild>

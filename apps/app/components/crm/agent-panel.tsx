@@ -151,7 +151,6 @@ function ThreadWithHistory({
 	conversation: Conversation | null;
 	onNewThread: () => void;
 }) {
-	const t = useTranslations("crm.agentPanel");
 	const trpc = useTRPC();
 
 	const thread = useQuery<ThreadState>({

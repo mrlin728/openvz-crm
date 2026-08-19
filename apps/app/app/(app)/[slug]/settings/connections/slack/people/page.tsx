@@ -1,7 +1,6 @@
 import SlackLogo from "@openvz/ui/components/brand-logos/slack";
 import { Spinner } from "@openvz/ui/components/spinner";
 import { redirect } from "next/navigation";
-import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { requireSession } from "@/lib/session";

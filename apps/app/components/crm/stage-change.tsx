@@ -61,7 +61,6 @@ export function DealStageMenu({
 	stage: DealStage;
 	variant?: "inline" | "control";
 }) {
-	const t = useTranslations("crm.stageChange");
 	const [, setCloseParams] = useQueryStates(closeReasonParams);
 	const setStage = useStageMutation();
 

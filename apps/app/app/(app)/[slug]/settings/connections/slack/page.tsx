@@ -266,9 +266,10 @@ function MissingGrant({
 	slug: string;
 	missing: SlackScope[];
 }) {
+	const t = useTranslations("settings.slack");
+
 	if (missing.length === 0) return null;
 
-	const t = useTranslations("settings.slack");
 	const privateChannels = missing.some((entry) =>
 		PRIVATE_CHANNEL_SCOPES.includes(entry.scope),
 	);

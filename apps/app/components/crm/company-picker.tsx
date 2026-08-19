@@ -175,7 +175,6 @@ export function InlineCompanyField({
 	none?: { value: string; label: string };
 	company?: { id: string; name: string } | null;
 }) {
-	const t = useTranslations("crm.companyPicker");
 	const id = useId();
 
 	return (

@@ -5,7 +5,6 @@ import { Button } from "@openvz/ui/components/button";
 import { Spinner } from "@openvz/ui/components/spinner";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { requireSession } from "@/lib/session";

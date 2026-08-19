@@ -98,7 +98,7 @@ export function AgentCode({
 
 		setEditing(false);
 		toast.success(t("saved"));
-	}, [agentId, queryClient, save, trpc]);
+	}, [agentId, queryClient, save, t, trpc]);
 
 	const editorOptions = useMemo<EditorOptions<undefined>>(
 		() => ({

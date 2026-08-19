@@ -106,7 +106,6 @@ function DisclosureRow({
 	note: string;
 	children: React.ReactNode;
 }) {
-	const t = useTranslations("crm.fields");
 	return (
 		<Collapsible>
 			<CollapsibleTrigger asChild>

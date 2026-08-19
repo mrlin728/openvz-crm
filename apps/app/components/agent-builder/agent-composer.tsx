@@ -1483,7 +1483,6 @@ function ResourceButton({
 	disabled: boolean;
 	onSelect: () => void;
 }) {
-	const t = useTranslations("agent");
 	return (
 		<button
 			type="button"
