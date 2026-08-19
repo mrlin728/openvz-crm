@@ -107,7 +107,8 @@
 			"connect": "Connect",
 			"intakeTitle": "Intake endpoint",
 			"backToConnections": "Back to connections",
-			"intakeUnavailableLong": "This connection is not available yet. No endpoint, API key, or intake activity has been created for this workspace."
+			"intakeUnavailableLong": "This connection is not available yet. No endpoint, API key, or intake activity has been created for this workspace.",
+			"emptyPrompt": "Right now every deal, contact and note has to be typed in by hand. Connect a tool and the CRM starts filling itself in from the work your team already does."
 		},
 		"google": {
 			"meetings": "Meetings",
@@ -301,7 +302,8 @@
 			"noRate": "No rate",
 			"noRates": "No rates yet. Refresh to fetch them, or enter one by hand.",
 			"remove": "Remove",
-			"yes": "Yes"
+			"yes": "Yes",
+			"reportingHint": "Every total, chart and average in the CRM is expressed in this currency. Each deal keeps the currency it was sold in."
 		},
 		"members": {
 			"title": "Members",

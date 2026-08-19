@@ -147,10 +147,7 @@ export function CurrencySettings() {
 			<Card>
 				<CardHeader>
 					<CardTitle>{t("reportingCurrency")}</CardTitle>
-					<CardDescription>
-						Every total, chart and average in the CRM is expressed in this
-						currency. Each deal keeps the currency it was sold in.
-					</CardDescription>
+					<CardDescription>{t("reportingHint")}</CardDescription>
 				</CardHeader>
 
 				<CardContent>

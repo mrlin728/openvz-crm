@@ -107,7 +107,8 @@
 			"connect": "连接",
 			"intakeTitle": "接入端点",
 			"backToConnections": "返回连接",
-			"intakeUnavailableLong": "这个连接还不可用。这个工作区还没有创建端点、API 密钥或任何接入活动。"
+			"intakeUnavailableLong": "这个连接还不可用。这个工作区还没有创建端点、API 密钥或任何接入活动。",
+			"emptyPrompt": "现在每一笔交易、每一个联系人、每一条备注都得手工敲进去。连上一个工具，CRM 就会从你团队本来就在做的事里自己补齐。"
 		},
 		"google": {
 			"meetings": "会议",
@@ -301,7 +302,8 @@
 			"noRate": "没有汇率",
 			"noRates": "还没有汇率。点刷新自动获取，或者手工填一个。",
 			"remove": "删除",
-			"yes": "是"
+			"yes": "是",
+			"reportingHint": "CRM 里所有的合计、图表和平均值都用这个币种表示。每一笔交易仍保留它成交时用的币种。"
 		},
 		"members": {
 			"title": "成员",

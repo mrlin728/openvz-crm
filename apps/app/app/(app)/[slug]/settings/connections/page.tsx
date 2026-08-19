@@ -92,7 +92,7 @@ async function ConnectionsSettingsPageContent({
 					<header className="flex items-start justify-between gap-4 px-(--spacing-block-inline)">
 						<div className="flex flex-col gap-2">
 							<h1 className="font-medium text-2xl tracking-tight">
-								Connections
+								{t("title")}
 							</h1>
 							<p className="max-w-2xl text-muted-foreground text-sm">
 								{t("pageDescription")}
@@ -117,9 +117,7 @@ async function ConnectionsSettingsPageContent({
 							{t("noneYet")}
 						</h1>
 						<p className="text-muted-foreground text-sm leading-relaxed">
-							Right now every deal, contact and note has to be typed in by hand.
-							Connect a tool and the CRM starts filling itself in from the work
-							your team already does.
+							{t("emptyPrompt")}
 						</p>
 					</div>
 					<div className="flex flex-col divide-y rounded-lg border bg-card px-(--spacing-block-inline)">
