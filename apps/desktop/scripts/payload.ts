@@ -218,11 +218,6 @@ async function dependenciesOf(manifest: string): Promise<string[]> {
 	return typeof named === "object" && named !== null ? Object.keys(named) : [];
 }
 
-/**
- * A package the trace left out is not the end of it: the ones we put back
- * bring dependencies of their own that the trace never saw either. Walk the
- * closure until nothing new is missing.
- */
 async function completeClosure(traced: string, real: string): Promise<number> {
 	const queue = await packageDirectories(traced);
 	const seen = new Set(queue);

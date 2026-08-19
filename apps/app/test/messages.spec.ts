@@ -11,11 +11,6 @@ function paths(tree: Tree, prefix = ""): string[] {
 	});
 }
 
-/**
- * The argument names a message takes. Only the outermost braces name an
- * argument — the ones inside a plural hold the words for each branch, and
- * those differ by language on purpose.
- */
 function placeholders(value: string): string[] {
 	const names: string[] = [];
 	let depth = 0;
@@ -68,15 +63,11 @@ describe("the two catalogues", () => {
 			const offered = placeholders(value);
 			const used = placeholders(chinese.get(key) ?? "");
 
-			// A translation may ignore one — Chinese does not inflect for number,
-			// so it has no use for a count the English needs for "is" and "are".
 			expect(used.filter((name) => !offered.includes(name))).toEqual([]);
 		}
 	});
 
 	it("is actually translated", () => {
-		// Brand names are spelled the same in both languages. Every other
-		// identical string is a key somebody forgot.
 		const brands = new Set([
 			"crm.contact.github",
 			"settings.connections.google",
