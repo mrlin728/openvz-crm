@@ -10,6 +10,7 @@ import {
 	AccordionTrigger,
 } from "@openvz/ui/components/accordion";
 import { Icon } from "@openvz/ui/components/icon";
+import { useTranslations } from "next-intl";
 
 export type ScopeLine = {
 	scope: string;
@@ -33,14 +34,12 @@ export function SlackScopeGroups({
 	groups: ScopeGroup[];
 	withheld: ScopeLine[];
 }) {
+	const t = useTranslations("settings.slack");
 	return (
 		<section className="flex flex-col gap-3 px-(--spacing-block-inline)">
 			<div>
 				<h2 className="font-medium text-sm">{title}</h2>
-				<p className="text-muted-foreground text-xs">
-					Broad means the whole workspace, not one channel. Open a group to see
-					the details.
-				</p>
+				<p className="text-muted-foreground text-xs">{t("broadMeans")}</p>
 			</div>
 
 			<Accordion className="rounded-lg border px-4" type="multiple">
@@ -94,11 +93,11 @@ export function SlackScopeGroups({
 								{entry.grant}
 							</span>
 							<span className="text-muted-foreground text-xs">
-								Slack held this one back, so it is off.
+								{t("heldBack")}
 							</span>
 						</span>
 						<span className="shrink-0 whitespace-nowrap pt-0.5 pr-2 text-muted-foreground text-xs">
-							Not granted
+							{t("notGranted")}
 						</span>
 					</div>
 				))}

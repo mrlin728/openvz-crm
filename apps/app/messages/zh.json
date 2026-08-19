@@ -16,7 +16,9 @@
 		"submit": "登录",
 		"continueWith": "使用 {provider} 继续",
 		"failed": "无法登录。",
-		"unreachable": "无法连接登录服务。"
+		"unreachable": "无法连接登录服务。",
+		"tagline": "每一位客户，都在一个地方。",
+		"homepage": "首页"
 	},
 	"settings": {
 		"language": {
@@ -102,7 +104,10 @@
 			"pageDescription": "你的 CRM 从哪里获取信息，以及它被允许以你的名义发出什么。",
 			"addConnection": "添加连接",
 			"browseAll": "浏览全部连接",
-			"connect": "连接"
+			"connect": "连接",
+			"intakeTitle": "接入端点",
+			"backToConnections": "返回连接",
+			"intakeUnavailableLong": "这个连接还不可用。这个工作区还没有创建端点、API 密钥或任何接入活动。"
 		},
 		"google": {
 			"meetings": "会议",
@@ -234,7 +239,12 @@
 			"notReadingSlack": "OPENVZ AI 目前没有在读 Slack，这些匹配可能已经过时。",
 			"noTeammates": "没有可以匹配的 CRM 同事。",
 			"noExactMatch": "没有完全匹配的邮箱",
-			"matchNote": "Slack 邮箱变更后请刷新。CRM 只按完全一致的邮箱匹配。"
+			"matchNote": "Slack 邮箱变更后请刷新。CRM 只按完全一致的邮箱匹配。",
+			"heldBack": "Slack 没给这一项，所以它是关的。",
+			"notGranted": "未授予",
+			"broadMeans": "「宽」指的是整个工作区，不是某一个频道。展开分组看具体内容。",
+			"notReadingList": "OPENVZ AI 目前没有在读 Slack，这个列表可能已经过时。",
+			"adding": "添加中…"
 		},
 		"sso": {
 			"title": "单点登录",
@@ -432,7 +442,8 @@
 			"unassigned": "未分配",
 			"added": "已添加 {name}。",
 			"submit": "添加公司",
-			"cancel": "取消"
+			"cancel": "取消",
+			"domainHint": "填完整网址也行 —— 它会被简化成纯主机名，而主机名必须唯一。"
 		},
 		"bulk": {
 			"nobody": "不指派",
@@ -523,7 +534,8 @@
 			"unassigned": "未分配",
 			"added": "已添加 {name}。",
 			"submit": "添加交易",
-			"cancel": "取消"
+			"cancel": "取消",
+			"openDealNote": "新建的交易就是进行中的交易 —— 等有结果了再在管道里把它结掉。"
 		},
 		"bulk": {
 			"delete": "删除",

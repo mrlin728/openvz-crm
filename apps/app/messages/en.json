@@ -16,7 +16,9 @@
 		"submit": "Sign in",
 		"continueWith": "Continue with {provider}",
 		"failed": "Could not sign in.",
-		"unreachable": "Could not reach the sign-in service."
+		"unreachable": "Could not reach the sign-in service.",
+		"tagline": "Every customer, one place.",
+		"homepage": "Homepage"
 	},
 	"settings": {
 		"language": {
@@ -102,7 +104,10 @@
 			"pageDescription": "Where your CRM gets its information, and what it is allowed to send on your behalf.",
 			"addConnection": "Add connection",
 			"browseAll": "Browse all connections",
-			"connect": "Connect"
+			"connect": "Connect",
+			"intakeTitle": "Intake endpoint",
+			"backToConnections": "Back to connections",
+			"intakeUnavailableLong": "This connection is not available yet. No endpoint, API key, or intake activity has been created for this workspace."
 		},
 		"google": {
 			"meetings": "Meetings",
@@ -234,7 +239,12 @@
 			"notReadingSlack": "OPENVZ AI is not reading Slack right now. These matches can be out of date.",
 			"noTeammates": "No CRM teammates are available to match.",
 			"noExactMatch": "No exact email match",
-			"matchNote": "Refresh after a Slack email changes. The CRM matches exact email addresses only."
+			"matchNote": "Refresh after a Slack email changes. The CRM matches exact email addresses only.",
+			"heldBack": "Slack held this one back, so it is off.",
+			"notGranted": "Not granted",
+			"broadMeans": "Broad means the whole workspace, not one channel. Open a group to see the details.",
+			"notReadingList": "OPENVZ AI is not reading Slack right now. The list can be out of date.",
+			"adding": "Adding…"
 		},
 		"sso": {
 			"title": "SSO",
@@ -432,7 +442,8 @@
 			"unassigned": "Unassigned",
 			"added": "{name} added.",
 			"submit": "Add company",
-			"cancel": "Cancel"
+			"cancel": "Cancel",
+			"domainHint": "A full URL is fine — it is reduced to the bare host, which has to be unique."
 		},
 		"bulk": {
 			"nobody": "Nobody",
@@ -523,7 +534,8 @@
 			"unassigned": "Unassigned",
 			"added": "{name} added.",
 			"submit": "Add deal",
-			"cancel": "Cancel"
+			"cancel": "Cancel",
+			"openDealNote": "A new deal is an open deal — close it from the pipeline once there is an outcome to record."
 		},
 		"bulk": {
 			"delete": "Delete",

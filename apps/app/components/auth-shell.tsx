@@ -1,16 +1,18 @@
 import Logo from "@openvz/ui/components/logo";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { AuthShader } from "@/components/auth-shader";
 
 export function AuthShell({ children }: { children: ReactNode }) {
+	const t = useTranslations("signIn");
 	return (
 		<main className="dark grid min-h-svh bg-background text-foreground lg:grid-cols-[minmax(0,1fr)_minmax(420px,520px)]">
 			<section className="relative hidden min-h-svh overflow-hidden bg-muted p-8 lg:flex lg:flex-col lg:justify-between xl:p-12">
 				<AuthShader />
 
 				<div className="relative flex gap-2 text-sm/5">
-					<Link href="/" aria-label="Homepage" className="flex">
+					<Link href="/" aria-label={t("homepage")} className="flex">
 						<Logo className="size-5 shrink-0" />
 					</Link>
 				</div>
@@ -21,7 +23,7 @@ export function AuthShell({ children }: { children: ReactNode }) {
 							OPENVZ CRM
 						</p>
 						<h1 className="max-w-[14ch] text-5xl/14 font-semibold text-balance">
-							Every customer, one place.
+							{t("tagline")}
 						</h1>
 					</div>
 				</div>
@@ -59,9 +61,11 @@ export function AuthHeading({
 	title: string;
 	description: ReactNode;
 }) {
+	const t = useTranslations("signIn");
+
 	return (
 		<div className="flex flex-col gap-3 text-left">
-			<Link href="/" aria-label="Homepage" className="flex">
+			<Link href="/" aria-label={t("homepage")} className="flex">
 				<Logo className="size-6 shrink-0" />
 			</Link>
 			<div className="flex flex-col gap-1">

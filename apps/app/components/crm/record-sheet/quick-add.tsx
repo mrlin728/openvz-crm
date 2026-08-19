@@ -335,7 +335,7 @@ export function QuickAddDeal({
 				/>
 			</Field>
 			<Field>
-				<FieldLabel htmlFor={closeId}>Expected close</FieldLabel>
+				<FieldLabel htmlFor={closeId}>{t("expectedClose")}</FieldLabel>
 				<DatePicker
 					id={closeId}
 					value={closeDate}

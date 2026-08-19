@@ -91,9 +91,7 @@ export function SlackChannels() {
 			</div>
 
 			{channels.stalled ? (
-				<p className="text-warning text-xs">
-					OPENVZ AI is not reading Slack right now. The list can be out of date.
-				</p>
+				<p className="text-warning text-xs">{t("notReadingList")}</p>
 			) : null}
 
 			{rows.length > 0 || query ? (
@@ -200,13 +198,13 @@ function AskDialog({
 
 				<AlertDialogFooter>
 					<AlertDialogCancel disabled={status === "pending"}>
-						Cancel
+						{t("cancel")}
 					</AlertDialogCancel>
 					<Button
 						disabled={status === "pending"}
 						onClick={canInviteItself ? onConfirm : () => void copyThenConfirm()}
 					>
-						<AsyncButtonContent pendingLabel="Adding…" status={status}>
+						<AsyncButtonContent pendingLabel={t("adding")} status={status}>
 							{canInviteItself ? "Add OPENVZ AI" : "Copy and mark as asked"}
 						</AsyncButtonContent>
 					</Button>

@@ -136,10 +136,7 @@ function CreateCompanyForm() {
 								autoComplete="off"
 								inputMode="url"
 							/>
-							<FieldDescription>
-								A full URL is fine — it is reduced to the bare host, which has
-								to be unique.
-							</FieldDescription>
+							<FieldDescription>{t("domainHint")}</FieldDescription>
 						</Field>
 
 						<Field>
