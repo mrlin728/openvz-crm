@@ -4,6 +4,7 @@ import ArrowRight from "@carbon/icons-react/es/ArrowRight";
 import { Icon } from "@openvz/ui/components/icon";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useTRPC } from "@/lib/trpc/client";
@@ -17,6 +18,7 @@ const SUGGESTIONS = [
 ];
 
 export function AgentBuilderHome({ name }: { name: string }) {
+	const t = useTranslations("agent");
 	const router = useRouter();
 	const workspaceUrl = useWorkspaceUrl();
 	const trpc = useTRPC();
@@ -51,8 +53,7 @@ export function AgentBuilderHome({ name }: { name: string }) {
 					What can I help with, {firstName(name)}?
 				</h1>
 				<p className="max-w-xl text-balance text-muted-foreground text-sm">
-					Ask about your CRM, tag a record or integration, or describe an agent
-					to build to automate a task.
+					{t("homePrompt")}
 				</p>
 			</div>
 
@@ -64,13 +65,12 @@ export function AgentBuilderHome({ name }: { name: string }) {
 					onSubmit={submit}
 				/>
 				<p className="flex h-8 items-center px-px text-muted-foreground text-xs">
-					Chats and agent drafts stay private to you. Deploying an agent makes
-					it available to the whole team.
+					{t("privacyNote")}
 				</p>
 
 				<div className="pt-1">
 					<p className="flex h-7 items-center text-muted-foreground text-xs">
-						Suggested agents
+						{t("suggestedAgents")}
 					</p>
 					{SUGGESTIONS.map((suggestion) => (
 						<button

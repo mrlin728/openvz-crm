@@ -26,6 +26,7 @@ import {
 import { Icon } from "@openvz/ui/components/icon";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useCrmCache } from "@/lib/trpc/cache";
@@ -47,6 +48,7 @@ export function DeleteChatAction({
 	returnToChatList?: boolean;
 	onDeleted?: () => void;
 }) {
+	const t = useTranslations("agent");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 	const router = useRouter();
@@ -57,7 +59,7 @@ export function DeleteChatAction({
 			onSuccess: async () => {
 				await cache.conversationRemoved(conversationId);
 				setConfirming(false);
-				toast.success("Chat deleted.");
+				toast.success(t("chatDeleted"));
 				onDeleted?.();
 
 				if (returnToChatList) {
@@ -93,7 +95,7 @@ export function DeleteChatAction({
 							disabled={removeAction.pending}
 						>
 							<Icon icon={OverflowMenuVertical} />
-							<span className="sr-only">More chat actions</span>
+							<span className="sr-only">{t("moreChatActions")}</span>
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
@@ -102,7 +104,7 @@ export function DeleteChatAction({
 							onSelect={() => setConfirming(true)}
 						>
 							<Icon icon={TrashCan} />
-							Delete chat
+							{t("deleteChat")}
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
@@ -124,7 +126,7 @@ export function DeleteChatAction({
 					</AlertDialogHeader>
 					<AlertDialogFooter>
 						<AlertDialogCancel disabled={removeAction.pending}>
-							Cancel
+							{t("cancel")}
 						</AlertDialogCancel>
 						<Button
 							variant="destructive"
@@ -134,11 +136,11 @@ export function DeleteChatAction({
 						>
 							<AsyncButtonContent
 								status={removeAction.status}
-								pendingLabel="Deleting"
+								pendingLabel={t("deleting")}
 								successLabel="Deleted"
 								errorLabel="Try again"
 							>
-								Delete chat
+								{t("deleteChat")}
 							</AsyncButtonContent>
 						</Button>
 					</AlertDialogFooter>

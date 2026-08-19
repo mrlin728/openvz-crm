@@ -14,6 +14,7 @@ import { Input } from "@openvz/ui/components/input";
 import { Label } from "@openvz/ui/components/label";
 import { Switch } from "@openvz/ui/components/switch";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useTRPC } from "@/lib/trpc/client";
@@ -25,6 +26,7 @@ export function CreateChannelDialog({
 	children: React.ReactNode;
 	onCreated: () => Promise<void> | void;
 }) {
+	const t = useTranslations("agent");
 	const trpc = useTRPC();
 	const queryClient = useQueryClient();
 	const [open, setOpen] = useState(false);
@@ -40,7 +42,7 @@ export function CreateChannelDialog({
 				await onCreated();
 				setOpen(false);
 				setName("");
-				toast.success("Creating the channel in Slack.");
+				toast.success(t("creatingChannel"));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -55,16 +57,13 @@ export function CreateChannelDialog({
 
 			<DialogContent className="sm:max-w-(--container-narrow)">
 				<DialogHeader>
-					<DialogTitle>Create a channel</DialogTitle>
-					<DialogDescription>
-						OPENVZ AI makes it in Slack and joins it. You can put the agent in
-						it straight after.
-					</DialogDescription>
+					<DialogTitle>{t("createChannel")}</DialogTitle>
+					<DialogDescription>{t("createChannelDescription")}</DialogDescription>
 				</DialogHeader>
 
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor="channel-name">Name</Label>
+						<Label htmlFor="channel-name">{t("name")}</Label>
 						<Input
 							id="channel-name"
 							onChange={(event) => setName(event.target.value)}
@@ -84,9 +83,7 @@ export function CreateChannelDialog({
 							id="channel-private"
 							onCheckedChange={setIsPrivate}
 						/>
-						<Label htmlFor="channel-private">
-							Private. Only people you invite can see it.
-						</Label>
+						<Label htmlFor="channel-private">{t("privateChannelHint")}</Label>
 					</div>
 				</div>
 
@@ -96,7 +93,7 @@ export function CreateChannelDialog({
 						onClick={() => setOpen(false)}
 						variant="outline"
 					>
-						Cancel
+						{t("cancel")}
 					</Button>
 					<Button
 						disabled={!valid || create.isPending}

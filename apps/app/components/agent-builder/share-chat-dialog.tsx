@@ -20,6 +20,7 @@ import {
 import { Icon } from "@openvz/ui/components/icon";
 import { cn } from "@openvz/ui/lib/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useTRPC } from "@/lib/trpc/client";
@@ -32,6 +33,7 @@ export function ShareChatDialog({
 	conversationId: string;
 	title: string;
 }) {
+	const t = useTranslations("agent");
 	const trpc = useTRPC();
 	const workspaceUrl = useWorkspaceUrl();
 	const queryClient = useQueryClient();
@@ -77,7 +79,7 @@ export function ShareChatDialog({
 				setToken(null);
 				setChoice({ conversationId: input.id, value: false });
 				await invalidate();
-				toast.success("Chat link revoked.");
+				toast.success(t("linkRevoked"));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -88,7 +90,7 @@ export function ShareChatDialog({
 		await navigator.clipboard.writeText(
 			`${window.location.origin}${workspaceUrl(`/chat/${shareToken}`)}`,
 		);
-		toast.success("Chat link copied.");
+		toast.success(t("linkCopied"));
 	};
 	const createAction = useAsyncAction({
 		action: () => create.mutateAsync({ id: conversationId }),
@@ -109,7 +111,7 @@ export function ShareChatDialog({
 		>
 			<DialogTrigger asChild>
 				<Button variant="outline" size="sm">
-					Share chat
+					{t("shareChat")}
 				</Button>
 			</DialogTrigger>
 			<DialogContent
@@ -118,7 +120,7 @@ export function ShareChatDialog({
 			>
 				<DialogHeader className="relative gap-1 border-b p-5 pr-14">
 					<DialogTitle className="font-semibold text-sm">
-						Share chat
+						{t("shareChat")}
 					</DialogTitle>
 					<DialogDescription>{title}</DialogDescription>
 					<DialogClose asChild>
@@ -128,7 +130,7 @@ export function ShareChatDialog({
 							className="absolute top-4 right-4"
 						>
 							<Icon icon={Close} />
-							<span className="sr-only">Close</span>
+							<span className="sr-only">{t("close")}</span>
 						</Button>
 					</DialogClose>
 				</DialogHeader>
@@ -139,7 +141,7 @@ export function ShareChatDialog({
 							role="status"
 							className="py-6 text-center text-muted-foreground text-sm"
 						>
-							Loading sharing status…
+							{t("loadingSharing")}
 						</p>
 					) : status.isError ? (
 						<div
@@ -147,21 +149,21 @@ export function ShareChatDialog({
 							className="flex items-center justify-between gap-3 py-4"
 						>
 							<p className="text-muted-foreground text-sm">
-								Sharing status could not be loaded.
+								{t("sharingFailed")}
 							</p>
 							<Button
 								variant="outline"
 								size="sm"
 								onClick={() => status.refetch()}
 							>
-								Try again
+								{t("tryAgain")}
 							</Button>
 						</div>
 					) : (
 						<>
 							<ShareChoice
 								selected={shared === false}
-								label="Only you"
+								label={t("onlyYou")}
 								disabled={createAction.pending || revokeAction.pending}
 								onSelect={() => {
 									if (shared || status.data.enabled) {
@@ -173,7 +175,7 @@ export function ShareChatDialog({
 							/>
 							<ShareChoice
 								selected={shared === true}
-								label="Anyone in OPENVZ AI with the link"
+								label={t("anyoneWithLink")}
 								detail="Read-only"
 								disabled={createAction.pending || revokeAction.pending}
 								onSelect={() => {
@@ -208,7 +210,7 @@ export function ShareChatDialog({
 											}
 											pendingLabel={shareToken ? "Copying" : "Creating link"}
 											successLabel={shareToken ? "Copied" : "Link created"}
-											errorLabel="Try again"
+											errorLabel={t("tryAgain")}
 										>
 											{shareToken ? (
 												<Icon icon={Copy} data-icon="inline-start" />
@@ -220,7 +222,7 @@ export function ShareChatDialog({
 							) : null}
 
 							<p className="text-muted-foreground text-xs">
-								Sharing this chat does not change who can edit or run the agent.
+								{t("sharingNote")}
 							</p>
 						</>
 					)}
@@ -235,19 +237,19 @@ export function ShareChatDialog({
 					>
 						<AsyncButtonContent
 							status={revokeAction.status}
-							pendingLabel="Revoking"
+							pendingLabel={t("revoking")}
 							successLabel="Revoked"
-							errorLabel="Try again"
+							errorLabel={t("tryAgain")}
 						>
-							Revoke link
+							{t("revokeLink")}
 						</AsyncButtonContent>
 					</Button>
 					<div className="flex gap-3">
 						<DialogClose asChild>
-							<Button variant="outline">Cancel</Button>
+							<Button variant="outline">{t("cancel")}</Button>
 						</DialogClose>
 						<DialogClose asChild>
-							<Button>Done</Button>
+							<Button>{t("done")}</Button>
 						</DialogClose>
 					</div>
 				</DialogFooter>

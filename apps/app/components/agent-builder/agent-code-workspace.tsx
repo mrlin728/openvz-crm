@@ -10,6 +10,7 @@ import {
 	useFileTree,
 	useFileTreeSelection,
 } from "@pierre/trees/react";
+import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 import { latestBuilderArtifacts } from "@/lib/agent-builder-state";
@@ -61,6 +62,7 @@ function AgentCodeWorkspaceSurface({
 	paths: string[];
 	working: boolean;
 }) {
+	const t = useTranslations("agent");
 	const [mode, setMode] = useState<"code" | "changes">("code");
 	const hydrated = useHydrated();
 	const { resolvedTheme } = useTheme();
@@ -84,12 +86,12 @@ function AgentCodeWorkspaceSurface({
 	if (!hydrated || (resolvedTheme !== "light" && resolvedTheme !== "dark")) {
 		return (
 			<section
-				aria-label="Generated agent files"
+				aria-label={t("generatedFiles")}
 				aria-busy="true"
 				className="h-[412px] overflow-hidden rounded-lg bg-muted/40"
 			>
 				<span role="status" className="sr-only">
-					Loading agent code
+					{t("loadingCode")}
 				</span>
 			</section>
 		);
@@ -105,7 +107,7 @@ function AgentCodeWorkspaceSurface({
 
 	return (
 		<section
-			aria-label="Generated agent files"
+			aria-label={t("generatedFiles")}
 			className="overflow-hidden rounded-lg bg-muted/40"
 		>
 			<header className="flex min-h-11 flex-wrap items-center gap-2 px-3 py-2">
@@ -129,7 +131,7 @@ function AgentCodeWorkspaceSurface({
 				</span>
 				<fieldset
 					className="flex min-w-0 items-center gap-1 border-0 p-0"
-					aria-label="Code view"
+					aria-label={t("codeView")}
 				>
 					<Button
 						variant={mode === "code" ? "secondary" : "ghost"}
@@ -137,7 +139,7 @@ function AgentCodeWorkspaceSurface({
 						aria-pressed={mode === "code"}
 						onClick={() => setMode("code")}
 					>
-						Code
+						{t("code")}
 					</Button>
 					<Button
 						variant={mode === "changes" ? "secondary" : "ghost"}
@@ -146,7 +148,7 @@ function AgentCodeWorkspaceSurface({
 						aria-pressed={mode === "changes"}
 						onClick={() => setMode("changes")}
 					>
-						Changes
+						{t("changes")}
 					</Button>
 				</fieldset>
 			</header>
@@ -155,7 +157,7 @@ function AgentCodeWorkspaceSurface({
 				<div className="h-36 min-w-0 border-b border-border/60 bg-muted/15 p-2 md:h-[360px] md:border-r md:border-b-0">
 					<FileTree
 						model={model}
-						aria-label="Agent files"
+						aria-label={t("agentFiles")}
 						style={{ colorScheme: themeType, height: "100%", width: "100%" }}
 					/>
 				</div>

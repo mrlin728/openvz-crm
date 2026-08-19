@@ -30,6 +30,7 @@ import {
 } from "@openvz/validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useSlackChannels } from "@/components/slack/use-slack-channels";
@@ -38,6 +39,7 @@ import { useTRPC } from "@/lib/trpc/client";
 import { useWorkspaceUrl } from "@/lib/use-workspace-url";
 
 export function NewAgentDialog({ children }: { children: React.ReactNode }) {
+	const t = useTranslations("agent");
 	const router = useRouter();
 	const trpc = useTRPC();
 	const queryClient = useQueryClient();
@@ -111,40 +113,37 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 
 			<DialogContent className="sm:max-w-(--container-sheet)">
 				<DialogHeader>
-					<DialogTitle>New agent</DialogTitle>
-					<DialogDescription>
-						Say what it is and where it lives. The builder writes the rest. You
-						can change all of this later.
-					</DialogDescription>
+					<DialogTitle>{t("newAgent")}</DialogTitle>
+					<DialogDescription>{t("newAgentDescription")}</DialogDescription>
 				</DialogHeader>
 
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor="agent-name">Name</Label>
+						<Label htmlFor="agent-name">{t("name")}</Label>
 						<Input
 							id="agent-name"
 							onChange={(event) => setName(event.target.value)}
-							placeholder="Renewal prep brief"
+							placeholder={t("namePlaceholder")}
 							value={name}
 						/>
 					</div>
 
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor="agent-job">What it should do</Label>
+						<Label htmlFor="agent-job">{t("whatItDoes")}</Label>
 						<Textarea
 							id="agent-job"
 							onChange={(event) => setJob(event.target.value)}
-							placeholder="A week before a renewal, gather the account history and post a short brief for whoever owns the deal."
+							placeholder={t("whatItDoesPlaceholder")}
 							rows={3}
 							value={job}
 						/>
 					</div>
 
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor="agent-channel">Lives in</Label>
+						<Label htmlFor="agent-channel">{t("livesIn")}</Label>
 						<Select onValueChange={setChannelId} value={channelId}>
 							<SelectTrigger id="agent-channel">
-								<SelectValue placeholder="Pick a Slack channel" />
+								<SelectValue placeholder={t("pickChannel")} />
 							</SelectTrigger>
 							<SelectContent>
 								{rows.map((row) => (
@@ -164,7 +163,7 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 					</div>
 
 					<div className="flex flex-col gap-1.5">
-						<Label>Allowed to</Label>
+						<Label>{t("allowedTo")}</Label>
 						<div className="flex flex-wrap gap-2">
 							{schemas.agents.permissions.map((entry) => {
 								const on = allowed.includes(entry.id);
@@ -200,14 +199,14 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 
 				<DialogFooter className="items-center">
 					<p className="mr-auto text-muted-foreground text-xs">
-						Nothing sends until you turn it on.
+						{t("nothingSends")}
 					</p>
 					<Button
 						disabled={create.isPending}
 						onClick={() => setOpen(false)}
 						variant="outline"
 					>
-						Cancel
+						{t("cancel")}
 					</Button>
 					<Button disabled={!ready || create.isPending} onClick={hand}>
 						{create.isPending ? "Handing over…" : "Hand to the builder"}

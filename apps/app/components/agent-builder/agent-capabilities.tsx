@@ -18,6 +18,7 @@ import {
 import { SaveBar } from "@openvz/ui/components/save-bar";
 import { Switch } from "@openvz/ui/components/switch";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import {
@@ -57,6 +58,7 @@ export function AgentCapabilities({
 	canManage: boolean;
 	capabilities: Capabilities;
 }) {
+	const t = useTranslations("agent");
 	const trpc = useTRPC();
 	const queryClient = useQueryClient();
 
@@ -83,7 +85,7 @@ export function AgentCapabilities({
 					queryKey: trpc.agents.byId.pathKey(),
 				});
 				reset();
-				toast.success("Saved. A new version is live.");
+				toast.success(t("savedNewVersion"));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -93,7 +95,7 @@ export function AgentCapabilities({
 		trpc.slack.joinChannel.mutationOptions({
 			onSuccess: async () => {
 				await channels.reload();
-				toast.success("Asked someone to invite OPENVZ AI.");
+				toast.success(t("askedToInvite"));
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -103,7 +105,7 @@ export function AgentCapabilities({
 		return (
 			<Alert variant="warning">
 				<Icon icon={Warning} />
-				<AlertTitle>This version's manifest cannot be read</AlertTitle>
+				<AlertTitle>{t("manifestUnreadable")}</AlertTitle>
 				<AlertDescription>
 					{capabilities.problem ?? "The manifest is not in a shape we know."}
 				</AlertDescription>
@@ -178,13 +180,13 @@ export function AgentCapabilities({
 								}}
 							>
 								<Button size="sm" variant="outline">
-									Create a channel
+									{t("createChannel")}
 								</Button>
 							</CreateChannelDialog>
 						) : null
 					}
 					summary="One channel. OPENVZ AI joins it when you save."
-					title="Lives in"
+					title={t("livesIn")}
 				>
 					<ChannelPicker
 						canInviteItself={canInviteItself}
@@ -201,7 +203,7 @@ export function AgentCapabilities({
 
 			<Section
 				summary="If it is off here, it cannot do it."
-				title="What it can do there"
+				title={t("whatItCanDo")}
 			>
 				<div className="flex flex-col">
 					{capabilities.actions.map((action) => (
@@ -232,7 +234,7 @@ export function AgentCapabilities({
 					))}
 					{capabilities.actions.length === 0 ? (
 						<p className="text-muted-foreground text-sm">
-							Nothing outside the CRM.
+							{t("nothingOutside")}
 						</p>
 					) : null}
 				</div>
@@ -242,13 +244,13 @@ export function AgentCapabilities({
 				summary={
 					capabilities.dataScope?.summary || "What it reads to do its job."
 				}
-				title="What it can see"
+				title={t("whatItCanSee")}
 			>
 				<div className="flex flex-wrap gap-2">
 					{shownResources.length === 0 &&
 					capabilities.dataScope?.mode === "WORKSPACE" ? (
 						<span className="flex h-7 items-center rounded-md border px-2.5 text-sm">
-							Every record in the workspace
+							{t("everyRecord")}
 						</span>
 					) : null}
 
@@ -321,7 +323,7 @@ export function AgentCapabilities({
 					size="sm"
 					variant="outline"
 				>
-					Discard
+					{t("discard")}
 				</Button>
 				<Button
 					disabled={revise.isPending || blocked !== null}
@@ -336,6 +338,7 @@ export function AgentCapabilities({
 }
 
 function ResourcePicker({ onPick }: { onPick: (resource: Resource) => void }) {
+	const t = useTranslations("agent");
 	const trpc = useTRPC();
 	const [open, setOpen] = useState(false);
 	const [query, setQuery] = useState("");
@@ -352,7 +355,7 @@ function ResourcePicker({ onPick }: { onPick: (resource: Resource) => void }) {
 					type="button"
 				>
 					<Icon className="size-3" icon={Add} motion="none" />
-					Add a record type
+					{t("addRecordType")}
 				</button>
 			</PopoverTrigger>
 
@@ -360,7 +363,7 @@ function ResourcePicker({ onPick }: { onPick: (resource: Resource) => void }) {
 				<input
 					className="w-full border-b bg-transparent px-3 py-2.5 text-sm outline-none"
 					onChange={(event) => setQuery(event.target.value)}
-					placeholder="Search records and integrations"
+					placeholder={t("searchRecordsIntegrations")}
 					value={query}
 				/>
 				<div className="flex max-h-64 flex-col overflow-y-auto py-1">
@@ -388,7 +391,7 @@ function ResourcePicker({ onPick }: { onPick: (resource: Resource) => void }) {
 					))}
 					{(results.data ?? []).length === 0 ? (
 						<p className="px-3 py-2 text-muted-foreground text-sm">
-							Nothing matches.
+							{t("nothingMatches")}
 						</p>
 					) : null}
 				</div>
