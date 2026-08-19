@@ -14,6 +14,7 @@ import {
 	QuestionnaireTitle,
 } from "@openvz/ui/components/questionnaire";
 import type { EveMessageInputRequest } from "eve/react";
+import { useTranslations } from "next-intl";
 import { type FormEvent, useState } from "react";
 import { AGENT_COMPOSER_CLASS_NAME } from "./agent-composer-frame";
 
@@ -32,6 +33,7 @@ export function AgentClarificationComposer({
 	pending: boolean;
 	onSubmit: (response: ClarificationResponse) => Promise<void>;
 }) {
+	const t = useTranslations("agent");
 	const options = question.options ?? [];
 	const [transportError, setTransportError] = useState<string | null>(null);
 	const showFreeform =
@@ -110,7 +112,7 @@ export function AgentClarificationComposer({
 					{showFreeform ? (
 						<QuestionnaireInput
 							aria-label={options.length > 0 ? "Another answer" : "Your answer"}
-							placeholder="Add the detail the agent needs"
+							placeholder={t("addDetail")}
 							disabled={pending}
 						/>
 					) : null}
@@ -126,9 +128,9 @@ export function AgentClarificationComposer({
 				<QuestionnaireSubmit disabled={pending} aria-busy={pending} size="sm">
 					<AsyncButtonContent
 						status={pending ? "pending" : "idle"}
-						pendingLabel="Submitting"
+						pendingLabel={t("submitting")}
 					>
-						Submit answer
+						{t("submitAnswer")}
 					</AsyncButtonContent>
 				</QuestionnaireSubmit>
 			</QuestionnaireActions>

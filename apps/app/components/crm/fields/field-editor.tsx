@@ -42,6 +42,7 @@ import { StatusIndicator } from "@openvz/ui/components/status-indicator";
 import { Switch } from "@openvz/ui/components/switch";
 import { Textarea } from "@openvz/ui/components/textarea";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { toast } from "sonner";
 import { useCrmCache } from "@/lib/trpc/cache";
@@ -124,6 +125,7 @@ function draftFrom(field: FieldRecord | undefined): Draft {
 }
 
 function Coverage({ field }: { field: FieldRecord }) {
+	const t = useTranslations("crm.fields");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 	const coverage = useQuery(
@@ -133,7 +135,7 @@ function Coverage({ field }: { field: FieldRecord }) {
 	const backfill = useMutation(
 		trpc.fields.backfill.mutationOptions({
 			onSuccess: async () => {
-				toast.success("Your agents will pick this up.");
+				toast.success(t("agentsPickUp"));
 				await cache.fieldCoverage(field.id);
 			},
 			onError: (error) => toast.error(error.message),
@@ -181,6 +183,7 @@ export function FieldEditor({
 	field: FieldRecord | undefined;
 	onDone: () => void;
 }) {
+	const t = useTranslations("crm.fields");
 	const trpc = useTRPC();
 	const cache = useCrmCache();
 	const labelId = useId();
@@ -431,7 +434,7 @@ export function FieldEditor({
 						<AlertDialogHeader>
 							<AlertDialogTitle>Archive {field.label}?</AlertDialogTitle>
 							<AlertDialogDescription>
-								Hidden everywhere. Its values are kept.
+								{t("archivedHint")}
 							</AlertDialogDescription>
 						</AlertDialogHeader>
 						<AlertDialogFooter>
@@ -440,7 +443,7 @@ export function FieldEditor({
 								variant="destructive"
 								onClick={() => archive.mutate({ id: field.id })}
 							>
-								Archive field
+								{t("archiveField")}
 							</AlertDialogAction>
 						</AlertDialogFooter>
 					</AlertDialogContent>

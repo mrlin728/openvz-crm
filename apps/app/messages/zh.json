@@ -622,7 +622,8 @@
 			"alsoHere": "同公司的人",
 			"noDeals": "没有参与任何交易",
 			"deleteConsequence": "他的备注、与智能体的对话，以及智能体查到的一切都会一起删除；邮件和会议仍记在公司名下。",
-			"deleteSuppressed": "同步不会再把 {email} 建回来 —— 只有你自己重新添加才会。"
+			"deleteSuppressed": "同步不会再把 {email} 建回来 —— 只有你自己重新添加才会。",
+			"source": "来源"
 		},
 		"deal": {
 			"fallbackTitle": "交易",
@@ -720,7 +721,9 @@
 			"moreActions": "更多操作",
 			"cancel": "取消",
 			"delete": "删除",
-			"couldNotLoad": "这条记录加载不出来"
+			"couldNotLoad": "这条记录加载不出来",
+			"back": "返回",
+			"close": "关闭"
 		},
 		"bulkActions": {
 			"assignOwner": "指派负责人",
@@ -738,7 +741,10 @@
 			"edit": "编辑",
 			"archive": "归档",
 			"restore": "恢复",
-			"fields": "字段"
+			"fields": "字段",
+			"archivedHint": "到处都不显示，但它的值会保留。",
+			"archiveField": "归档字段",
+			"agentsPickUp": "你的智能体会用上它。"
 		},
 		"timeline": {
 			"outstanding": "待处理",
@@ -963,6 +969,27 @@
 		"openChat": "打开对话",
 		"suggestedAgents": "推荐的智能体",
 		"homePrompt": "问问你的 CRM、标记一条记录或集成，或者描述一个要构建的智能体来自动化某件事。",
-		"privacyNote": "对话和智能体草稿只有你能看到。部署之后整个团队才能用。"
+		"privacyNote": "对话和智能体草稿只有你能看到。部署之后整个团队才能用。",
+		"submitAnswer": "提交回答",
+		"addDetail": "补充智能体需要的细节",
+		"submitting": "提交中"
+	},
+	"onboarding": {
+		"title": "介绍一下你的公司",
+		"description": "两件事，只填一次。名称决定 CRM 怎么称呼你；网站让智能体知道你卖的是什么。",
+		"companyName": "公司名称",
+		"workspaceUrl": "工作区地址",
+		"workspaceUrlHint": "你的团队用这个地址打开 CRM。",
+		"website": "网站",
+		"websiteHint": "只读取一次，之后每一次回答都知道你卖什么。",
+		"researchTitle": "让你的 CRM 数据更完整",
+		"researchDescription": "接上 Context，调研智能体就能把加进 CRM 的每一家公司都查一遍。",
+		"contextKey": "Context API 密钥",
+		"signUpHere": "在这里注册",
+		"pasteKey": "粘贴密钥",
+		"grantTitle": "还差一步",
+		"grantDescription": "只保存与 CRM 里已有公司之间的往来。私人邮件会被直接丢弃，不做保存。",
+		"signOut": "退出登录",
+		"signOutFailed": "无法退出登录。"
 	}
 }

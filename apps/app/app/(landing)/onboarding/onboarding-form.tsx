@@ -18,11 +18,13 @@ import {
 import { Spinner } from "@openvz/ui/components/spinner";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useId, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useTRPC } from "@/lib/trpc/client";
 
 export function OnboardingForm({ placeholder }: { placeholder: string }) {
+	const t = useTranslations("onboarding");
 	const trpc = useTRPC();
 	const router = useRouter();
 
@@ -60,7 +62,7 @@ export function OnboardingForm({ placeholder }: { placeholder: string }) {
 		>
 			<FieldGroup>
 				<Field>
-					<FieldLabel htmlFor={nameId}>Company name</FieldLabel>
+					<FieldLabel htmlFor={nameId}>{t("companyName")}</FieldLabel>
 					<Input
 						id={nameId}
 						name="name"
@@ -78,7 +80,7 @@ export function OnboardingForm({ placeholder }: { placeholder: string }) {
 				</Field>
 
 				<Field>
-					<FieldLabel htmlFor={slugId}>Workspace URL</FieldLabel>
+					<FieldLabel htmlFor={slugId}>{t("workspaceUrl")}</FieldLabel>
 					<InputGroup>
 						<InputGroupAddon>
 							<InputGroupText>/</InputGroupText>
@@ -102,13 +104,11 @@ export function OnboardingForm({ placeholder }: { placeholder: string }) {
 							required
 						/>
 					</InputGroup>
-					<FieldDescription>
-						Your team will use this address to open the CRM.
-					</FieldDescription>
+					<FieldDescription>{t("workspaceUrlHint")}</FieldDescription>
 				</Field>
 
 				<Field>
-					<FieldLabel htmlFor={websiteId}>Website</FieldLabel>
+					<FieldLabel htmlFor={websiteId}>{t("website")}</FieldLabel>
 					<InputGroup>
 						<InputGroupAddon>
 							<InputGroupText>https://</InputGroupText>
@@ -125,9 +125,7 @@ export function OnboardingForm({ placeholder }: { placeholder: string }) {
 							required
 						/>
 					</InputGroup>
-					<FieldDescription>
-						Read once, so every answer afterwards knows what you sell.
-					</FieldDescription>
+					<FieldDescription>{t("websiteHint")}</FieldDescription>
 				</Field>
 			</FieldGroup>
 

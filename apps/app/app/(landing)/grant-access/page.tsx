@@ -1,6 +1,7 @@
 import { mailboxGrantsNeeded } from "@openvz/auth";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { AuthHeading, AuthShell } from "@/components/auth-shell";
 import { requireSession, signInAccounts } from "@/lib/session";
 import { GrantAccess } from "./grant-access";
@@ -22,6 +23,7 @@ const BOTH =
 	"This CRM reads your mail and calendar so meetings and email threads show up on the right company. It is read-only — nothing is ever sent on your behalf.";
 
 export default async function GrantAccessPage() {
+	const t = await getTranslations("onboarding");
 	const { user } = await requireSession();
 
 	const providers = mailboxGrantsNeeded(await signInAccounts(user.id));
@@ -35,15 +37,14 @@ export default async function GrantAccessPage() {
 	return (
 		<AuthShell>
 			<AuthHeading
-				title="One more step"
+				title={t("grantTitle")}
 				description={(only ? DESCRIPTION[only] : undefined) ?? BOTH}
 			/>
 
 			<GrantAccess providers={providers} />
 
 			<p className="text-center text-muted-foreground text-sm/5">
-				Only conversations with companies in the CRM are stored. Personal mail
-				is discarded without being saved.
+				{t("grantDescription")}
 			</p>
 		</AuthShell>
 	);

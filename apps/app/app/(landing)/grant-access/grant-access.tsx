@@ -10,6 +10,7 @@ import GoogleLogo from "@openvz/ui/components/brand-logos/google";
 import MicrosoftLogo from "@openvz/ui/components/brand-logos/microsoft";
 import { Button } from "@openvz/ui/components/button";
 import { Spinner } from "@openvz/ui/components/spinner";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import { signOutAndRedirect } from "@/lib/sign-out";
@@ -32,6 +33,7 @@ export function GrantAccess({
 }: {
 	providers: readonly MailboxProviderId[];
 }) {
+	const t = useTranslations("onboarding");
 	const [pending, setPending] = useState<MailboxProviderId | null>(null);
 
 	function fail(message?: string) {
@@ -84,12 +86,12 @@ export function GrantAccess({
 			<Button
 				className="w-full"
 				onClick={() => {
-					signOutAndRedirect().catch(() => toast.error("Could not sign out."));
+					signOutAndRedirect().catch(() => toast.error(t("signOutFailed")));
 				}}
 				type="button"
 				variant="ghost"
 			>
-				Sign out
+				{t("signOut")}
 			</Button>
 		</div>
 	);

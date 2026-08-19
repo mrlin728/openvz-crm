@@ -12,11 +12,13 @@ import { Input } from "@openvz/ui/components/input";
 import { Spinner } from "@openvz/ui/components/spinner";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useId } from "react";
 import { toast } from "sonner";
 import { useTRPC } from "@/lib/trpc/client";
 
 export function ResearchForm() {
+	const t = useTranslations("onboarding");
 	const trpc = useTRPC();
 	const router = useRouter();
 
@@ -55,12 +57,12 @@ export function ResearchForm() {
 		>
 			<FieldGroup>
 				<Field>
-					<FieldLabel htmlFor={keyId}>Context API key</FieldLabel>
+					<FieldLabel htmlFor={keyId}>{t("contextKey")}</FieldLabel>
 					<Input
 						id={keyId}
 						name="apiKey"
 						type="password"
-						placeholder="Paste the key"
+						placeholder={t("pasteKey")}
 						autoComplete="off"
 						autoCapitalize="off"
 						autoCorrect="off"
@@ -76,7 +78,7 @@ export function ResearchForm() {
 							rel="noreferrer"
 							className="underline underline-offset-4 hover:text-foreground"
 						>
-							Sign up here
+							{t("signUpHere")}
 						</a>
 					</FieldDescription>
 				</Field>

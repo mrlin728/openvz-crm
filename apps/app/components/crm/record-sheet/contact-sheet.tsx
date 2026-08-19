@@ -210,7 +210,7 @@ export function ContactSheet({ contactId }: { contactId: string }) {
 								}
 							>
 								<Icon icon={Star} data-icon="inline-start" />
-								<span className="hidden sm:inline">Make primary</span>
+								<span className="hidden sm:inline">{t("makePrimary")}</span>
 							</Button>
 						) : null}
 						<RecordActions
@@ -474,7 +474,7 @@ function Background({ brief }: { brief: NonNullable<Contact["brief"]> }) {
 							rel="noreferrer noopener"
 							className="underline-offset-2 hover:underline"
 						>
-							Source
+							{t("source")}
 						</a>
 					) : null}
 					{brief.sourceUrl ? " · " : null}

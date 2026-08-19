@@ -622,7 +622,8 @@
 			"alsoHere": "Also here",
 			"noDeals": "Not on any deals",
 			"deleteConsequence": "Their notes, agent conversations and everything the agent found go too; emails and meetings stay filed against the company.",
-			"deleteSuppressed": "The sync will not bring {email} back — only adding them yourself will."
+			"deleteSuppressed": "The sync will not bring {email} back — only adding them yourself will.",
+			"source": "Source"
 		},
 		"deal": {
 			"fallbackTitle": "Deal",
@@ -720,7 +721,9 @@
 			"moreActions": "More actions",
 			"cancel": "Cancel",
 			"delete": "Delete",
-			"couldNotLoad": "This record could not be loaded"
+			"couldNotLoad": "This record could not be loaded",
+			"back": "Back",
+			"close": "Close"
 		},
 		"bulkActions": {
 			"assignOwner": "Assign owner",
@@ -738,7 +741,10 @@
 			"edit": "Edit",
 			"archive": "Archive",
 			"restore": "Restore",
-			"fields": "Fields"
+			"fields": "Fields",
+			"archivedHint": "Hidden everywhere. Its values are kept.",
+			"archiveField": "Archive field",
+			"agentsPickUp": "Your agents will pick this up."
 		},
 		"timeline": {
 			"outstanding": "Outstanding",
@@ -963,6 +969,27 @@
 		"openChat": "Open chat",
 		"suggestedAgents": "Suggested agents",
 		"homePrompt": "Ask about your CRM, tag a record or integration, or describe an agent to build to automate a task.",
-		"privacyNote": "Chats and agent drafts stay private to you. Deploying an agent makes it available to the whole team."
+		"privacyNote": "Chats and agent drafts stay private to you. Deploying an agent makes it available to the whole team.",
+		"submitAnswer": "Submit answer",
+		"addDetail": "Add the detail the agent needs",
+		"submitting": "Submitting"
+	},
+	"onboarding": {
+		"title": "Tell us about your company",
+		"description": "Two things, once. The name is what the CRM calls you; the website is how the agent learns what you sell.",
+		"companyName": "Company name",
+		"workspaceUrl": "Workspace URL",
+		"workspaceUrlHint": "Your team will use this address to open the CRM.",
+		"website": "Website",
+		"websiteHint": "Read once, so every answer afterwards knows what you sell.",
+		"researchTitle": "Level up your CRM data",
+		"researchDescription": "Power your research agent with Context to research every company added to your CRM.",
+		"contextKey": "Context API key",
+		"signUpHere": "Sign up here",
+		"pasteKey": "Paste the key",
+		"grantTitle": "One more step",
+		"grantDescription": "Only conversations with companies in the CRM are stored. Personal mail is discarded without being saved.",
+		"signOut": "Sign out",
+		"signOutFailed": "Could not sign out."
 	}
 }

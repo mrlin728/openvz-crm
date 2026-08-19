@@ -591,7 +591,7 @@ function CompanyDeals({
 						action={
 							<Button variant="outline" size="sm" onClick={onAdd}>
 								<Icon icon={Add} data-icon="inline-start" />
-								New deal
+								{t("newDeal")}
 							</Button>
 						}
 					/>
