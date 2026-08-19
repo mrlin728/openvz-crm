@@ -59,4 +59,8 @@ const nextConfig: NextConfig = {
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
-export default withNextIntl(nextConfig);
+// The plugin is typed against whichever copy of `next` resolves from
+// next-intl, and a hoisted install has one at the workspace root as well as
+// one here. They are the same version and the same shape; TypeScript only
+// sees two declarations of it.
+export default withNextIntl(nextConfig) as NextConfig;
