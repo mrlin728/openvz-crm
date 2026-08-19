@@ -2,7 +2,7 @@
 	"name": "openvz-crm",
 	"private": true,
 	"license": "MIT",
-	"version": "1.13.0",
+	"version": "1.14.0",
 	"scripts": {
 		"prepare": "bun scripts/install-hooks.ts",
 		"build": "turbo run build",
